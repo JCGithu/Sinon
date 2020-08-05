@@ -1,0 +1,34 @@
+{
+  "name": "Sinon",
+  "version": "1.2.1",
+  "description": "A video tool that's actually useful",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-packager . --app-version 1.2.1 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite"
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
+  "author": "Jack",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^8.3.3",
+    "electron-packager": "^14.2.1",
+    "electron-rebuild": "^1.11.0"
+  },
+  "dependencies": {
+    "animejs": "^3.2.0",
+    "electron-json-storage": "^4.1.8",
+    "ffmpeg-static-electron": "^2.0.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "gifsicle": "^5.1.0",
+    "got": "^11.5.1",
+    "jquery": "^1.12.4"
+  }
+}

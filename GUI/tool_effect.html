@@ -1,0 +1,52 @@
+<script src='../linkers/effect.js'></script>
+
+<div style="margin-bottom: 5vh">
+    <input type="text" id= 'downloadFile' placeholder="">
+    <button id="downloadtext">Choose a File</button>
+</div>
+<div style='display: flex; flex-direction: row; justify-content: center; align-items: center;'>
+    <div class='select'>
+        <select id='convertFormat' class="convFormat" classNamePrefix='conv'>
+            <option value='blur'>Social Media Blur</option>
+            <option value='wave'>Generate Waveform</option>
+            <option value='grabs'>Get Screengrabs</option>
+            <option value='concat'>Join clips</option>
+            <option value='custom'>Custom</option>
+        </select>
+    </div>
+</div>
+
+<div style="margin-top: 5vh">
+    <button style="position: absolute; left: 25%; z-index: 2;" id='runforrest' class="grow-on-hover" onclick="run_effect()">Generate!</button>
+</div>
+<script>
+    const fs = require("fs");
+    const {dialog} = require('electron').remote;
+    
+    document.getElementById('downloadtext').addEventListener('click', function(){
+        dialog.showOpenDialog({
+            filters: [
+                { name: 'Video', extensions: ['mkv', 'avi', 'mp4', 'ts', 'm3u8','mpd','webm', 'mpg', 'flv', 'mov'] },
+                { name: 'Audio', extensions: ['mp3','flac','wav','aac']},
+                { name: 'All Files', extensions: ['*'] }
+            ],
+            properties: ['openFile', 'multiSelections'],
+            title: 'Pick A File'
+        }).then((data) => {
+            console.log(data.filePaths)
+            effectFile = data.filePaths;
+            document.getElementById('downloadFile').value = effectFile;
+            if($("#downloadFile").val().length < 1){
+                $('#runforrest').slideUp(300);
+                $('#downloadFile').css({
+                    'cssText': 'background-color : lightgrey'
+                });
+            } else {
+                $("#runforrest").slideDown(750);
+                $('#downloadFile').css({
+                });
+            }
+            return effectFile
+        });
+    });
+</script>

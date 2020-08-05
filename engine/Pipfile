@@ -1,0 +1,29 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+appdirs = "==1.4.3"
+beautifulsoup4 = "==4.8.2"
+certifi = "==2019.11.28"
+chardet = "==3.0.4"
+distlib = "==0.3.0"
+filelock = "==3.0.12"
+idna = "==2.9"
+lxml = "==4.5.0"
+requests = "==2.23.0"
+six = "==1.14.0"
+soupsieve = "==2.0"
+urllib3 = "==1.25.8"
+virtualenv = "==20.0.15"
+pyinstaller = "*"
+pip = "*"
+install = "*"
+instagram-private-api = {editable = true,git = "https://git@github.com/ping/instagram_private_api.git",ref = "1.6.0"}
+youtube-dl = "~=2020.6.16.1"
+
+[requires]
+python_version = "3.8"

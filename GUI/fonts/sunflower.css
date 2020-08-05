@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'sunflower';
+    src: url('made_sunflower-webfont.ttf') format('truetype'),
+         url('made_sunflower-webfont.svg#made_sunflowerregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}

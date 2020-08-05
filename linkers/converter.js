@@ -1,0 +1,125 @@
+async function run_convert(){
+    lineBreak();
+    swalColours();
+    convertFile = document.getElementById('downloadFile').value;
+    var e = document.getElementById("convertFormat");
+    format = e.options[e.selectedIndex].value;
+    outputFile = path.join(path.parse(convertFile).dir, path.parse(convertFile).name);
+    inputExt = path.parse(convertFile).ext
+
+    console.log('Converter running')
+    console.log('file path: ', convertFile)
+    console.log('format: ', format)
+    console.log('output: ', outputFile)
+    lineBreak();
+
+    function swalConvert(){
+        Swal.fire({
+            title: 'Converting...',
+            customClass: 'swal-size-sm',
+            html: "<p id='progressText'></p>",
+            backdrop: swalLoading,
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            target: document.getElementById('swalframe'),
+        });
+    };
+
+    //MP4
+    if (format.indexOf('mp4')>=0){
+        if (inputExt.indexOf('.mp4')>=0){
+            finalOutput = outputFile + '-SinonConverted.mp4'
+        } else {
+            finalOutput = outputFile + '.mp4'
+        }
+        console.log('Final output: ', finalOutput)
+        lineBreak();
+        swalConvert();
+        ffmpeg(convertFile).format('mp4').on('progress', function(progress) {
+            if (progress.percent === undefined){
+                document.getElementById("progressText").textContent = (progress.timemark).match('\d\d\:\d\d\:\d\d)');
+            } else {
+                document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
+                console.log('Processing: ' + progress.percent + '% done');
+                percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2))
+                win.setProgressBar(percentage);
+            }
+        }).save(finalOutput).on('end', function(stdout, stderr) {
+            console.log('Conversion Success!');
+            Swal.fire({
+                icon: 'success',
+                title: "Conversion Success!",
+                customClass: 'swal-size-sm',
+                backdrop: swalPass,
+            });
+            win.setProgressBar(-1);
+        });
+        console.log('mp4 running');
+    }
+
+    //MP3
+    if (format.indexOf('mp3')>=0){
+        if (inputExt.indexOf('.mp3')>=0){
+            finalOutput = outputFile + '-SinonConverted.mp3'
+        } else {
+            finalOutput = outputFile + '.mp3'
+        }
+        console.log('Final output: ', finalOutput)
+        lineBreak();
+        swalConvert();
+        ffmpeg(convertFile).format('mp3').noVideo().on('progress', function(progress) {
+            document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
+            console.log('Processing: ' + progress.percent + '% done');
+            percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2))
+            win.setProgressBar(percentage);
+        }).save(finalOutput).on('end', function(stdout, stderr) {
+            console.log('Conversion Success!');
+            Swal.fire({
+                icon: 'success',
+                title: "Conversion Success!",
+                customClass: 'swal-size-sm',
+                backdrop: swalPass,
+            });
+            win.setProgressBar(-1);
+        });
+        console.log('mp3 running');
+    }
+
+    //GIF
+    if (format.indexOf('gif')>=0){
+        if (inputExt.indexOf('.gif')>=0){
+            finalOutput = outputFile + '-SinonConverted.gif'
+            finalOutputName = path.parse(convertFile).name + '-SinonConverted.gif'
+        } else {
+            finalOutput = outputFile + '.gif'
+            finalOutputName = path.parse(convertFile).name + '.gif'
+        }
+        OptimalOutput = outputFile + '_lossy.gif'
+        
+        ffmpeg(convertFile).format('gif').fps(12).complexFilter([
+            '[0:v]mpdecimate[frames]',
+            '[frames]scale=w=trunc(oh*a/2)*2:h=248[rescaled]'],
+            'rescaled').on('progress', function(progress) {
+            document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed() + '%';
+            console.log('Processing: ' + progress.percent + '% done');
+            percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2))
+            win.setProgressBar(percentage);
+        }).save(finalOutput).on('end', function(stdout, stderr) {
+            document.getElementById("progressText").textContent = 'Optimising';
+            execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128','--resize-width=400',finalOutput], err => {
+                console.log('Conversion Success!');
+                Swal.fire({
+                    icon: 'success',
+                    title: "Conversion Success!",
+                    customClass: 'swal-size-sm',
+                    backdrop: swalPass,
+                });
+                win.setProgressBar(-1);
+            });
+        });
+        console.log('gif running');
+        console.log('Final output: ', finalOutput)
+        lineBreak();
+        swalConvert();
+    }
+};
