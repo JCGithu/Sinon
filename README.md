@@ -2,7 +2,7 @@
 
 ### A 'useful' video tool.
 
-##Note
+## Note
 This github is mainly used to host releases and act as a backup, therefore it only has the main structure of the program uploaded, not the entire project.
 
 This is my first coding project and I have learnt alongside it and so there are undoubtedly a number of mistakes or (*probably extremely*) unoptimized code. If you can see a cruicial fault or want to offer improvement I do welcome it -- provided it's constructive.
