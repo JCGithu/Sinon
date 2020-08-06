@@ -86,7 +86,7 @@ async function run_pynon() {
     };
     //Python error template
     function pythonFail(error){
-        error = error.replace(instaPass, "").replace(instaUse, "");
+        error = error.toString().replace(instaPass, "").replace(instaUse, "");
         console.log(error);
         Swal.fire({
             icon: 'error',
