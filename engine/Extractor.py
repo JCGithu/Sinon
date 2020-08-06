@@ -16,11 +16,11 @@ import sys
 test = False
 
 if test is True :
-    initialurl = 'https://www.facebook.com/sam.panda27/posts/10157340115091135'
+    initialurl = 'https://myfox8.com/news/woman-participates-in-covid-19-vaccine-trial-so-she-can-hug-her-grandchildren-again/'
     downloadPath = r'C:\Users\jackc\Desktop\metro'
     order = 'extract'
     finalurl = ''
-    geo = 'US'
+    geo = 'UK'
     userProxy = ''
     ffmpegPath = r''
     instaUse = ''
@@ -58,10 +58,9 @@ if 'extract' in order:
         errorcode = 'pass'
         soup = ''
 
-        if test is False :
-            text_file = open("NeedProxyList.txt", "r")
-            proxy_list1 = text_file.readlines()
-            proxy_list_final=[]
+        text_file = open("NeedProxyList.txt", "r")
+        proxy_list1 = text_file.readlines()
+        proxy_list_final=[]
 
         def proxyCheck(initialurl, userProxy):
             for element in proxy_list1:
