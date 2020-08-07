@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "win": "electron-packager . --app-version 1.2.1 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
-    "mac": "electron-packager . --app-version 1.2.1 --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite"
+    "mac": "electron-packager . --app-version 1.2.1 --prune=true --platform darwin --icon ./imgs/sinon.icns --overwrite"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
