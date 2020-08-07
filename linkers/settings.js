@@ -21,6 +21,29 @@ $(document).ready(function (){
     $(".colourstrip").hide().show(2500);
     $('#currentTool').load('../GUI/tool_down.html');
 
+    //Version Checker!
+    const got = require('got');
+
+    var appVersion = document.getElementById("ver").innerHTML;
+    var appVersion = appVersion.toString().replace('Version','').replace(' ','');
+ 
+    (async () => {
+        try {
+            const response = await got('https://jackgracie.co.uk/sinon');
+            version = /\/v(.*?)\//.exec(response.body)
+            version = version[1].toString().replace(' ','');
+            console.log('Up-to-date version is:', version);
+            if (version == appVersion){
+                console.log ('App is up to date!')
+            } else {
+                console.log ('App needs updating')
+                document.getElementById("ver").style.color = 'var(--hover)';
+            }
+        } catch (error) {
+            console.log("Can't get up-to-date version number");
+        }
+    })();
+
     var textWrapper = document.querySelector('.mainTitle .letters');
     textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
     anime.timeline()
