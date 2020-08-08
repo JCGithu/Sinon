@@ -1,10 +1,18 @@
 
 # Sinon
 ### A handy video tool.
+#### Video tool built using [electron](http://electron.atom.io/), [node.js](https://nodejs.org/), and [python](https://www.python.org/).
 
 ## Note
 
 This is my first scripting project and I have learnt alongside it so there are undoubtedly a number of mistakes or (*probably extremely*) unoptimized code. If you can see a cruicial fault or want to offer improvement I welcome it -- provided it's constructive.
+
+## Currently supported releases:
+
+* OS X
+* Windows
+
+If you think it is missing a feature or you've found a bug feel free to open an issue, or even better sending a PR that fixes that.
 
 ## Features
 
@@ -36,8 +44,17 @@ This is my first scripting project and I have learnt alongside it so there are u
 	* **Automatic URL Wiping**: to save those vital milliseconds.
 	* **Autosaved settings**.
 
+## Development
+
+Simply clone this repo and run `npm install` and then `npm run rebuild`.
+Afterwards you can run `npm start` to run the app.
+
 ## Thanks
 
 This app is thanks to the tools made available by the teams behind __ffmepg__, __youtube-dl__, and __get_iplayer__.
 
 Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code.
+
+## License
+
+MIT
