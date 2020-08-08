@@ -740,6 +740,10 @@ async function run_pynon() {
                 else {
                     var finalURL = message;
                     console.log('No specifications found, Generic Downloader selected')
+
+                    if (message.indexOf('tiktok.com')>=0){
+                        var finalURL = message.replace(/\/\?hl=../gm, "");
+                    }
                     
                     Swal.fire({
                         icon: 'success',
