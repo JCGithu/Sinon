@@ -10,10 +10,6 @@ const FFmpegStatic = require('ffmpeg-static-electron');
 var ffmpeg = require('fluent-ffmpeg');
 const gifsicle = require('gifsicle');
 var extractorPath = path.join(__dirname, '/../engine/dist/extractor');
-/* var extTest = path.join(__dirname, '/../engine/dist/extractor');
-console.log('SICK TEST MAN::: ', extTest);
-console.log(__dirname) */
-/* var iplayerPath = path.join(process.cwd(), './engine/get_iplayer'); */
 var ffmpegPath = FFmpegStatic.path;
 ffmpeg.setFfmpegPath(ffmpegPath);
 console.log('ffmpeg binary location: ')
