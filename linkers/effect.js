@@ -220,21 +220,7 @@ async function run_effect(){
             var getInputs = new Promise((resolve, reject) => {
                 effectFile.forEach(async function(fileSelected, index, array){
                     effectSetUp(fileSelected);
-                    console.log ('here we are');
-/*                     new Promise((resolve, reject) => {
-                        ffmpeg(inputFull).input('anullsrc').inputFormat('lavfi').outputOptions(['-map 0', '-map 1']).save(inputFull)
-                        .on('error', function(err, stdout, stderr) {
-                            effectFail(err);
-                        })
-                        .on('end', function(stdout, stderr) {
-
-                        });
-                    }).then(() => {
-                        resolve();
-                    });
- */
-                    console.log ('made it')
-                    ffmpegInputs = ffmpegInputs.input(inputFull)
+                    ffmpegInputs = ffmpegInputs.input(inputFull);
                     if (index === array.length -1) resolve();
                     return ffmpegInputs
                 });
