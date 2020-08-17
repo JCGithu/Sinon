@@ -1,5 +1,6 @@
 const app = remote.app;
 const fs = require("fs");
+const { version } = require("process");
 const {dialog} = require('electron').remote;
 
 function settingSave() {
@@ -131,13 +132,13 @@ docReady(function(){
     (async () => {
         try {
             const response = await got('https://jackgracie.co.uk/sinon');
-            version = /\/v(.*?)\//.exec(response.body)
-            version = version[1].toString().replace(' ','');
+            version = /Version (\d.\d.\d)/.exec(response.body)
+            version = version[0].toString().replace(' ','').replace('Version','');
             if (version !== appVersion){
                 document.getElementById("ver").style.color = 'var(--hover)';
             }
         } catch (error) {
-
+            console.log(error);
         }
     })();
 
