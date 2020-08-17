@@ -1,64 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinon</title>
-    <link rel="stylesheet" type="text/css" href="./fonts/sunflower.css">
-    <link rel="stylesheet" type="text/css" href="./fonts/baloo.css">
     <link rel="stylesheet" type="text/css" href="./main.css">
-    <script src="https://kit.fontawesome.com/d4955f84cb.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="../linkers/anime.min.js"></script>
     <script src="../linkers/hub.js"></script>
-    <script src="../linkers/csi.min.js"></script> <!-- Data replacement script -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.0/anime.min.js"></script>
+    <script src='../linkers/settings.js'></script>
+    <script src="../linkers/animations.js"></script>
 </head>
 
 <body>
-    <div class=corners id='swalframe'>    
-        <svg xmlns="http://www.w3.org/2000/svg" class="wavecontainer" width="100%" height="100%" fill="none">
-            <mask id="mask0" mask-type="alpha" x="0" y="0" width="1" height="1">
-                <g id="wave_group2">
-                    <g id="wave1">
-                        <g id="Vectorwave2">
-                            <path d="M-700.762 176.188C-700.762 176.188 -446.408 196.623 -281.407 196.778C6.10773 197.047 278.572 146.965 561.986 146.255C732.917 145.826 993.227 176.188 993.227 176.188V336.982H-700.762V176.188Z" fill="black"/>
-                            <path d="M-2394.75 176.188C-2394.75 176.188 -2140.4 196.623 -1975.4 196.778C-1687.88 197.047 -1415.42 146.965 -1132 146.255C-961.071 145.826 -700.762 176.188 -700.762 176.188V336.982H-2394.75V176.188Z" fill="black"/>
-                        </g>
-                    </g>
-                </g>
-            </mask>
-            <mask id="mask1" mask-type="alpha" x="0" y="0" width="1" height="1">
-                <g id="wave_group1">
-                    <g id="wave2">
-                        <g id="Vectorwave">
-                            <path d="M-700.762 176.188C-700.762 176.188 -446.408 196.623 -281.407 196.778C6.10773 197.047 278.572 146.965 561.986 146.255C732.917 145.826 993.227 176.188 993.227 176.188V336.982H-700.762V176.188Z" fill="black"/>
-                            <path d="M-2394.75 176.188C-2394.75 176.188 -2140.4 196.623 -1975.4 196.778C-1687.88 197.047 -1415.42 146.965 -1132 146.255C-961.071 145.826 -700.762 176.188 -700.762 176.188V336.982H-2394.75V176.188Z" fill="black"/>
-                        </g>
-                    </g>
-                </g>
-            </mask>
-            <rect mask="url(#mask0)" width="540" height="500" fill="#30bced"></rect>
-            <rect mask="url(#mask1)" width="540" height="500" fill="url(#gradient-1)"></rect>
-            <defs>
-                <linearGradient id="gradient-1">
-                    <stop offset="0%" stop-color="#008080"/>
-                    <stop offset="100%" stop-color="#64e4c3"/>
-                </linearGradient>
-            </defs>
-        </svg>
-        <script src='../linkers/waves.js'></script>
+    <div class=corners id='swalframe'>
+        <div class="wavecontainer">
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
         <div class="toolMenu">
-            <div style='position:fixed; height: 100vh; width:5px; background-color: white; left:29vw;'></div>
-            <h2 style='color: white;'>Tools</h2>
+            <h2>Tools</h2>
             <a id='MenuD' class="grow-on-hover">Downloader</a><br>
             <a id='MenuC' class="grow-on-hover">Converter</a><br>
             <a id='MenuE' class="grow-on-hover">Effects</a><br>
-            <a id='closeTool' style='font-size: x-large;'class="grow-on-hover">&#171;</a><br>
+            <a id='toolClose' class="grow-on-hover">&#171;</a><br>
         </div>
         <div class = "optionsbg">
-            <div class="colourstrip" id="optionstrip" style="background-color: white !important;"></div>
-            <h1 style="font-size: xx-large; padding-top: 2.5vh; padding-bottom: -15vh;">Options</h1>
+            <div class="colourstrip" id="optionstrip"></div>
+            <h1>Options</h1>
             <div class="optionsblock">
                 <div class="optionscontainer">
                     <div class='optionscontainertwo'>
@@ -75,76 +43,55 @@
                         </select>
                         <a style="margin-top: 10px;">Custom Proxy</a>
                         <input type="text" id="proxyInput" placeholder="Enter Custom Proxy" style='width: 60vw !important'>
-                        <p style="text-align: center; font-size: smaller; line-height: 0.7rem;">Proxies are only used if a website is <br> not available in your country</p>
+                        <p>Proxies are only used if a website is <br> not available in your country</p>
                         <a>Instagram Username</a>
                         <input type="text" id="InstaUse" placeholder="Enter Instagram Username" style='width: 60vw !important'>
                         <a style="margin-top: 10px;">Instagram Password</a>
                         <input type="text" id="InstaPass" placeholder="Enter Instagram Password" style='width: 60vw !important'>
-                        <script>
-                            var checkbox = document.querySelector('input[name=mode]');
-                            checkbox.addEventListener('change', function() {
-                                if(this.checked) {
-                                    trans()
-                                    document.documentElement.setAttribute('data-theme', 'dark')
-                                } else {
-                                    trans()
-                                    document.documentElement.setAttribute('data-theme', 'light')
-                                }
-                            })
-                            let trans = () => {
-                                document.documentElement.classList.add('transition');
-                                window.setTimeout(() => {
-                                    document.documentElement.classList.remove('transition');
-                                }, 1000)
-                            }
-                        </script>
+                        <button id="settingDelete" class="grow-on-hover">Delete settings</button>
                     </div>
                 </div>
             </div>
-            <i class="fas fa-chevron-circle-down fa-lg grow-on-hover" id="closeoptions" style="position:absolute; z-index:6;cursor: pointer; bottom: 10vh; left:48.5vw;"></i>
+            <svg id="closeOptions" viewBox="0 0 512 512">
+                <use xlink:href="../imgs/tools.svg#downArrow"></use>
+            </svg>
         </div>
         <div class="docbg">
-            <div id='docbar'style="background-color: #30BCED; top: 5px; width:100vw; height:7.5px; position: absolute;"></div>
-            <h1 style="font-size: xx-large; padding-top: 2.5vh; padding-bottom: -15vh;">Documentation</h1>
-                <div style="position: absolute; top:23vh; left: 10vw; overflow-y: scroll; padding: 0vw 5vw 0vw 5vw; width: 70vw; height:60vh; background-color: rgba(0,0,0,0.05); border-radius: 30px;" class="docstuff">
+            <div id='docbar'></div>
+            <h1>Documentation</h1>
+                <div class="docstuff">
                     <div data-include = './changelog.html'></div>
                 </div>
-            <i class="fas fa-chevron-circle-down fa-lg grow-on-hover" id="closedocs" style="position:absolute; cursor: pointer; bottom: 10vh !important; align-self: center; right: 48.5vw !important;"></i>
-
+            <svg id="closedocs" viewBox="0 0 512 512">
+                <use xlink:href="../imgs/tools.svg#downArrow"></use>
+            </svg>
         </div>
-        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-            <defs>
-            <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-            <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-            </defs>
-        </svg>
     </div>
         <div class='maindiv'>
             <header>
-                <i id='toolbar' class="fas fa-bars fa-lg grow-on-hover" style='position: absolute; top:4vw; left: 5vh; z-index: 4; cursor: pointer'></i>
+                <svg id="toolbar" viewBox="0 0 448 512">
+                    <use xlink:href="../imgs/tools.svg#toolBox"></use>
+                </svg>
                 <div class="colourstrip"></div>
-                <div class="menu">
-                    <i class="fas fa-window-close fa-lg grow-on-hover" id="close"></i>
-                    <i class="fas fa-cogs fa-lg grow-on-hover" id="options" style="padding:10px"></i>
-                    <a style="font-size: 8pt;" class="grow-on-hover" id="ver">Version 1.2.1</a>
+                <div class="banner">
+                    <svg id="close" viewBox="0 0 512 512">
+                        <use xlink:href="../imgs/tools.svg#closeBox"></use>
+                    </svg>
+                    <svg id="optionsIcon" viewBox="0 0 640 512">
+                        <use xlink:href="../imgs/tools.svg#optionsBox"></use>
+                    </svg>
+                    <a style="font-size: 8pt;" class="grow-on-hover" id="ver">Version 1.2.2</a>
                 </div>
             </header>
             <h1 class="mainTitle">
                 <span class="text-wrapper">
                     <span class="letters">Sinon</span>
-                  </span>
+                </span>
             </h1>
-            <div id='currentTool'>
-            </div>
-            <script>document.getElementById('close').addEventListener('click', function(){win.close()});</script>
+            <div id='currentTool'></div>
         </div>
-        <script src = '../linkers/jquery-1.12.4.min.js' type='text/javascript'></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script src='../linkers/settings.js'></script>
     </div>
-
+    <script src="../linkers/sweetalert.js"></script>
+    <script src="../linkers/csi.min.js"></script> <!-- Data replacement script -->
 </body>
 </html>

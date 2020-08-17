@@ -1,27 +1,43 @@
 {
   "name": "Sinon",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "A video tool that's actually useful",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "win": "electron-packager . --app-version 1.2.1 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
-    "mac": "electron-packager . --app-version 1.2.1 --prune=true --platform darwin --icon ./imgs/sinon.icns --overwrite"
+    "win": "electron-packager . --app-version 1.2.2 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
+    "mac": "electron-packager . --app-version 1.2.2 --prune=true --platform darwin --icon ./imgs/sinon.icns --overwrite",
+    "build": "electron-builder"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "build":{
+    "appId": "Sinon",
+    "productName": "Sinon",
+    "icon": "./imgs/sinon.ico",
+    "asar": false,
+    "nsis":{
+      "oneClick": false,
+      "createDesktopShortcut": "always",
+      "allowToChangeInstallationDirectory": false,
+      "createStartMenuShortcut": true,
+      "menuCategory": true
+    },
+    "mac": {
+      "icon": "./imgs/sinon.icns"
+    }
+  },
+  "repository": "https://github.com/JCGithu/Sinon",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "Sinon",
+    "Video",
+    "Downloader"
   ],
-  "author": "Jack",
+  "author": "Colloquial",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^8.3.3",
-    "electron-packager": "^14.2.1",
-    "electron-rebuild": "^1.11.0"
+    "electron-builder": "^22.8.0",
+    "electron-packager": "^14.2.1"
   },
   "dependencies": {
     "animejs": "^3.2.0",
@@ -29,7 +45,6 @@
     "ffmpeg-static-electron": "^2.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "gifsicle": "^5.1.0",
-    "got": "^11.5.1",
-    "jquery": "^1.12.4"
+    "got": "^11.5.1"
   }
 }

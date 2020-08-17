@@ -1,5 +1,3 @@
-<script src="../linkers/pynon.js"></script>
-
 <div>
     <input type="text" id="inputURL" placeholder="Enter URL">
 </div>
@@ -8,36 +6,5 @@
     <button id="downloadtext">Pick Folder</button>
 </div>
 <div>
-    <button style="position: absolute; left: 25%; z-index: 2;" id='runforrest' class="grow-on-hover" onclick="run_pynon()">Run!</button>
+    <button style="position: absolute; left: 25%; z-index: 2;" id='runTool' class="grow-on-hover" onclick="run_pynon()">Run!</button>
 </div>
-<script>
-    const fs = require("fs");
-    const {dialog} = require('electron').remote;
-    
-    document.getElementById('downloadtext').addEventListener('click', function(){
-        dialog.showOpenDialog({
-            properties: ['openDirectory'],
-            title: 'Pick A Download Folder'
-        }).then((data) => {
-            console.log(data.filePaths)
-            var downloadPath = data.filePaths;
-            document.getElementById('downloadfolder').value = downloadPath;
-            var waitTimer;
-            clearTimeout(waitTimer);
-            waitTimer = setTimeout(settingSave, 5000);
-        });
-    });
-    $("#inputURL").keyup(function() {
-        if($("#inputURL").val().length < 1){
-            $('#runforrest').slideUp(300);
-            $('#inputURL').css({
-                'cssText': 'background-color : lightgrey'
-            });
-        } else {
-            $("#runforrest").slideDown(750);
-            $('#inputURL').css({
-            });
-        }
-    });
-
-</script>

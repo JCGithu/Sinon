@@ -1,4 +1,28 @@
-const { setNonEnumerableProperties } = require('got');
+/* const { cpuUsage } = require('process'); */
+
+document.getElementById('downloadtext').addEventListener('click', function(){
+    dialog.showOpenDialog({
+        properties: ['openDirectory'],
+        title: 'Pick A Download Folder'
+    }).then((data) => {
+        console.log(data.filePaths)
+        var downloadPath = data.filePaths;
+        document.getElementById('downloadfolder').value = downloadPath;
+        var waitTimer;
+        clearTimeout(waitTimer);
+        waitTimer = setTimeout(settingSave, 5000);
+    });
+});
+inputText = document.getElementById("inputURL");
+runButton = document.getElementById("runTool");
+
+inputText.addEventListener("keyup", function(){
+    if (inputText.value.length < 1){
+        runButton.classList.remove('active');
+    } else {
+        runButton.classList.add('active');
+    };
+});
 
 async function run_pynon() {
     //Inputs
@@ -307,6 +331,77 @@ async function run_pynon() {
                 if (message.indexOf('youtube.com')>=0) {
                     console.log('Running Youtube Download Options');
                     var finalURL = message;
+                    var playlist = false;
+                    function youtubeSwal (dlquality){
+                        if (dlquality === 'normal') {
+                                    
+                            RunningSwal();
+                            var order = 'normal';
+
+                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                if (error) {
+                                    console.log('Youtube Normal Download Fail');
+                                    console.log(error)
+                                    pythonFail(error);
+                                }
+                                else{
+                                    var message = stdout;
+                                    console.log('Normal Youtube Downloader Output:')
+                                    console.log(message);
+                                    pythonPass();
+                                }
+                            });
+                        }
+                        if (dlquality === 'high') {
+
+                            Swal.fire({
+                                icon: 'info',
+                                title: "Heads Up",
+                                text: "High quality downloads can take roughly 4x longer to process. Only use when needed.",
+                                showCancelButton: true,
+                                confirmButtonText: 'Continue',
+                                showLoaderOnConfirm: true,
+                                backdrop: swalLoading,
+                                customClass: 'swal-size-sm',
+                                target: document.getElementById('swalframe'),
+                                preConfirm: () => {
+                                    RunningSwal();
+                            
+                                    var order = 'high';
+                                    
+                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                        if (error) {
+                                            console.log('High Quality Youtube Downloader Error, Details:')
+                                            pythonFail(error);
+                                        }
+                                        else{
+                                            var message = stdout;
+                                            console.log('High Quality Youtube Downloader Output:')
+                                            console.log(message);
+                                            pythonPass();
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        if (dlquality === 'live') {
+                            
+                            RunningSwal();
+
+                            var order = 'live';
+
+                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                if (error) {
+                                    console.log('Livestream Youtube Grabber Error, Details:')
+                                    pythonFail(error);
+                                }
+                                else {
+                                    var livestreamurl = stdout;
+                                    pythonLive(livestreamurl);
+                                }
+                            });
+                        }
+                    };
                     var { value: dlquality } = Swal.fire({
                         icon: 'success',
                         title: "Video found!",
@@ -325,75 +420,28 @@ async function run_pynon() {
                         customClass: 'swal-size-sm',
                         target: document.getElementById('swalframe'),
                         preConfirm: (dlquality) => {
-
-                            if (dlquality === 'normal') {
-                                
-                                RunningSwal();
-
-                                var order = 'normal';
-                                
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
-                                    if (error) {
-                                        console.log('Youtube Normal Download Fail');
-                                        console.log(error)
-                                        pythonFail(error);
-                                    }
-                                    else{
-                                        var message = stdout;
-                                        console.log('Normal Youtube Downloader Output:')
-                                        console.log(message);
-                                        pythonPass();
-                                    }
-                                });
-                            }
-                            if (dlquality === 'high') {
-
+                            if (finalURL.indexOf('&list=')>=0) {
+                                console.log('Playlist found');
                                 Swal.fire({
                                     icon: 'info',
-                                    title: "Heads Up",
-                                    text: "High quality downloads can take roughly 4x longer to process. Only use when needed.",
+                                    title: 'Playlist URL',
+                                    text: 'Seems like this URL is part of a playlist, do you want to download the whole playlist?',
                                     showCancelButton: true,
-                                    confirmButtonText: 'Continue',
-                                    showLoaderOnConfirm: true,
                                     backdrop: swalLoading,
                                     customClass: 'swal-size-sm',
                                     target: document.getElementById('swalframe'),
-                                    preConfirm: () => {
-                                        RunningSwal();
-                                
-                                        var order = 'high';
-                                        
-                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
-                                            if (error) {
-                                                console.log('High Quality Youtube Downloader Error, Details:')
-                                                pythonFail(error);
-                                            }
-                                            else{
-                                                var message = stdout;
-                                                console.log('High Quality Youtube Downloader Output:')
-                                                console.log(message);
-                                                pythonPass();
-                                            }
-                                        });
+                                    confirmButtonText: 'Single Video',
+                                    cancelButtonText: 'Playlist',
+                                }).then((result) => {
+                                    if (result.value) {
+                                        finalURL = finalURL.replace(/&list=.*/g,'');
+                                        youtubeSwal(dlquality);
+                                    } else {
+                                        youtubeSwal(dlquality);
                                     }
                                 });
-                            }
-                            if (dlquality === 'live') {
-                                
-                                RunningSwal();
-
-                                var order = 'live';
-
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
-                                    if (error) {
-                                        console.log('Livestream Youtube Grabber Error, Details:')
-                                        pythonFail(error);
-                                    }
-                                    else {
-                                        var livestreamurl = stdout;
-                                        pythonLive(livestreamurl);
-                                    }
-                                });
+                            } else {
+                                youtubeSwal(dlquality);
                             }
                         }
                     });

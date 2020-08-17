@@ -1,3 +1,28 @@
+document.getElementById('downloadtext').addEventListener('click', function(){
+    dialog.showOpenDialog({
+        filters: [
+            { name: 'Video', extensions: ['mkv', 'avi', 'mp4', 'ts', 'm3u8','mpd','webm', 'mpg', 'flv', 'mov'] },
+            { name: 'Audio', extensions: ['mp3','flac','wav','aac', 'm4a']},
+            { name: 'All Files', extensions: ['*'] }
+        ],
+        properties: ['openFile'],
+        title: 'Pick A File'
+    }).then((data) => {
+        console.log(data.filePaths)
+        var convertFile = data.filePaths;
+        document.getElementById('downloadFile').value = convertFile;
+        
+        inputText = document.getElementById('downloadFile')
+        runButton = document.getElementById("runTool");
+
+        if(convertFile < 1){
+            runButton.classList.remove('active');
+        } else {
+            runButton.classList.add('active');
+        }
+    });
+});
+
 async function run_convert(){
     lineBreak();
     swalColours();

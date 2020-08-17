@@ -1,5 +1,3 @@
-<script src='../linkers/converter.js'></script>
-
 <div style="margin-bottom: 5vh">
     <input type="text" id= 'downloadFile' placeholder="">
     <button id="downloadtext">Choose a File</button>
@@ -14,36 +12,5 @@
     </div>
 </div>
 <div style="margin-top: 5vh">
-    <button style="position: absolute; left: 25%; z-index: 2;" id='runforrest' class="grow-on-hover" onclick="run_convert()">Convert!</button>
+    <button style="position: absolute; left: 25%; z-index: 2;" id='runTool' class="grow-on-hover" onclick="run_convert()">Convert!</button>
 </div>
-<script>
-    const fs = require("fs");
-    const {dialog} = require('electron').remote;
-    
-    document.getElementById('downloadtext').addEventListener('click', function(){
-        dialog.showOpenDialog({
-            filters: [
-                { name: 'Video', extensions: ['mkv', 'avi', 'mp4', 'ts', 'm3u8','mpd','webm', 'mpg', 'flv', 'mov'] },
-                { name: 'Audio', extensions: ['mp3','flac','wav','aac', 'm4a']},
-                { name: 'All Files', extensions: ['*'] }
-            ],
-            properties: ['openFile'],
-            title: 'Pick A File'
-        }).then((data) => {
-            console.log(data.filePaths)
-            var convertFile = data.filePaths;
-            document.getElementById('downloadFile').value = convertFile;
-            if($("#downloadFile").val().length < 1){
-                $('#runforrest').slideUp(300);
-                $('#downloadFile').css({
-                    'cssText': 'background-color : lightgrey'
-                });
-            } else {
-                $("#runforrest").slideDown(750);
-                $('#downloadFile').css({
-
-                });
-            }
-        });
-    });
-</script>

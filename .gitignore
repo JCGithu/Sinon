@@ -8,3 +8,5 @@ engine/feed_json.json
 credentials.json
 feed_json.json
 Sinon-win32-x64
+GUI/fonts
+dist

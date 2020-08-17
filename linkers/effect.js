@@ -1,3 +1,29 @@
+document.getElementById('downloadtext').addEventListener('click', function(){
+    dialog.showOpenDialog({
+        filters: [
+            { name: 'Video', extensions: ['mkv', 'avi', 'mp4', 'ts', 'm3u8','mpd','webm', 'mpg', 'flv', 'mov'] },
+            { name: 'Audio', extensions: ['mp3','flac','wav','aac']},
+            { name: 'All Files', extensions: ['*'] }
+        ],
+        properties: ['openFile', 'multiSelections'],
+        title: 'Pick A File'
+    }).then((data) => {
+        console.log(data.filePaths)
+        effectFile = data.filePaths;
+        downloadFile = document.getElementById('downloadFile')
+        downloadFile.value = effectFile;
+
+        runButton = document.getElementById("runTool");
+
+        if(downloadFile.value.length < 1){
+            runButton.classList.remove('active');
+        } else {
+            runButton.classList.add('active');
+        }
+        return effectFile
+    });
+});
+
 async function run_effect(){
     lineBreak();
     swalColours();
@@ -114,7 +140,7 @@ async function run_effect(){
                         var cropSetting = '[pxratio_fix]crop=w=ih*(9/16)[cropped]';
                     }
                     if (ratio === 'square') {
-                        var cropSetting = '[pxratio_fix]crop=w=ih*1[cropped]';
+                        var cropSetting = "[pxratio_fix]crop='if(lt(in_h,in_w),in_h,in_w):in_h'[cropped]";
                     }
                     effectFile.forEach(function(fileSelected){
                         effectSetUp(fileSelected);

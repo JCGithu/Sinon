@@ -4,6 +4,7 @@ const { execFile } = require('child_process');
 const { remote } = require('electron');
 var spawn = require('child_process').spawn;
 const path = require("path");
+const { setNonEnumerableProperties } = require('got');
 
 //FFMPEG, GIF, IPLAYER SET UP
 const FFmpegStatic = require('ffmpeg-static-electron');
@@ -12,8 +13,6 @@ const gifsicle = require('gifsicle');
 var extractorPath = path.join(__dirname, '/../engine/dist/extractor');
 var ffmpegPath = FFmpegStatic.path;
 ffmpeg.setFfmpegPath(ffmpegPath);
-console.log('ffmpeg binary location: ')
-console.log(ffmpegPath)
 
 //VARIABLE SETS
 win = remote.getCurrentWindow();
@@ -23,6 +22,21 @@ var extractorOptions = {
 var ffmpegOptions = {
     "cwd": ffmpegPath,
 };
+
+function lineBreak(){
+    console.log('~=~=~=~=~=~=~=~=~=~=~=~')
+};
+
+function docReady(fn) {
+    // see if DOM is already available
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        // call on next available tick
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+};
+
 var OSName
 var ExtractorSet
 var [swalFail, swalLoading, swalPass] = ['#232323','#2C3E50','#2C3E50'];
@@ -34,18 +48,10 @@ function OScheck(){
     if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS", ExtractorSet='./extractor', ffmpegSet='./ffmpeg';
     if (navigator.appVersion.indexOf("X11")!=-1) OSName="UNIX", ExtractorSet='extractor';
     if (navigator.appVersion.indexOf("Linux")!=-1) OSName="Linux", ExtractorSet='extractor';
-    lineBreak();
-    console.log('And the OS is...')
-    console.log(OSName)
-    lineBreak();
 }
 OScheck();
 
 //LINE AND COLOUR FUNCTIONS
-
-function lineBreak(){
-    console.log('~=~=~=~=~=~=~=~=~=~=~=~')
-}
 function swalColours(){
     if (document.getElementById('darkswitch').checked) {
         var swalFail = '#232323';
