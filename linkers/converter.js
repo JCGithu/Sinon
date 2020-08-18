@@ -1,3 +1,5 @@
+const { fstat } = require("fs");
+
 document.getElementById('downloadtext').addEventListener('click', function(){
     dialog.showOpenDialog({
         filters: [
@@ -112,39 +114,138 @@ async function run_convert(){
 
     //GIF
     if (format.indexOf('gif')>=0){
-        if (inputExt.indexOf('.gif')>=0){
-            finalOutput = outputFile + '-SinonConverted.gif'
-            finalOutputName = path.parse(convertFile).name + '-SinonConverted.gif'
-        } else {
-            finalOutput = outputFile + '.gif'
-            finalOutputName = path.parse(convertFile).name + '.gif'
-        }
-        OptimalOutput = outputFile + '_lossy.gif'
-        
-        ffmpeg(convertFile).format('gif').fps(12).complexFilter([
-            '[0:v]mpdecimate[frames]',
-            '[frames]scale=w=trunc(oh*a/2)*2:h=248[rescaled]'],
-            'rescaled').on('progress', function(progress) {
-            document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed() + '%';
-            console.log('Processing: ' + progress.percent + '% done');
-            percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2))
-            win.setProgressBar(percentage);
-        }).save(finalOutput).on('end', function(stdout, stderr) {
-            document.getElementById("progressText").textContent = 'Optimising';
-            execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128','--resize-width=400',finalOutput], err => {
-                console.log('Conversion Success!');
-                Swal.fire({
-                    icon: 'success',
-                    title: "Conversion Success!",
-                    customClass: 'swal-size-sm',
-                    backdrop: swalPass,
+        Swal.mixin({
+            confirmButtonText: 'Next &rarr;',
+            progressSteps: ['1', '2', '3'],
+            backdrop: swalLoading,
+            customClass: 'swal-size-sm',
+            target: document.getElementById('swalframe')
+        }).queue([
+            {
+                title: 'Resolution',
+                text: 'Please choose the resolution of your GIF',
+                input: 'select',
+                inputOptions: {
+                    High: '1080p',
+                    hMid: '720p',
+                    lMid: '480p',
+                    low: '240p',
+                },
+                inputPlaceholder: 'Select Resolution',
+            },
+            {
+                title: 'Quality',
+                text: 'Please choose the quality of your GIF',
+                input: 'select',
+                inputOptions: {
+                    High: 'High',
+                    Mid: 'Normal',
+                    Low: 'Optimised',
+                },
+                inputPlaceholder: 'Select Quality',
+            },
+            {
+                title: 'Crop',
+                text: 'Do you want to crop the GIF?',
+                input: 'select',
+                inputOptions: {
+                    None: 'No',
+                    Wide: 'Widescreen',
+                    Square: 'Square',
+                    Vertical: 'Vertical',
+                    Two: "2:1"
+                },
+            }
+        ]).then((result) => {
+            if (result.value) {
+                var answers = JSON.stringify(result.value);
+                answers = answers.replace('[','').replace(']','').split(',');
+                var [rez, qual, crop] = [answers[0].replace('"','').replace('"',''), answers[1].replace('"','').replace('"',''), answers[2].replace('"','').replace('"','')];
+                console.log(rez);
+                console.log(qual);
+                console.log(crop);
+
+                if (rez == 'High'){
+                    reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=1080[rescaled]';
+                } else if (rez == 'hMid'){
+                    reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=720[rescaled]';
+                } else if (rez == 'lMid'){
+                    reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=480[rescaled]';
+                } else if (rez == 'low'){
+                    reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=240[rescaled]';
+                };
+
+                opti = false;
+
+                if (qual == 'High'){
+                    fps = '25'
+                } else if (qual == 'Mid') {
+                    fps = '12'
+                } else if (qual == 'Low') {
+                    fps = '10'
+                    opti = true;
+                };
+
+                if (crop == 'None'){
+                    gifCrop = '[rescaled]crop=w=iw[cropped]'
+                } else if (crop == 'Wide') {
+                    gifCrop = "[rescaled]crop='in_w:if(lt(in_w,in_h),in_w*(9/16),in_h)'[cropped]"
+                } else if (crop == 'Square') {
+                    gifCrop = "[rescaled]crop='if(lt(in_h,in_w),in_h,in_w):if(lt(in_w,in_h),in_w,in_h)'[cropped]"
+                } else if (crop == 'Vertical'){
+                    gifCrop = '[rescaled]crop=w=ih*(9/16)[cropped]'
+                }else if (crop == 'Two'){
+                    gifCrop = '[rescaled]crop=h=iw*0.5[cropped]'
+                };
+
+                if (inputExt.indexOf('.gif')>=0){
+                    finalOutput = outputFile + '-SinonConverted.gif'
+                    finalOutputName = path.parse(convertFile).name + '-SinonConverted.gif'
+                } else {
+                    finalOutput = outputFile + '.gif'
+                    finalOutputName = path.parse(convertFile).name + '.gif'
+                }
+                OptimalOutput = outputFile + '_lossy.gif'
+                
+                ffmpeg(convertFile).format('gif').fps(fps).complexFilter([
+                    '[0:v]mpdecimate[frames]', reRez, gifCrop],
+                    'cropped').on('progress', function(progress) {
+                    document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed() + '%';
+                    console.log('Processing: ' + progress.percent + '% done');
+                    percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2))
+                    win.setProgressBar(percentage);
+                }).save(finalOutput).on('end', function(stdout, stderr) {
+                    if (opti == true){
+                        document.getElementById("progressText").textContent = 'Optimising';
+                        execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128',finalOutput], err => {
+                            console.log('Conversion Success!');
+                            fs.unlink(finalOutput, function (err) {
+                                if (err) throw err;
+                                console.log('File deleted!');
+                            });
+                            Swal.fire({
+                                icon: 'success',
+                                title: "Conversion Success!",
+                                customClass: 'swal-size-sm',
+                                backdrop: swalPass,
+                            });
+                            win.setProgressBar(-1);
+                        });
+                    } else {
+                        win.setProgressBar(-1);
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Conversion Success!",
+                            customClass: 'swal-size-sm',
+                            backdrop: swalPass,
+                        });
+                    }
                 });
-                win.setProgressBar(-1);
-            });
-        });
-        console.log('gif running');
-        console.log('Final output: ', finalOutput)
-        lineBreak();
-        swalConvert();
+                console.log('gif running');
+                console.log('Final output: ', finalOutput)
+                lineBreak();
+                swalConvert();
+            }
+        })
     }
 };
