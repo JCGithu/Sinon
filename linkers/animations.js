@@ -119,6 +119,8 @@ docReady(function(){
             menuRun = dmenu;
             setTimeout(folderLoad, 800);
             swap (menuRun);
+        } else {
+            toolMenu.classList.remove('toolOpen');
         };
         menuCurrent = 'down';
     });
@@ -127,6 +129,8 @@ docReady(function(){
         if (menuCurrent !== 'conv') {
             menuRun = cmenu;
             swap (menuRun);
+        }else{
+            toolMenu.classList.remove('toolOpen');
         };
         menuCurrent = 'conv';
     })
@@ -135,6 +139,8 @@ docReady(function(){
         if (menuCurrent !== 'effect') {
             menuRun = emenu;
             swap (menuRun);
+        }else{
+            toolMenu.classList.remove('toolOpen');
         };
         menuCurrent = 'effect';
     });
