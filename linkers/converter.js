@@ -3,7 +3,7 @@ const { fstat } = require("fs");
 document.getElementById('downloadtext').addEventListener('click', function(){
     dialog.showOpenDialog({
         filters: [
-            { name: 'Video', extensions: ['mkv', 'avi', 'mp4', 'ts', 'm3u8','mpd','webm', 'mpg', 'flv', 'mov'] },
+            { name: 'Video', extensions: ['mkv', 'avi', 'mp4', 'ts', 'm3u8','mpd','webm', 'mpg', 'flv', 'mov', 'gif'] },
             { name: 'Audio', extensions: ['mp3','flac','wav','aac', 'm4a']},
             { name: 'All Files', extensions: ['*'] }
         ],
@@ -114,9 +114,51 @@ async function run_convert(){
 
     //GIF
     if (format.indexOf('gif')>=0){
+        if (inputExt.indexOf('.gif')>=0){
+            finalOutput = outputFile + '-SinonConverted.gif'
+            finalOutputName = path.parse(convertFile).name + '-SinonConverted.gif'
+        } else {
+            finalOutput = outputFile + '.gif'
+            finalOutputName = path.parse(convertFile).name + '.gif'
+        }
+        OptimalOutput = outputFile + '_basic.gif'
+        
+        ffmpeg(convertFile).format('gif').fps(12).complexFilter([
+            '[0:v]mpdecimate[frames]',
+            '[frames]scale=w=trunc(oh*a/2)*2:h=360[rescaled]'],
+            'rescaled').on('progress', function(progress) {
+            document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed() + '%';
+            console.log('Processing: ' + progress.percent + '% done');
+            percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2))
+            win.setProgressBar(percentage);
+        }).save(finalOutput).on('end', function(stdout, stderr) {
+            document.getElementById("progressText").textContent = 'Optimising';
+            execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128',finalOutput], err => {
+                console.log('Conversion Success!');
+                fs.unlink(finalOutput, function (err) {
+                    if (err) throw err;
+                    console.log('File deleted!');
+                });
+                Swal.fire({
+                    icon: 'success',
+                    title: "Conversion Success!",
+                    customClass: 'swal-size-sm',
+                    backdrop: swalPass,
+                });
+                win.setProgressBar(-1);
+            });
+        });
+        console.log('gif running');
+        console.log('Final output: ', finalOutput)
+        lineBreak();
+        swalConvert();
+    }
+
+    // Advanced GIF
+    if (format.indexOf('adv')>=0){
         Swal.mixin({
             confirmButtonText: 'Next &rarr;',
-            progressSteps: ['1', '2', '3'],
+            progressSteps: ['1', '2', '3', '4', '5'],
             backdrop: swalLoading,
             customClass: 'swal-size-sm',
             target: document.getElementById('swalframe')
@@ -129,20 +171,32 @@ async function run_convert(){
                     High: '1080p',
                     hMid: '720p',
                     lMid: '480p',
+                    hlow: '360p',
                     low: '240p',
                 },
                 inputPlaceholder: 'Select Resolution',
             },
             {
-                title: 'Quality',
-                text: 'Please choose the quality of your GIF',
+                title: 'Colour Quality',
+                text: 'Please choose the colour space of your GIF',
                 input: 'select',
                 inputOptions: {
-                    High: 'High',
-                    Mid: 'Normal',
-                    Low: 'Optimised',
+                    High: 'High / 256',
+                    Mid: 'Normal / 128',
+                    Low: 'Optimised / 64',
                 },
-                inputPlaceholder: 'Select Quality',
+                inputPlaceholder: 'Select Colour Range',
+            },
+            {
+                title: 'Frame Rate',
+                text: 'Please choose your fps',
+                input: 'range',
+                inputAttributes: {
+                    min: 1,
+                    max: 60,
+                    step: 1,
+                },
+                inputValue: 25,
             },
             {
                 title: 'Crop',
@@ -155,15 +209,23 @@ async function run_convert(){
                     Vertical: 'Vertical',
                     Two: "2:1"
                 },
+            },
+            {
+                title: 'Compression',
+                text: 'Please your compression rate',
+                input: 'range',
+                inputAttributes: {
+                    min: 1,
+                    max: 100,
+                    step: 1,
+                },
+                inputValue: 50,
             }
         ]).then((result) => {
             if (result.value) {
                 var answers = JSON.stringify(result.value);
                 answers = answers.replace('[','').replace(']','').split(',');
-                var [rez, qual, crop] = [answers[0].replace('"','').replace('"',''), answers[1].replace('"','').replace('"',''), answers[2].replace('"','').replace('"','')];
-                console.log(rez);
-                console.log(qual);
-                console.log(crop);
+                var [rez, qual, fps, crop, compress] = [answers[0].replace('"','').replace('"',''), answers[1].replace('"','').replace('"',''), answers[2].replace('"','').replace('"',''), answers[3].replace('"','').replace('"',''), answers[4].replace('"','').replace('"','')];
 
                 if (rez == 'High'){
                     reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=1080[rescaled]';
@@ -171,19 +233,20 @@ async function run_convert(){
                     reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=720[rescaled]';
                 } else if (rez == 'lMid'){
                     reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=480[rescaled]';
+                } else if (rez == 'hlow'){
+                    reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=360[rescaled]';
                 } else if (rez == 'low'){
                     reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=240[rescaled]';
                 };
 
-                opti = false;
+                opti = true;
 
                 if (qual == 'High'){
-                    fps = '25'
+                    cRange = '--colors=256';
                 } else if (qual == 'Mid') {
-                    fps = '12'
+                    cRange = '--colors=128';
                 } else if (qual == 'Low') {
-                    fps = '10'
-                    opti = true;
+                    cRange = '--colors=64';
                 };
 
                 if (crop == 'None'){
@@ -198,6 +261,8 @@ async function run_convert(){
                     gifCrop = '[rescaled]crop=h=iw*0.5[cropped]'
                 };
 
+                lossy = '--lossy=' + compress;
+
                 if (inputExt.indexOf('.gif')>=0){
                     finalOutput = outputFile + '-SinonConverted.gif'
                     finalOutputName = path.parse(convertFile).name + '-SinonConverted.gif'
@@ -205,7 +270,7 @@ async function run_convert(){
                     finalOutput = outputFile + '.gif'
                     finalOutputName = path.parse(convertFile).name + '.gif'
                 }
-                OptimalOutput = outputFile + '_lossy.gif'
+                OptimalOutput = outputFile + '_advanced.gif'
                 
                 ffmpeg(convertFile).format('gif').fps(fps).complexFilter([
                     '[0:v]mpdecimate[frames]', reRez, gifCrop],
@@ -217,7 +282,7 @@ async function run_convert(){
                 }).save(finalOutput).on('end', function(stdout, stderr) {
                     if (opti == true){
                         document.getElementById("progressText").textContent = 'Optimising';
-                        execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128',finalOutput], err => {
+                        execFile(gifsicle, ['-o', OptimalOutput, lossy, '-O3', cRange,finalOutput], err => {
                             console.log('Conversion Success!');
                             fs.unlink(finalOutput, function (err) {
                                 if (err) throw err;
