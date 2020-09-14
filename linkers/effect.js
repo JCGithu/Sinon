@@ -284,10 +284,55 @@ async function run_effect(){
             });
         });
     }
+
+    //New Wave
+    async function newWave(){
+        return new Promise ((resolve, reject) => {
+
+            p5Script = document.createElement("script");
+            p5SoundScript = document.createElement("script");
+            waveScript = document.createElement("script");
+            waveScript.type = "text/javascript";
+            p5Script.type = "text/javascript";
+            p5SoundScript.type = "text/javascript";
+
+            p5Script.src = '../linkers/wave/p5.min.js';
+            p5Script.id = 'p5';
+
+            p5SoundScript.src = '../linkers/wave/p5.sound.js';
+            p5SoundScript.id = 'p5sound';
+
+            waveScript.src = '../linkers/wave/wave.js';
+            waveScript.id = 'waveScript';
+
+            document.head.appendChild(p5Script);
+
+            p5Script.onload = p5Script.onreadystatechange = function() {
+                if (!this.readyState || this.readyState == 'complete'){
+                    console.log('p5 loaded')
+                    document.head.appendChild(p5SoundScript);
+                    p5SoundScript.onload = p5SoundScript.onreadystatechange = function() {
+                        if (!this.readyState || this.readyState == 'complete'){
+                            document.head.appendChild(waveScript);
+                            waveScript.onload = waveScript.onreadystatechange = function() {
+                                if (!this.readyState || this.readyState == 'complete'){
+                                    console.log('wut wut')
+                                    resolve('bloody ran init');
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        });
+    }
     
     // SINGLE
     async function singleEffect(format){
         if (format.indexOf('wave')>=0){
+
+            /* await newWave(); */
+
             await wave();
         }
         if (format.indexOf('blur')>=0){

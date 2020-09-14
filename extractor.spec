@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['extractor.py', 'dlhigh.py', 'dlnormal.py', 'dllive.py', 'dlproxy.py', 'dlperiscope.py', 'dlstories.py'],
-             pathex=['C:\\Users\\jackc\\Documents\\Coding\\ElectronSinon'],
+             pathex=['C:\\Users\\jackc\\Documents\\Colloquial\\Sinon\\Sinon'],
              binaries=[],
              datas=[('NeedProxyList.txt', '.')],
              hiddenimports=[],

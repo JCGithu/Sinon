@@ -132,9 +132,9 @@ docReady(function(){
     (async () => {
         try {
             const response = await got('https://jackgracie.co.uk/sinon');
-            version = /Version (\d.\d.\d)/.exec(response.body)
-            version = version[0].toString().replace(' ','').replace('Version','');
-            if (version !== appVersion){
+            Sversion = /Version (\d.\d.\d)/.exec(response.body)
+            Sversion = Sversion[0].toString().replace(' ','').replace('Version','');
+            if (Sversion !== appVersion){
                 document.getElementById("ver").style.color = 'var(--hover)';
             }
         } catch (error) {

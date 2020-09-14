@@ -1,7 +1,7 @@
 const os = require('os');
 const storage = require('electron-json-storage');
 const { execFile } = require('child_process');
-const { remote } = require('electron');
+const { remote, ipcRenderer } = require('electron');
 var spawn = require('child_process').spawn;
 const path = require("path");
 const { setNonEnumerableProperties } = require('got');

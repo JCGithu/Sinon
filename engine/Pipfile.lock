@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "50f7921cbc389f9e47395bd177315322ef76d917e01944ab52add0bcadca9b4b"
+            "sha256": "d8e2771adb0fa801b8d0098cef3bd1fb7365f42cd0594b96b981537180e83c70"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -92,11 +92,11 @@
         },
         "install": {
             "hashes": [
-                "sha256:9714ab0204658ec0bbf888d119afc4b1979e809e35a6ac379ba74ef21fdb9a7f",
-                "sha256:d92a21844bd9f11b53fc7110a9b880a082f111be3860222bbef96605554fcd42"
+                "sha256:d6d927c47b82f0183557830b98dcc36f3520489c66c3a2eda0c898b718e393b2",
+                "sha256:fe75019b45eb1febc9232f452861e7693efeadd554f18cdc4ff647f29349b145"
             ],
             "index": "pypi",
-            "version": "==1.3.1"
+            "version": "==1.3.3"
         },
         "lxml": {
             "hashes": [
@@ -139,10 +139,17 @@
         },
         "pyinstaller": {
             "hashes": [
-                "sha256:3730fa80d088f8bb7084d32480eb87cbb4ddb64123363763cf8f2a1378c1c4b7"
+                "sha256:970beb07115761d5e4ec317c1351b712fd90ae7f23994db914c633281f99bab0"
             ],
             "index": "pypi",
-            "version": "==3.6"
+            "version": "==4.0"
+        },
+        "pyinstaller-hooks-contrib": {
+            "hashes": [
+                "sha256:4935b2b48c2a38ab4f8f80d77147781642bff7d31748fca07d26dbdeeefb560d",
+                "sha256:71982f32883309e89675bfd10093cdcaca4f894bce11a91a34559b8224cf5e63"
+            ],
+            "version": "==2020.8"
         },
         "pywin32-ctypes": {
             "hashes": [
@@ -193,11 +200,11 @@
         },
         "youtube-dl": {
             "hashes": [
-                "sha256:9fc0389a1bbbeb609a5bb4ad5630dea107a9d1a24c73721c611a78c234309a75",
-                "sha256:e54b307048bb18164729fb278013af6d5477c69c3d995147205a16f22a61296b"
+                "sha256:ddfbc48793a24f58aba94e61b969003506ab259757b6cb7cb64eb37c1ca8415c",
+                "sha256:eced5195e3264c36d2d62610bf235f75b592d5bb2f8ac424fd8da54ee426cd75"
             ],
             "index": "pypi",
-            "version": "==2020.6.16.1"
+            "version": "==2020.9.6"
         }
     },
     "develop": {}
