@@ -1,6 +1,6 @@
 {
   "name": "Sinon",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A video tool that's actually useful",
   "main": "main.js",
   "scripts": {
