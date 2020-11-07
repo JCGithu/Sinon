@@ -16,10 +16,10 @@ import sys
 test = False
 
 if test is True :
-    initialurl = 'https://myfox8.com/news/woman-participates-in-covid-19-vaccine-trial-so-she-can-hug-her-grandchildren-again/'
+    initialurl = 'https://www.pscp.tv/WelshGovernment/1kvJpeOmEeMxE'
     downloadPath = r'C:\Users\jackc\Desktop\metro'
-    order = 'extract'
-    finalurl = ''
+    order = 'normal'
+    finalurl = 'https://www.pscp.tv/WelshGovernment/1kvJpeOmEeMxE'
     geo = 'UK'
     userProxy = ''
     ffmpegPath = r''

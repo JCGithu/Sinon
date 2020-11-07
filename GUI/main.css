@@ -643,6 +643,13 @@ button {
   color: var(--hover);
 }
 
+/* WAVEFORM */
+canvas {
+  position: absolute;
+  left: 110vw;
+  top: 0vh;
+}
+
 /* SWAL */
 .swal-size-sm {
   font-size: 0.65rem !important;

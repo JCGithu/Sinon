@@ -1,20 +1,21 @@
 {
   "name": "Sinon",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A video tool that's actually useful",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "win": "electron-packager . --app-version 1.2.3 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
-    "mac": "electron-packager . --app-version 1.2.3 --prune=true --platform darwin --icon ./imgs/sinon.icns --overwrite",
+    "win": "electron-packager . --app-version 1.2.4 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
+    "mac": "electron-packager . --app-version 1.2.4 --prune=true --platform darwin --icon ./imgs/sinon.icns --overwrite",
+    "linux": "electron-packager . --app-version 1.2.4 --prune=true --platform linux --arch x64 --icon ./imgs/sinon.icns --overwrite",
     "build": "electron-builder"
   },
-  "build":{
+  "build": {
     "appId": "Sinon",
     "productName": "Sinon",
     "icon": "./imgs/sinon.ico",
     "asar": false,
-    "nsis":{
+    "nsis": {
       "oneClick": false,
       "createDesktopShortcut": "always",
       "allowToChangeInstallationDirectory": false,
@@ -40,11 +41,16 @@
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
-    "animejs": "^3.2.0",
+    "@types/animejs": "^3.1.2",
+    "animejs": "^3.2.1",
+    "axios": "^0.20.0",
     "electron-json-storage": "^4.1.8",
     "ffmpeg-static-electron": "^2.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "gifsicle": "^5.1.0",
-    "got": "^11.5.1"
+    "got": "^11.5.1",
+    "p5": "^1.1.9",
+    "rimraf": "^3.0.2",
+    "sweetalert2": "^10.9.0"
   }
 }

@@ -55,25 +55,6 @@ def download(downloadPath, finalURL, ffmpegPath):
         'ffmpeg_location': ffmpegPath,
         }
 
-    if 'pscp.tv' in finalURL:
-
-        source = requests.get(finalURL, verify=True).text
-        soup = BeautifulSoup(source, 'lxml')
-        texttwo = re.findall('\(@(.*?)\)', str(soup))
-        textthree = str(texttwo).replace('[','').replace(']','').replace("'","")
-
-        ydl_opts = {
-            'logger': MyLogger(),
-            'progress_hooks': [my_hook],
-            'outtmpl': downloadPath + '/' + textthree + '.%(ext)s',
-            'ffmpeg_location': ffmpegPath,
-        }
-
-
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            r = ydl.extract_info(finalURL, False)
-            finalURL = (r['formats'][-1]['url'])
-
     if 'cloudfront.net' in finalURL:
 
         ydl_opts = {
@@ -99,6 +80,24 @@ def download(downloadPath, finalURL, ffmpegPath):
             'outtmpl': downloadPath + '/%(title)s.%(ext)s',
             'ffmpeg_location': ffmpegPath,
         }
+
+    if 'pscp.tv' in finalURL:
+        source = requests.get(finalURL, verify=True).text
+        soup = BeautifulSoup(source, 'lxml')
+        texttwo = re.findall('\(@(.*?)\)', str(soup))
+        textthree = str(texttwo).replace('[','').replace(']','').replace("'","")
+
+        ydl_opts = {
+            'logger': MyLogger(),
+            'progress_hooks': [my_hook],
+            'outtmpl': downloadPath + '/' + textthree + '.%(ext)s',
+            'ffmpeg_location': ffmpegPath,
+        }
+
+
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            r = ydl.extract_info(finalURL, False)
+            finalURL = (r['formats'][-1]['url']) 
 
     if "bbc.co.uk/iplayer" in finalURL:
         pidcode = str(re.findall('episode/(.*?)/',finalURL)).replace('[','').replace(']','').replace("'","")
