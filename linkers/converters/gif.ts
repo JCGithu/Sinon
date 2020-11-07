@@ -1,9 +1,11 @@
-const { convertAlert } = require('../alerts/convertAlert');
-const { errorAlert } = require('../alerts/errorAlert');
-
-import Swal  from 'sweetalert2';
 const gifsicle = require('gifsicle');
 const { execFile } = require('child_process');
+
+import { convertAlert } from '../alerts/convertAlert';
+import { successAlert } from '../alerts/successAlert';
+
+import { remote, win, fs, lineBreak } from '../Utilities/utils';
+import Swal  from 'sweetalert2';
 
 interface swalResult {
     value: [];

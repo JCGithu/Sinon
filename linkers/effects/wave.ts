@@ -1,7 +1,8 @@
-import Swal,{ SweetAlertOptions } from 'sweetalert2';
+import { convertAlert } from '../alerts/convertAlert';
+import { errorAlert } from '../alerts/errorAlert';
+import { successAlert } from '../alerts/successAlert';
 
-const { convertAlert } = require('../alerts/convertAlert');
-const { errorAlert } = require('../alerts/errorAlert');
+import { remote, win, lineBreak } from '../Utilities/utils';
 
 async function wave(multi, swalColour, format){
     return new Promise ((resolve, reject) => {
@@ -29,7 +30,7 @@ async function wave(multi, swalColour, format){
                 }
             })
             .on('error', function(err: any, stdout: any, stderr: any) {
-                errorAlert('', 'effect', err, swalColour);
+                errorAlert('', 'effect', err, swalColour, '');
             })
             .save(finalOutput).on('end', function(stdout: any, stderr: any) {
                 console.log('Conversion Success!');

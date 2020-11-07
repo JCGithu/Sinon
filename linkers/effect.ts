@@ -1,7 +1,4 @@
-const { errorAlert } = require('./alerts/errorAlert');
-const { runningAlert } = require('./alerts/runningAlert');
-const { successAlert } = require('./alerts/successAlert');
-const { remote, ipcRenderer } = require('electron');
+import { swalColours, lineBreak } from './Utilities/utils';
 
 //Effects
 const { screengrabs } = require('./effects/screengrab');
@@ -9,7 +6,7 @@ const { socialBlur } = require('./effects/blur');
 const { concat } = require('./effects/concat');
 const { wave } = require('./effects/wave');
 
-import Swal,{ SweetAlertOptions } from 'sweetalert2';
+import Swal from 'sweetalert2';
 const rimraf  = require("rimraf");
 
 async function run_effect(){

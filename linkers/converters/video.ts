@@ -1,7 +1,10 @@
-const { convertAlert } = require('../alerts/convertAlert');
-const { errorAlert } = require('../alerts/errorAlert');
+import Swal from 'sweetalert2';
 
-import Swal  from 'sweetalert2';
+import { lineBreak, progressBar } from '../Utilities/utils';
+
+import { successAlert } from '../alerts/successAlert';
+import { convertAlert } from '../alerts/convertAlert';
+import { errorAlert } from '../alerts/errorAlert';
 
 async function videoConvert(convertInfo, swalColour){
     Swal.fire({
@@ -52,7 +55,7 @@ async function videoConvert(convertInfo, swalColour){
                     }
                     runMP4.on('error', function(err, stdout, stderr) {
                         err = err + stdout + stderr;
-                        errorAlert(err, 'convert', swalColour);
+                        errorAlert(err, 'convert', '', swalColour, '');
                     });
                     runMP4.on('end', function() {
                         successAlert('convert', '', swalColour);

@@ -1,8 +1,8 @@
 {
-  "name": "Sinon",
+  "name": "sinon",
   "version": "1.2.4",
   "description": "A video tool that's actually useful",
-  "main": "main.js",
+  "main": "./build/main.js",
   "scripts": {
     "start": "electron .",
     "win": "electron-packager . --app-version 1.2.4 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
@@ -36,7 +36,7 @@
   "author": "Colloquial",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^8.3.3",
+    "electron": "^10.1.5",
     "electron-builder": "^22.8.0",
     "electron-packager": "^14.2.1"
   },

@@ -1,6 +1,7 @@
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
+const { copyString } = require('../Utilities/utils');
 
-function successAlert(passType, passText, swalColour) {
+export function successAlert(passType, passText, swalColour) {
     var swalOptions = {
         icon: 'success',
         title: 'Download Success!',
@@ -20,12 +21,10 @@ function successAlert(passType, passText, swalColour) {
     } else if (passType == 'convert'){
         swalOptions.title = 'Conversion Success!';
     } else if (passType == 'effect'){
-        swalOptions.title = 'Effect Success!'
+        swalOptions.title = 'Effect Success!';
+    } else if (passType == 'delete'){
+        swalOptions.title = 'Deleted!';
     }
 
     Swal.fire(swalOptions);
-};
-
-module.exports = {
-    successAlert
 };

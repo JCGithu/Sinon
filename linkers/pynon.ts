@@ -3,6 +3,14 @@ const { dialog } = require('electron').remote;
 const { execFile } = require('child_process');
 var spawn = require('child_process').spawn;
 
+//Utils
+const { lineBreak, swalColours, fs } = require('./Utilities/utils');
+
+// Alerts
+const { errorAlert } = require('./alerts/errorAlert');
+const { runningAlert } = require('./alerts/runningAlert');
+const { successAlert } = require('./alerts/successAlert');
+
 document.getElementById('downloadtext').addEventListener('click', function(){
     dialog.showOpenDialog({
         properties: ['openDirectory'],
@@ -18,11 +26,6 @@ document.getElementById('downloadtext').addEventListener('click', function(){
 });
 var inputText = document.getElementById("inputURL") as HTMLInputElement;
 var runButton = document.getElementById("runTool");
-
-// Alerts
-const { errorAlert } = require('./alerts/errorAlert');
-const { runningAlert } = require('./alerts/runningAlert');
-const { successAlert } = require('./alerts/successAlert');
 
 inputText.addEventListener("keyup", function(){
     if (inputText.value.length < 1){
@@ -186,7 +189,6 @@ async function run_pynon() {
 
                             const stream = require('stream');
                             const {promisify} = require('util');
-                            const fs = require('fs');
                             const got = require('got');
 
                             console.log ('got to the file section and the final url is: ', finalURL);
@@ -242,115 +244,104 @@ async function run_pynon() {
                 if (message.indexOf('youtube.com')>=0) {
                     console.log('Running Youtube Download Options');
                     var finalURL = message;
-                    var playlist = false;
-                    function youtubeSwal (dlquality){
-                        if (dlquality === 'normal') {
-                                    
-                            runningAlert();
-                            var order = 'normal';
-
-                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
-                                if (error) {
-                                    console.log('Youtube Normal Download Fail');
-                                    errorAlert(error, 'download', '', swalColour);
-                                }
-                                else{
-                                    var message = stdout;
-                                    console.log('Normal Youtube Downloader Output:')
-                                    console.log(message);
-                                    successAlert('','', swalColour);
-                                }
-                            });
-                        }
-                        if (dlquality === 'high') {
-
+                    if (finalURL.indexOf('&list=')>=0) {
+                        console.log('Playlist found');
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Playlist URL',
+                            text: 'Seems like this URL is part of a playlist, do you want to download the whole playlist?',
+                            showCancelButton: true,
+                            backdrop: swalColour.loading,
+                            target: document.getElementById('swalframe'),
+                            confirmButtonText: 'Single Video',
+                            cancelButtonText: 'Playlist',
+                        }).then((result) => {
+                            if (result.value) {
+                                finalURL = finalURL.replace(/&list=.*/g,'');
+                            }
                             Swal.fire({
-                                icon: 'info',
-                                title: "Heads Up",
-                                text: "High quality downloads can take roughly 4x longer to process. Only use when needed.",
+                                icon: 'success',
+                                title: "Video found!",
+                                text: "Nice one, now click download to grab this clip",
+                                input: 'select',
+                                inputOptions: {
+                                    normal: 'Normal Resolution',
+                                    high: 'High Resolution',
+                                    live: 'Grab .m3u8 Code'
+                                },
+                                inputPlaceholder: 'Select Quality',
                                 showCancelButton: true,
-                                confirmButtonText: 'Continue',
+                                confirmButtonText: 'Download',
                                 showLoaderOnConfirm: true,
                                 backdrop: swalColour.loading,
                                 target: document.getElementById('swalframe'),
-                                preConfirm: () => {
-                                    runningAlert();
-                            
-                                    var order = 'high';
-                                    
-                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
-                                        if (error) {
-                                            console.log('High Quality Youtube Downloader Error, Details:')
-                                            errorAlert(error, 'download', '', swalColour);
+                                preConfirm: (dlquality) => {
+                                        if (dlquality === 'normal') {
+                                            runningAlert();
+                                            var order = 'normal';
+                
+                                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                                if (error) {
+                                                    console.log('Youtube Normal Download Fail');
+                                                    errorAlert(error, 'download', '', swalColour);
+                                                }
+                                                else{
+                                                    var message = stdout;
+                                                    console.log('Normal Youtube Downloader Output:')
+                                                    console.log(message);
+                                                    successAlert('','', swalColour);
+                                                }
+                                            });
                                         }
-                                        else{
-                                            var message = stdout;
-                                            console.log('High Quality Youtube Downloader Output:')
-                                            console.log(message);
-                                            successAlert('','', swalColour);
+                                        if (dlquality === 'high') {
+                
+                                            Swal.fire({
+                                                icon: 'info',
+                                                title: "Heads Up",
+                                                text: "High quality downloads can take roughly 4x longer to process. Only use when needed.",
+                                                showCancelButton: true,
+                                                confirmButtonText: 'Continue',
+                                                showLoaderOnConfirm: true,
+                                                backdrop: swalColour.loading,
+                                                target: document.getElementById('swalframe'),
+                                                preConfirm: () => {
+                                                    runningAlert();
+                                            
+                                                    var order = 'high';
+                                                    
+                                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                                        if (error) {
+                                                            console.log('High Quality Youtube Downloader Error, Details:')
+                                                            errorAlert(error, 'download', '', swalColour);
+                                                        }
+                                                        else{
+                                                            var message = stdout;
+                                                            console.log('High Quality Youtube Downloader Output:')
+                                                            console.log(message);
+                                                            successAlert('','', swalColour);
+                                                        }
+                                                    });
+                                                }
+                                            });
                                         }
-                                    });
-                                }
-                            });
-                        }
-                        if (dlquality === 'live') {
-                            
-                            runningAlert();
-
-                            var order = 'live';
-
-                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
-                                if (error) {
-                                    console.log('Livestream Youtube Grabber Error, Details:')
-                                    errorAlert(error, 'download', '', swalColour);
-                                }
-                                else {
-                                    successAlert('live', stdout, swalColour);
-                                }
-                            });
-                        }
-                    };
-                    Swal.fire({
-                        icon: 'success',
-                        title: "Video found!",
-                        text: "Nice one, now click download to grab this clip",
-                        input: 'select',
-                        inputOptions: {
-                            normal: 'Normal Resolution',
-                            high: 'High Resolution',
-                            live: 'Grab .m3u8 Code'
-                        },
-                        inputPlaceholder: 'Select Quality',
-                        showCancelButton: true,
-                        confirmButtonText: 'Download',
-                        showLoaderOnConfirm: true,
-                        backdrop: swalColour.loading,
-                        target: document.getElementById('swalframe'),
-                        preConfirm: (dlquality) => {
-                            if (finalURL.indexOf('&list=')>=0) {
-                                console.log('Playlist found');
-                                Swal.fire({
-                                    icon: 'info',
-                                    title: 'Playlist URL',
-                                    text: 'Seems like this URL is part of a playlist, do you want to download the whole playlist?',
-                                    showCancelButton: true,
-                                    backdrop: swalColour.loading,
-                                    target: document.getElementById('swalframe'),
-                                    confirmButtonText: 'Single Video',
-                                    cancelButtonText: 'Playlist',
-                                }).then((result) => {
-                                    if (result.value) {
-                                        finalURL = finalURL.replace(/&list=.*/g,'');
-                                        youtubeSwal(dlquality);
-                                    } else {
-                                        youtubeSwal(dlquality);
+                                        if (dlquality === 'live') {
+                                            runningAlert();
+                                            var order = 'live';
+                                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                                if (error) {
+                                                    console.log('Livestream Youtube Grabber Error, Details:')
+                                                    errorAlert(error, 'download', '', swalColour);
+                                                }
+                                                else {
+                                                    successAlert('live', stdout, swalColour);
+                                                }
+                                            });
+                                        }
                                     }
-                                });
-                            } else {
-                                youtubeSwal(dlquality);
-                            }
-                        }
-                    });
+                                }
+                            );
+                        });
+                    }
                 }
                 // PARLIAMENT TV EXTRACTOR SETTINGS
                 else if (message.indexOf('parliamentlive.tv')>=0) {

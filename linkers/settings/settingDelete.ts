@@ -1,6 +1,9 @@
-import Swal from 'sweetalert2';
+const Swal = require('sweetalert2');
 
-function settingDelete(){
+import { successAlert } from '../alerts/successAlert';
+import { swalColours } from '../Utilities/utils';
+
+export function settingDelete(){
     var swalColour = swalColours();
     Swal.fire({
         icon: 'warning',
@@ -17,14 +20,7 @@ function settingDelete(){
                 if (error) throw error;
             });
             console.log ('Settings deleted');
-            Swal.fire({
-                icon: 'success',
-                title: 'Deleted!',
-                showConfirmButton: true,
-                backdrop: swalColour.loading,
-                toast:false,
-                target: document.getElementById('swalframe'),
-            });
+            successAlert('delete','', swalColour)
         };
     });
 };

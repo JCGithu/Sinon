@@ -1,4 +1,8 @@
-function copyString (str) {
+export const { remote } = require('electron');
+export const win = remote.getCurrentWindow();
+export const fs = require('fs');
+
+export function copyString (str) {
     var el = document.createElement('textarea');
     el.value = str;
     el.setAttribute('readonly', '');
@@ -11,7 +15,7 @@ function copyString (str) {
     lineBreak();
 };
 
-function swalColours(){
+export function swalColours(){
     let darkSwitch = document.getElementById('darkswitch') as HTMLInputElement;
     if (darkSwitch.checked) {
         let swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50'}
@@ -22,11 +26,11 @@ function swalColours(){
     }
 };
 
-function lineBreak(){
+export function lineBreak(){
     console.log('~=~=~=~=~=~=~=~=~=~=~=~');
 };
 
-function progressBar(progress: { percent: number; timemark: any; }, format){
+export function progressBar(progress: { percent: number; timemark: any; }, format){
     if (progress.percent === undefined){
         document.getElementById("progressText").textContent = (progress.timemark).match('\d\d\:\d\d\:\d\d)');
     } else {
@@ -43,6 +47,10 @@ function progressBar(progress: { percent: number; timemark: any; }, format){
     }
 }
 
-module.exports = {
-    copyString, lineBreak, swalColours, progressBar
-}
+export function docReady(fn) {
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(fn, 1);
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+};

@@ -1,6 +1,6 @@
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
 
-function convertAlert(swalColour){
+export function convertAlert(swalColour){
     Swal.fire({
         title: 'Generating...',
         html: "<p id='progressText'></p>",
@@ -10,7 +10,3 @@ function convertAlert(swalColour){
         target: document.getElementById('swalframe'),
     });
 }
-
-module.exports = {
-    convertAlert
-};

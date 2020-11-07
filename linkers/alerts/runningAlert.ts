@@ -1,6 +1,6 @@
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
 
-function runningAlert() {
+export function runningAlert() {
 
     var swalOptions = {
         title: 'Running!',
@@ -13,8 +13,4 @@ function runningAlert() {
     } as SweetAlertOptions;
 
     Swal.fire(swalOptions);
-};
-
-module.exports = {
-    runningAlert
 };

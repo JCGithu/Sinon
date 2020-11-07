@@ -1,7 +1,8 @@
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
 
-const { convertAlert } = require('../alerts/convertAlert');
-const { errorAlert } = require('../alerts/errorAlert');
+import { successAlert } from '../alerts/successAlert';
+import { convertAlert } from '../alerts/convertAlert';
+import { errorAlert } from '../alerts/errorAlert';
 
 async function screengrabs (multi, swalColour, format){
     return new Promise ((resolve) => {
@@ -30,7 +31,7 @@ async function screengrabs (multi, swalColour, format){
                         filename: fileSettings.inputName + '-%d.png',
                     })
                     .on('error', function(err: any) {
-                        errorAlert('', 'effect', err, swalColour);
+                        errorAlert('', 'effect', err, swalColour, '');
                     })
                     .on('end', function() {
                         console.log('Conversion Success!');

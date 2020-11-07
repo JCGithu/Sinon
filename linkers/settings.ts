@@ -1,16 +1,15 @@
-const fs = require("fs");
 const { version } = require("process");
 const { remote } = require('electron');
 const { dialog } = require('electron').remote;
 const win = remote.getCurrentWindow();
 
-const { settingDelete } = require('./../linkers/settings/settingDelete');
+import { docReady, lineBreak } from './Utilities/utils';
+import { settingDelete } from './settings/settingDelete';
 
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 docReady(function(){
-
     //Frame Style
     (document.getElementsByClassName("maindiv")[0] as HTMLElement).style.borderRadius = "10%";
 

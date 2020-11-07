@@ -1,7 +1,10 @@
-const { convertAlert } = require('../alerts/convertAlert');
-const { errorAlert } = require('../alerts/errorAlert');
-const { successAlert } = require('../alerts/successAlert');
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
+
+import { remote, win, lineBreak } from '../Utilities/utils';
+
+import { convertAlert } from '../alerts/convertAlert';
+import { errorAlert } from '../alerts/errorAlert';
+import { successAlert } from '../alerts/successAlert';
 
 async function socialBlur (multi, swalColour, format){
     return new Promise ((resolve) => {
@@ -20,7 +23,7 @@ async function socialBlur (multi, swalColour, format){
             backdrop: swalColour.loading,
             target: document.getElementById('swalframe'),
             preConfirm: (ratio) => {
-                convertAlert();
+                convertAlert(swalColour);
                 if (ratio === 'vertical') {
                     var cropSetting = '[pxratio_fix]crop=w=ih*(9/16)[cropped]';
                 }
@@ -60,7 +63,7 @@ async function socialBlur (multi, swalColour, format){
                         }
                     })
                     .on('error', function(err: any, stdout: any, stderr: any) {
-                        errorAlert('', 'effect', err, swalColour);
+                        errorAlert('', 'effect', err, swalColour, '');
                     })
                     .save(finalOutput).on('end', function(stdout: any, stderr: any) {
                         console.log('Conversion Success!');

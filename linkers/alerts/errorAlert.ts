@@ -1,7 +1,7 @@
-//let { copyString } = require("../Utilities/utils");
+import { copyString } from "../Utilities/utils";
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
 
-function errorAlert(error, errorType, errorText, swalColour, instaDeets) {
+export function errorAlert(error, errorType, errorText, swalColour, instaDeets) {
     let instaUse = document.getElementById('InstaUse') as HTMLInputElement;
     let instaPass = document.getElementById('InstaPass') as HTMLInputElement;
     error = error.toString().replace(instaPass.value, "").replace(instaUse.value, "");

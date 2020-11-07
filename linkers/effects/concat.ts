@@ -1,6 +1,10 @@
-const { convertAlert } = require('../alerts/convertAlert');
-const { errorAlert } = require('../alerts/errorAlert');
-const { successAlert } = require('../alerts/successAlert');
+const { version } = require("process");
+
+import { remote, win, progressBar, lineBreak } from '../Utilities/utils';
+
+import { convertAlert } from '../alerts/convertAlert';
+import { errorAlert } from '../alerts/errorAlert';
+import { successAlert } from '../alerts/successAlert';
 
 async function concat(multi, swalColour, format){
     return new Promise ((resolve) => {
@@ -16,7 +20,7 @@ async function concat(multi, swalColour, format){
         });
         getInputs.then(() => {
             lineBreak();
-            convertAlert(swalColours);
+            convertAlert(swalColour);
             console.log(ffmpegInputs);
             var finalOutput = fileSettings.outputFile + '-Sinon-Joined.mp4'
             ffmpegInputs
@@ -24,7 +28,7 @@ async function concat(multi, swalColour, format){
                     progressBar(progress, format);
                 })
                 .on('error', function(err: any, stdout: any, stderr: any) {
-                    errorAlert('', 'effect', err, swalColour);
+                    errorAlert('', 'effect', err, swalColour, '');
                 })
                 .mergeToFile(finalOutput)
                 .outputOptions([

@@ -2,6 +2,8 @@ const { videoConvert } = require('./converters/video');
 const { audioConvert } = require('./converters/audio');
 const { gifConvert } = require('./converters/gif');
 
+import { swalColours, lineBreak } from './Utilities/utils';
+
 async function run_convert(){
     lineBreak();
     let swalColour = swalColours();

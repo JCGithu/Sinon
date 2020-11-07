@@ -1,6 +1,7 @@
 const os = require('os');
 const storage = require('electron-json-storage');
 const { execFile } = require('child_process');
+const fs = require('fs');
 const { remote, ipcRenderer } = require('electron');
 const path = require("path");
 const { setNonEnumerableProperties } = require('got');
@@ -33,5 +34,3 @@ OScheck();
 
 //LINE AND COLOUR FUNCTIONS
 const {copyString, lineBreak, swalColours} = require ('./Utilities/utils');
-
-let swalColour = swalColours();
