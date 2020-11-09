@@ -37,6 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var sweetalert2_1 = require("sweetalert2");
+var fileSetUp_1 = require("../Utilities/fileSetUp");
+var OS_FF_1 = require("../Utilities/OS&FF");
 var successAlert_1 = require("../alerts/successAlert");
 var convertAlert_1 = require("../alerts/convertAlert");
 var errorAlert_1 = require("../alerts/errorAlert");
@@ -62,8 +64,8 @@ function screengrabs(multi, swalColour, format) {
                         preConfirm: function (grabNum) {
                             convertAlert_1.convertAlert(swalColour);
                             effectFile.forEach(function (fileSelected) {
-                                var fileSettings = effectSetUp(fileSelected);
-                                ffmpeg(fileSelected).screenshots({
+                                var fileSettings = fileSetUp_1.effectSetUp(fileSelected);
+                                OS_FF_1.ffmpeg(fileSelected).screenshots({
                                     count: grabNum,
                                     folder: fileSettings.inputDir,
                                     filename: fileSettings.inputName + '-%d.png',
@@ -88,4 +90,3 @@ function screengrabs(multi, swalColour, format) {
 module.exports = {
     screengrabs: screengrabs
 };
-//# sourceMappingURL=screengrab.js.map

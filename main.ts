@@ -16,7 +16,8 @@ function createWindow () {
     fullscreenable:false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true
+      nodeIntegration: true,
+      enableRemoteModule: true
     }
   })
   mainWindow.loadFile('./GUI/GUI.html')

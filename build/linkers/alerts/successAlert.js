@@ -33,4 +33,3 @@ function successAlert(passType, passText, swalColour) {
 }
 exports.successAlert = successAlert;
 ;
-//# sourceMappingURL=successAlert.js.map

@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.effectSetUp = void 0;
 function effectSetUp(fileSelected) {
     var fileSettings = {
         outputFile: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).name),
@@ -9,7 +12,4 @@ function effectSetUp(fileSelected) {
     };
     return fileSettings;
 }
-module.exports = {
-    effectSetUp: effectSetUp
-};
-//# sourceMappingURL=fileSetUp.js.map
+exports.effectSetUp = effectSetUp;

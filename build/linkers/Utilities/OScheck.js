@@ -13,4 +13,3 @@ function OScheck() {
         OSName = "Linux", ExtractorSet = 'extractor';
 }
 ;
-//# sourceMappingURL=OScheck.js.map

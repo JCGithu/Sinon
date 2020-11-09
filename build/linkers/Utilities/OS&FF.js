@@ -17,6 +17,8 @@ exports.versionInfo = {
     OS: '',
     ExtractorSet: '',
     ffmpegSet: '',
+    ffmpegPath: exports.ffmpegPath,
+    extractorPath: exports.extractorPath
 };
 if (navigator.appVersion.indexOf("Win") != -1) {
     exports.versionInfo.OS = "Windows";

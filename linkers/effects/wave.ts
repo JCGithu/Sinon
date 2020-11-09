@@ -3,9 +3,13 @@ import { errorAlert } from '../alerts/errorAlert';
 import { successAlert } from '../alerts/successAlert';
 
 import { remote, win, lineBreak } from '../Utilities/utils';
+import { ffmpeg } from '../Utilities/OS&FF';
+import { effectSetUp } from '../Utilities/fileSetUp'; 
+
+const rimraf  = require("rimraf");
 
 async function wave(multi, swalColour, format){
-    return new Promise ((resolve, reject) => {
+    return new Promise ((resolve) => {
         effectFile.forEach(function(fileSelected: any){
             let fileSettings = effectSetUp(fileSelected);
             var finalOutput = fileSettings.outputFile + '-waveform.mov'

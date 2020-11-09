@@ -41,11 +41,13 @@ var dialog = require('electron').remote.dialog;
 var execFile = require('child_process').execFile;
 var spawn = require('child_process').spawn;
 //Utils
-var _a = require('./Utilities/utils'), lineBreak = _a.lineBreak, swalColours = _a.swalColours, fs = _a.fs;
+var utils_1 = require("./Utilities/utils");
+var OS_FF_1 = require("./Utilities/OS&FF");
+var settings_1 = require("./Utilities/settings");
 // Alerts
-var errorAlert = require('./alerts/errorAlert').errorAlert;
-var runningAlert = require('./alerts/runningAlert').runningAlert;
-var successAlert = require('./alerts/successAlert').successAlert;
+var errorAlert_1 = require("./alerts/errorAlert");
+var runningAlert_1 = require("./alerts/runningAlert");
+var successAlert_1 = require("./alerts/successAlert");
 document.getElementById('downloadtext').addEventListener('click', function () {
     dialog.showOpenDialog({
         properties: ['openDirectory'],
@@ -56,7 +58,7 @@ document.getElementById('downloadtext').addEventListener('click', function () {
         document.getElementById('inputURL').value = downloadPath;
         var waitTimer;
         clearTimeout(waitTimer);
-        waitTimer = setTimeout(settingSave, 5000);
+        waitTimer = setTimeout(settings_1.settingSave, 5000);
     });
 });
 var inputText = document.getElementById("inputURL");
@@ -76,7 +78,7 @@ function run_pynon() {
             console.log('Input URl: ' + inputURL);
             console.log('Download Path: ' + downloadPath);
             console.log('Pynon orders: ' + order);
-            console.log('Extractor path is: ' + extractorPath);
+            console.log('Extractor path is: ' + OS_FF_1.versionInfo.extractorPath);
             console.log('Geo is: ' + geo);
             if (userProxy == '') {
                 console.log('No user proxy inputted');
@@ -117,7 +119,7 @@ function run_pynon() {
             instaUse = document.getElementById('InstaUse').value;
             instaPass = document.getElementById('InstaPass').value;
             proxyInput = document.getElementById('proxyInput');
-            swalColour = swalColours();
+            swalColour = utils_1.swalColours();
             //Reset UserProxy
             if (proxyInput.value === undefined || proxyInput.value === null) {
                 userProxy = '';
@@ -127,11 +129,11 @@ function run_pynon() {
             }
             console.log('Function has started!');
             inputCheck(inputURL, downloadPath, order, finalURL, userProxy, geo);
-            lineBreak();
+            utils_1.lineBreak();
             ;
             if (downloadPath === '') {
                 console.log('Error Code 000: No Download Path');
-                errorAlert('', 'basic', "No download path given!", swalColour);
+                errorAlert_1.errorAlert('', 'basic', "No download path given!", swalColour, '');
             }
             if (inputURL.indexOf('tiktok.com') >= 0) {
                 inputURL = inputURL.replace(/\?lang=../gm, "");
@@ -140,14 +142,14 @@ function run_pynon() {
                 inputURL = inputURL.replace("youtu.be/", "youtube.com/watch?v=");
             }
             ;
-            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+            execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                 if (error) {
-                    errorAlert(error, 'proxy', 'Looks like a proxy error. Try again or use another method to rip the video for now.', swalColour);
+                    errorAlert_1.errorAlert(error, 'proxy', 'Looks like a proxy error. Try again or use another method to rip the video for now.', swalColour, '');
                 }
                 else {
                     console.log('Initial output from Extractor is:');
                     console.log(stdout);
-                    lineBreak();
+                    utils_1.lineBreak();
                     var message = stdout;
                     //NOT COVERED ERROR
                     if (message.indexOf('Err001') >= 0) {
@@ -164,18 +166,18 @@ function run_pynon() {
                             backdrop: swalColour.loading,
                             target: document.getElementById('swalframe'),
                             preConfirm: function (dlquality) {
-                                runningAlert();
+                                runningAlert_1.runningAlert();
                                 var order = 'normal';
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                     if (error) {
                                         console.log('Youtube Normal Download Fail');
-                                        errorAlert(error, 'download', '', swalColour);
+                                        errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                     }
                                     else {
                                         var message = stdout;
                                         console.log('Normal Youtube Downloader Output:');
                                         console.log(message);
-                                        successAlert('', '', swalColour);
+                                        successAlert_1.successAlert('', '', swalColour);
                                     }
                                 });
                             }
@@ -184,27 +186,27 @@ function run_pynon() {
                     //NO VIDEO FOUND ERROR
                     else if (message.indexOf('Err002') >= 0) {
                         console.log('Resulted in Error Code 002');
-                        errorAlert('', 'basic', "Can't see any video on this page?", swalColour);
+                        errorAlert_1.errorAlert('', 'basic', "Can't see any video on this page?", swalColour, '');
                     }
                     //SECURE VIDEO ERROR
                     else if (message.indexOf('Err003') >= 0) {
                         console.log('Resulted in Error Code 003');
-                        errorAlert('', 'basic', 'This is a secure video, sorry!', swalColour);
+                        errorAlert_1.errorAlert('', 'basic', 'This is a secure video, sorry!', swalColour, '');
                     }
                     //NO URL ERROR
                     else if (message.indexOf('Err004') >= 0) {
                         console.log('Resulted in Error Code 004');
-                        errorAlert('', 'basic', 'No URL input!', swalColour);
+                        errorAlert_1.errorAlert('', 'basic', 'No URL input!', swalColour, '');
                     }
                     else if (message.indexOf('Err005') >= 0) {
                         console.log('Resulted in Error Code 002');
-                        errorAlert('', 'basic', "Geo-restricted page", swalColour);
+                        errorAlert_1.errorAlert('', 'basic', "Geo-restricted page", swalColour, '');
                     }
                     //GENERIC EXTRACTOR
                     else if (message.indexOf('Generic') >= 0) {
                         finalURL = inputURL.replace(/\\\/|\/\\|\/\/|\\\\/g, "/").replace(':/', '://').replace(':///', '://');
                         console.log('Generic URL found: ', finalURL);
-                        lineBreak();
+                        utils_1.lineBreak();
                         var textInput = "<a>Seems like you've put in a direct file url.<br> Would you like to download?</a>";
                         sweetalert2_1.default.fire({
                             icon: 'info',
@@ -216,7 +218,7 @@ function run_pynon() {
                             backdrop: swalColour.loading,
                             target: document.getElementById('swalframe'),
                             preConfirm: function (dlquality) {
-                                runningAlert();
+                                runningAlert_1.runningAlert();
                                 if (finalURL.indexOf('.mp4') >= 0 || finalURL.indexOf('.mp3') >= 0) {
                                     var stream = require('stream');
                                     var promisify = require('util').promisify;
@@ -232,14 +234,14 @@ function run_pynon() {
                                             switch (_a.label) {
                                                 case 0:
                                                     _a.trys.push([0, 2, , 3]);
-                                                    return [4 /*yield*/, pipeline_1(got_1.stream(finalURL), fs.createWriteStream(downloadPath))];
+                                                    return [4 /*yield*/, pipeline_1(got_1.stream(finalURL), utils_1.fs.createWriteStream(downloadPath))];
                                                 case 1:
                                                     _a.sent();
-                                                    successAlert('', '', swalColour);
+                                                    successAlert_1.successAlert('', '', swalColour);
                                                     return [3 /*break*/, 3];
                                                 case 2:
                                                     error_1 = _a.sent();
-                                                    errorAlert(error_1, 'download', '', swalColour);
+                                                    errorAlert_1.errorAlert(error_1, 'download', '', swalColour, '');
                                                     return [3 /*break*/, 3];
                                                 case 3: return [2 /*return*/];
                                             }
@@ -248,15 +250,15 @@ function run_pynon() {
                                 }
                                 else {
                                     var order = 'normal';
-                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                    execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                         if (error) {
-                                            errorAlert(error, 'download', '', swalColour);
+                                            errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                         }
                                         else {
                                             var message = stdout;
                                             console.log('Generic Downloader Output:');
                                             console.log(message);
-                                            successAlert('', '', swalColour);
+                                            successAlert_1.successAlert('', '', swalColour);
                                         }
                                     });
                                 }
@@ -267,7 +269,7 @@ function run_pynon() {
                     else {
                         console.log('No errors so far, Extractor has produced:');
                         console.log(stdout);
-                        lineBreak();
+                        utils_1.lineBreak();
                         //Set input blank
                         var urlwipebox = document.querySelector('input[name=urlwipe]');
                         if (urlwipebox.checked == true) {
@@ -311,18 +313,18 @@ function run_pynon() {
                                         target: document.getElementById('swalframe'),
                                         preConfirm: function (dlquality) {
                                             if (dlquality === 'normal') {
-                                                runningAlert();
+                                                runningAlert_1.runningAlert();
                                                 var order = 'normal';
-                                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                                execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                                     if (error) {
                                                         console.log('Youtube Normal Download Fail');
-                                                        errorAlert(error, 'download', '', swalColour);
+                                                        errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                                     }
                                                     else {
                                                         var message = stdout;
                                                         console.log('Normal Youtube Downloader Output:');
                                                         console.log(message);
-                                                        successAlert('', '', swalColour);
+                                                        successAlert_1.successAlert('', '', swalColour);
                                                     }
                                                 });
                                             }
@@ -337,33 +339,33 @@ function run_pynon() {
                                                     backdrop: swalColour.loading,
                                                     target: document.getElementById('swalframe'),
                                                     preConfirm: function () {
-                                                        runningAlert();
+                                                        runningAlert_1.runningAlert();
                                                         var order = 'high';
-                                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                                        execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                                             if (error) {
                                                                 console.log('High Quality Youtube Downloader Error, Details:');
-                                                                errorAlert(error, 'download', '', swalColour);
+                                                                errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                                             }
                                                             else {
                                                                 var message = stdout;
                                                                 console.log('High Quality Youtube Downloader Output:');
                                                                 console.log(message);
-                                                                successAlert('', '', swalColour);
+                                                                successAlert_1.successAlert('', '', swalColour);
                                                             }
                                                         });
                                                     }
                                                 });
                                             }
                                             if (dlquality === 'live') {
-                                                runningAlert();
+                                                runningAlert_1.runningAlert();
                                                 var order = 'live';
-                                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                                execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                                     if (error) {
                                                         console.log('Livestream Youtube Grabber Error, Details:');
-                                                        errorAlert(error, 'download', '', swalColour);
+                                                        errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                                     }
                                                     else {
-                                                        successAlert('live', stdout, swalColour);
+                                                        successAlert_1.successAlert('live', stdout, swalColour);
                                                     }
                                                 });
                                             }
@@ -392,30 +394,30 @@ function run_pynon() {
                                 target: document.getElementById('swalframe'),
                                 preConfirm: function (dlquality) {
                                     if (dlquality === 'normal') {
-                                        runningAlert();
+                                        runningAlert_1.runningAlert();
                                         var order = 'normal';
-                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                        execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                             if (error) {
                                                 console.log('Parliament TV Download Error, Details');
-                                                errorAlert(error, 'download', '', swalColour);
+                                                errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                             }
                                             else {
                                                 var message = stdout;
-                                                successAlert('', '', swalColour);
+                                                successAlert_1.successAlert('', '', swalColour);
                                             }
                                         });
                                     }
                                     if (dlquality === 'live') {
-                                        runningAlert();
+                                        runningAlert_1.runningAlert();
                                         var order = 'live';
-                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                        execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                             if (error) {
                                                 console.log('Parliament TV Live Grab Error, Details');
-                                                errorAlert(error, 'download', '', swalColour);
+                                                errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                             }
                                             else {
                                                 var livestreamurl = stdout.replace('\\r/', '/');
-                                                successAlert('live', livestreamurl, swalColour);
+                                                successAlert_1.successAlert('live', livestreamurl, swalColour);
                                             }
                                         });
                                     }
@@ -442,35 +444,35 @@ function run_pynon() {
                                 target: document.getElementById('swalframe'),
                                 preConfirm: function (dlquality) {
                                     if (dlquality === 'normal') {
-                                        runningAlert();
+                                        runningAlert_1.runningAlert();
                                         console.log('final url is ' + finalURL);
                                         var order = 'normal';
-                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                        execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                             if (error) {
                                                 console.log('Periscope live grab error, details:');
                                                 error = error + stdout;
-                                                errorAlert(error, 'download', '', swalColour);
+                                                errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                                 console.log('Stdout is:');
                                                 console.log(stdout);
-                                                lineBreak();
+                                                utils_1.lineBreak();
                                             }
                                             else {
                                                 var message = stdout;
-                                                successAlert('', '', swalColour);
+                                                successAlert_1.successAlert('', '', swalColour);
                                             }
                                         });
                                     }
                                     if (dlquality === 'live') {
-                                        runningAlert();
+                                        runningAlert_1.runningAlert();
                                         var order = 'periscopefail';
-                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                        execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                             if (error) {
-                                                errorAlert(error + stdout, 'download', '', swalColour);
-                                                lineBreak();
+                                                errorAlert_1.errorAlert(error + stdout, 'download', '', swalColour, '');
+                                                utils_1.lineBreak();
                                             }
                                             else {
-                                                successAlert('live', stdout, swalColour);
-                                                lineBreak();
+                                                successAlert_1.successAlert('live', stdout, swalColour);
+                                                utils_1.lineBreak();
                                             }
                                         });
                                     }
@@ -481,26 +483,26 @@ function run_pynon() {
                         else if (message.indexOf('itv.com') >= 0) {
                             if (message.indexOf('hub') >= 0) {
                                 console.log('Running ITV Hub Options');
-                                runningAlert();
+                                runningAlert_1.runningAlert();
                                 var finalURL = message;
                                 var order = 'normal';
                                 var extractorOptions_1 = {
-                                    "cwd": extractorPath,
+                                    "cwd": OS_FF_1.versionInfo.extractorPath,
                                     "maxBuffer": 1024 * 30720,
                                 };
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions_1, function (error, stdout, stderr) {
+                                execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions_1, function (error, stdout, stderr) {
                                     if (error) {
                                         console.log('ITV Hub download error, details:');
-                                        errorAlert(error + stdout, 'download', '', swalColour);
+                                        errorAlert_1.errorAlert(error + stdout, 'download', '', swalColour, '');
                                         console.log('stdout log here:');
                                         console.log(stdout);
-                                        lineBreak();
+                                        utils_1.lineBreak();
                                     }
                                     else {
                                         console.log('Success! Stdout below:');
                                         console.log(stdout);
-                                        lineBreak();
-                                        successAlert('', '', swalColour);
+                                        utils_1.lineBreak();
+                                        successAlert_1.successAlert('', '', swalColour);
                                     }
                                     ;
                                 });
@@ -554,8 +556,8 @@ function run_pynon() {
                                         });
                                         iPlay.on('close', function (code) {
                                             console.log('Success!');
-                                            lineBreak();
-                                            successAlert('', '', swalColour);
+                                            utils_1.lineBreak();
+                                            successAlert_1.successAlert('', '', swalColour);
                                         });
                                     }
                                     if (timing === 'whole') {
@@ -615,18 +617,18 @@ function run_pynon() {
                                     showLoaderOnConfirm: true,
                                     backdrop: swalColour.loading,
                                     preConfirm: function () {
-                                        runningAlert();
+                                        runningAlert_1.runningAlert();
                                         var order = 'normal';
-                                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                        execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                             if (error) {
                                                 console.log('Instagram downloader error, details:');
-                                                errorAlert(error, 'download', '', swalColour);
+                                                errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                             }
                                             else {
                                                 var message = stdout;
                                                 console.log('Instagram extractor print out:');
                                                 console.log(message);
-                                                successAlert('', '', swalColour);
+                                                successAlert_1.successAlert('', '', swalColour);
                                             }
                                         });
                                     }
@@ -636,7 +638,7 @@ function run_pynon() {
                                 console.log('itsa story');
                                 if (instaUse === '' || instaPass === '') {
                                     console.log('Error Code 006: No Instagram Details');
-                                    errorAlert('', 'basic', 'No instagram login details found in settings. Required for story downloads!', swalColour);
+                                    errorAlert_1.errorAlert('', 'basic', 'No instagram login details found in settings. Required for story downloads!', swalColour, '');
                                 }
                                 else {
                                     sweetalert2_1.default.fire({
@@ -647,19 +649,19 @@ function run_pynon() {
                                         showLoaderOnConfirm: true,
                                         backdrop: swalColour.loading,
                                         preConfirm: function () {
-                                            runningAlert();
+                                            runningAlert_1.runningAlert();
                                             var order = 'stories';
                                             var finalURL = inputURL.replace(/\/\?hl=../gm, "");
-                                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                            execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                                 if (error) {
                                                     console.log('Stories downloader error, details:');
-                                                    errorAlert(error, 'download', '', swalColour);
+                                                    errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                                 }
                                                 else {
                                                     var message = stdout;
                                                     console.log('Stories extractor print out:');
                                                     console.log(message);
-                                                    successAlert('', '', swalColour);
+                                                    successAlert_1.successAlert('', '', swalColour);
                                                 }
                                             });
                                         }
@@ -679,12 +681,12 @@ function run_pynon() {
                                 showLoaderOnConfirm: true,
                                 backdrop: swalColour.loading,
                                 preConfirm: function () {
-                                    runningAlert();
+                                    runningAlert_1.runningAlert();
                                     var order = 'normal';
-                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, function (error, stdout, stderr) {
+                                    execFile(OS_FF_1.versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, OS_FF_1.versionInfo.ffmpegPath, instaUse, instaPass], OS_FF_1.extractorOptions, function (error, stdout, stderr) {
                                         if (error) {
                                             console.log('Generic downloader error, details:');
-                                            errorAlert(error, 'download', '', swalColour);
+                                            errorAlert_1.errorAlert(error, 'download', '', swalColour, '');
                                         }
                                         else {
                                             var message = stdout;
@@ -693,10 +695,10 @@ function run_pynon() {
                                             if (message.indexOf('twitter.com') >= 0) {
                                                 console.log('Changed video name due to Twitter, User notified');
                                                 var passText = 'Please note: Twitter videos are named after the username! Some tweets are just too long for titles.';
-                                                successAlert('', passText, swalColour);
+                                                successAlert_1.successAlert('', passText, swalColour);
                                             }
                                             else {
-                                                successAlert('', '', swalColour);
+                                                successAlert_1.successAlert('', '', swalColour);
                                             }
                                         }
                                     });
@@ -711,4 +713,3 @@ function run_pynon() {
     });
 }
 ;
-//# sourceMappingURL=pynon.js.map

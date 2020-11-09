@@ -1,6 +1,6 @@
-const { version } = require("process");
-
 import { remote, win, progressBar, lineBreak } from '../Utilities/utils';
+import { ffmpeg } from '../Utilities/OS&FF';
+import { effectSetUp } from '../Utilities/fileSetUp';
 
 import { convertAlert } from '../alerts/convertAlert';
 import { errorAlert } from '../alerts/errorAlert';

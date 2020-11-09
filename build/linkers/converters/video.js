@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var sweetalert2_1 = require("sweetalert2");
 var utils_1 = require("../Utilities/utils");
+var OS_FF_1 = require("../Utilities/OS&FF");
 var successAlert_1 = require("../alerts/successAlert");
 var convertAlert_1 = require("../alerts/convertAlert");
 var errorAlert_1 = require("../alerts/errorAlert");
@@ -83,10 +84,10 @@ function videoConvert(convertInfo, swalColour) {
                         preConfirm: function (videoConv) {
                             convertAlert_1.convertAlert(swalColour);
                             if (videoConv == 'convert') {
-                                var runMP4 = ffmpeg(convertInfo.file).format(videoForm).on('progress', function (progress) { utils_1.progressBar(progress, ''); }).save(finalOutput);
+                                var runMP4 = OS_FF_1.ffmpeg(convertInfo.file).format(videoForm).on('progress', function (progress) { utils_1.progressBar(progress, ''); }).save(finalOutput);
                             }
                             else {
-                                var runMP4 = ffmpeg(convertInfo.file).videoCodec('copy').audioCodec('aac').outputOptions([
+                                var runMP4 = OS_FF_1.ffmpeg(convertInfo.file).videoCodec('copy').audioCodec('aac').outputOptions([
                                     '-map 0:v', '-map 0:a:?',
                                 ]).output(finalOutput).on('progress', function (progress) { utils_1.progressBar(progress, ''); });
                             }
@@ -109,4 +110,3 @@ function videoConvert(convertInfo, swalColour) {
 module.exports = {
     videoConvert: videoConvert
 };
-//# sourceMappingURL=video.js.map

@@ -7,7 +7,6 @@ const { concat } = require('./effects/concat');
 const { wave } = require('./effects/wave');
 
 import Swal from 'sweetalert2';
-const rimraf  = require("rimraf");
 
 async function run_effect(){
     lineBreak();
@@ -16,8 +15,6 @@ async function run_effect(){
     var e = document.getElementById("convertFormat") as HTMLSelectElement;
     let format = e.options[e.selectedIndex].value;
 
-    //WAVE
-    
     // SINGLE
     async function singleEffect(format: string | string[]){
         if (format.indexOf('wave')>=0){
@@ -82,7 +79,7 @@ async function run_effect(){
                     console.log ('Running effect one, code: ' + format);
                     await singleEffect(format);
                     format = custom_two
-                    effectFile = [finalOutput];
+                    let effectFile = [finalOutput];
                     console.log ('Running effect two, code: ' + format);
                     await singleEffect(format);
                     if (custom_three.indexOf('blank')<=0){

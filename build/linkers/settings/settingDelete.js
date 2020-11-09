@@ -32,4 +32,3 @@ exports.settingDelete = settingDelete;
 module.exports = {
     settingDelete: settingDelete
 };
-//# sourceMappingURL=settingDelete.js.map

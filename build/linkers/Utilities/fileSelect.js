@@ -1,4 +1,5 @@
 var dialog = require('electron').remote.dialog;
+var effectFile;
 document.getElementById('downloadtext').addEventListener('click', function () {
     dialog.showOpenDialog({
         filters: [
@@ -49,4 +50,3 @@ document.getElementById('downloadtext').addEventListener('click', function () {
         ;
     });
 });
-//# sourceMappingURL=fileSelect.js.map

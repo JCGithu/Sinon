@@ -36,8 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var version = require("process").version;
 var utils_1 = require("../Utilities/utils");
+var OS_FF_1 = require("../Utilities/OS&FF");
+var fileSetUp_1 = require("../Utilities/fileSetUp");
 var convertAlert_1 = require("../alerts/convertAlert");
 var errorAlert_1 = require("../alerts/errorAlert");
 var successAlert_1 = require("../alerts/successAlert");
@@ -45,13 +46,13 @@ function concat(multi, swalColour, format) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, new Promise(function (resolve) {
-                    var ffmpegInputs = ffmpeg();
+                    var ffmpegInputs = OS_FF_1.ffmpeg();
                     var fileSettings;
                     var getInputs = new Promise(function (resolve) {
                         effectFile.forEach(function (fileSelected, index, array) {
                             return __awaiter(this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
-                                    fileSettings = effectSetUp(fileSelected);
+                                    fileSettings = fileSetUp_1.effectSetUp(fileSelected);
                                     ffmpegInputs = ffmpegInputs.input(fileSettings.inputFull);
                                     if (index === array.length - 1)
                                         resolve();
@@ -93,4 +94,3 @@ function concat(multi, swalColour, format) {
 module.exports = {
     concat: concat
 };
-//# sourceMappingURL=concat.js.map

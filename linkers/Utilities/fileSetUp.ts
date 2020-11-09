@@ -1,6 +1,4 @@
-
-
-function effectSetUp(fileSelected: any){
+export function effectSetUp(fileSelected: any){
     var fileSettings = {
         outputFile: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).name),
         inputFull: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).base),
@@ -10,8 +8,4 @@ function effectSetUp(fileSelected: any){
         pngFolder: path.parse(fileSelected).dir + '\\' + path.parse(fileSelected).name
     }
     return fileSettings
-}
-
-module.exports = {
-    effectSetUp
 }

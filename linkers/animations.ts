@@ -1,6 +1,8 @@
 const anime = require('animejs');
 
-import { docReady } from './Utilities/utils';
+import { docReady, storage } from './Utilities/utils';
+
+console.log('animation ran');
 
 function startAnimation(){
 
@@ -17,10 +19,10 @@ function startAnimation(){
     var downPage = '../GUI/tool_down.html';
     var convPage = '../GUI/tool_conv.html';
     var effectPage = '../GUI/tool_effect.html';
-    
-    var downloader = '../linkers/pynon.js';
-    var converter = '../linkers/converter.js';
-    var effector = '../linkers/effect.js';
+
+    let downloader = "require ('../build/linkers/pynon.js');"
+    let effector = "require ('../build/linkers/effect.js');"
+    let converter = "require ('../build/linkers/convertor.js');"
 
     var menuCurrent = 'down';
 
@@ -45,52 +47,31 @@ function startAnimation(){
     });
 
     //Tool Transitions
-    function toolReplace(page){
+    function toolReplace(page, intro){
         xhr.open('GET', page, true);
         xhr.onreadystatechange= function() {
             document.getElementById('currentTool').innerHTML = this.responseText;
         };
+        xhr.onload = () => {
+            if (intro){
+                console.log('huzzah')
+                let script = document.createElement("script");
+                script.innerHTML = downloader, effector, converter;
+                script.id = 'jsTool';
+                document.body.appendChild(script);
+            }
+        };
         xhr.send();
     };
 
-    toolReplace(downPage);
+    toolReplace(downPage, true);
     
-    var script = document.createElement("script");
-    script.type = "module";
-    script.src = downloader;
-    script.id = 'jsTool';
-    document.body.appendChild(script);
-
-    /* document.body.append(Object.assign(document.createElement('script'),{type:"text/javascript"})); */
     
-    function replacejs(file) {
-        if (document.getElementById('jsTool')){
-            document.getElementById('jsTool').remove();
-        }
-        var script = document.createElement("script");
-        script.type = "module";
-        script.src = file;
-        script.id = 'jsTool';
-        document.body.appendChild(script);
-    };
-
     //Toolbar Animations
 
     document.getElementById('toolbar').addEventListener('click', function(){
         toolMenu.classList.add('toolOpen');
     });
-    function dmenu (){
-        toolReplace(downPage);
-        replacejs(downloader)
-    }
-    function cmenu (){
-        toolReplace(convPage);
-        replacejs(converter);
-    }
-    function emenu (){
-        toolReplace(effectPage);
-        replacejs(effector);
-    }
 
     function folderLoad(){
         storage.get('settings', function(error, data) {
@@ -121,7 +102,7 @@ function startAnimation(){
     document.getElementById('MenuD').addEventListener("click", function(){
         if (menuCurrent !== 'down') {
             setTimeout(folderLoad, 800);
-            swap (dmenu);
+            swap (toolReplace(downPage, false));
         } else {
             toolMenu.classList.remove('toolOpen');
         };
@@ -130,8 +111,8 @@ function startAnimation(){
 
     document.getElementById('MenuC').addEventListener("click", function(){
         if (menuCurrent !== 'conv') {
-            swap (cmenu);
-        }else{
+            swap (toolReplace(convPage, false));
+        } else {
             toolMenu.classList.remove('toolOpen');
         };
         menuCurrent = 'conv';
@@ -139,7 +120,7 @@ function startAnimation(){
 
     document.getElementById('MenuE').addEventListener("click", function(){
         if (menuCurrent !== 'effect') {
-            swap (emenu);
+            swap (toolReplace(effectPage, false));
         }else{
             toolMenu.classList.remove('toolOpen');
         };

@@ -38,6 +38,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var sweetalert2_1 = require("sweetalert2");
 var utils_1 = require("../Utilities/utils");
+var fileSetUp_1 = require("../Utilities/fileSetUp");
+var OS_FF_1 = require("../Utilities/OS&FF");
 var convertAlert_1 = require("../alerts/convertAlert");
 var errorAlert_1 = require("../alerts/errorAlert");
 var successAlert_1 = require("../alerts/successAlert");
@@ -68,11 +70,11 @@ function socialBlur(multi, swalColour, format) {
                                 var cropSetting = "[pxratio_fix]crop='if(lt(in_h,in_w),in_h,in_w):in_h'[cropped]";
                             }
                             effectFile.forEach(function (fileSelected) {
-                                var fileSettings = effectSetUp(fileSelected);
+                                var fileSettings = fileSetUp_1.effectSetUp(fileSelected);
                                 var finalOutput = fileSettings.outputFile + '-bgblurred.mp4';
                                 console.log('Final output: ', finalOutput);
                                 utils_1.lineBreak();
-                                ffmpeg(fileSelected)
+                                OS_FF_1.ffmpeg(fileSelected)
                                     .complexFilter([
                                     '[0:v]scale=iw*sar:ih[pxratio_fix]',
                                     cropSetting,
@@ -120,4 +122,3 @@ function socialBlur(multi, swalColour, format) {
 module.exports = {
     socialBlur: socialBlur
 };
-//# sourceMappingURL=blur.js.map

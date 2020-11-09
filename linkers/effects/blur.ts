@@ -1,6 +1,8 @@
 import Swal,{ SweetAlertOptions } from 'sweetalert2';
 
 import { remote, win, lineBreak } from '../Utilities/utils';
+import { effectSetUp } from '../Utilities/fileSetUp';
+import { ffmpeg } from '../Utilities/OS&FF';
 
 import { convertAlert } from '../alerts/convertAlert';
 import { errorAlert } from '../alerts/errorAlert';

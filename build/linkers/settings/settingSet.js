@@ -1,5 +1,9 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.settingSet = void 0;
+var utils_1 = require("../Utilities/utils");
 function settingSet() {
-    storage.set('settings', {
+    utils_1.storage.set('settings', {
         UrlWipe: 'false',
         DarkMode: 'false',
         Geo: '',
@@ -13,8 +17,5 @@ function settingSet() {
     });
     console.log('Setting File Created!');
 }
+exports.settingSet = settingSet;
 ;
-module.exports = {
-    settingSet: settingSet
-};
-//# sourceMappingURL=settingSet.js.map

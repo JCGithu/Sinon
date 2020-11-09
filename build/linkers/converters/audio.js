@@ -38,6 +38,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var sweetalert2_1 = require("sweetalert2");
 var utils_1 = require("../Utilities/utils");
+var OS_FF_1 = require("../Utilities/OS&FF");
 var successAlert_1 = require("../alerts/successAlert");
 var convertAlert_1 = require("../alerts/convertAlert");
 var errorAlert_1 = require("../alerts/errorAlert");
@@ -66,7 +67,7 @@ function audioConvert(convertInfo, swalColour) {
                     console.log('Final output: ', finalOutput);
                     utils_1.lineBreak();
                     convertAlert_1.convertAlert(swalColour);
-                    ffmpeg(convertInfo.file).format(audioForm).noVideo().on('progress', function (progress) {
+                    OS_FF_1.ffmpeg(convertInfo.file).format(audioForm).noVideo().on('progress', function (progress) {
                         document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
                         console.log('Processing: ' + progress.percent + '% done');
                         var percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
@@ -88,4 +89,3 @@ function audioConvert(convertInfo, swalColour) {
 module.exports = {
     audioConvert: audioConvert
 };
-//# sourceMappingURL=audio.js.map

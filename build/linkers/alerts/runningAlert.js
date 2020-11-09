@@ -16,4 +16,3 @@ function runningAlert() {
 }
 exports.runningAlert = runningAlert;
 ;
-//# sourceMappingURL=runningAlert.js.map

@@ -13,4 +13,3 @@ function convertAlert(swalColour) {
     });
 }
 exports.convertAlert = convertAlert;
-//# sourceMappingURL=convertAlert.js.map

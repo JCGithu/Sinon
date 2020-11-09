@@ -4,12 +4,14 @@ const { execFile } = require('child_process');
 var spawn = require('child_process').spawn;
 
 //Utils
-const { lineBreak, swalColours, fs } = require('./Utilities/utils');
+import { lineBreak, swalColours, fs } from './Utilities/utils';
+import { versionInfo, extractorOptions, ffmpegOptions } from './Utilities/OS&FF';
+import { settingSave } from './Utilities/settings';
 
 // Alerts
-const { errorAlert } = require('./alerts/errorAlert');
-const { runningAlert } = require('./alerts/runningAlert');
-const { successAlert } = require('./alerts/successAlert');
+import { errorAlert } from './alerts/errorAlert';
+import { runningAlert } from './alerts/runningAlert';
+import { successAlert } from './alerts/successAlert';
 
 document.getElementById('downloadtext').addEventListener('click', function(){
     dialog.showOpenDialog({
@@ -63,7 +65,7 @@ async function run_pynon() {
         console.log('Input URl: ' + inputURL)
         console.log('Download Path: ' + downloadPath)
         console.log('Pynon orders: ' + order)
-        console.log('Extractor path is: ' + extractorPath)
+        console.log('Extractor path is: ' + versionInfo.extractorPath)
         console.log('Geo is: ' + geo)
         if (userProxy == ''){
             console.log('No user proxy inputted')
@@ -95,7 +97,7 @@ async function run_pynon() {
 
     if (downloadPath === ''){
         console.log ('Error Code 000: No Download Path')
-        errorAlert('','basic', "No download path given!", swalColour);
+        errorAlert('','basic', "No download path given!", swalColour, '');
     }
 
     if (inputURL.indexOf('tiktok.com')>=0){
@@ -105,9 +107,9 @@ async function run_pynon() {
         inputURL = inputURL.replace("youtu.be/", "youtube.com/watch?v=");
     };
 
-    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+    execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
         if (error) {
-            errorAlert(error, 'proxy', 'Looks like a proxy error. Try again or use another method to rip the video for now.', swalColour);
+            errorAlert(error, 'proxy', 'Looks like a proxy error. Try again or use another method to rip the video for now.', swalColour, '');
         }
         else {
             console.log('Initial output from Extractor is:')
@@ -134,10 +136,10 @@ async function run_pynon() {
 
                         var order = 'normal';
                         
-                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                        execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                             if (error) {
                                 console.log('Youtube Normal Download Fail');
-                                errorAlert(error, 'download', '', swalColour);
+                                errorAlert(error, 'download', '', swalColour, '');
                             }
                             else{
                                 var message = stdout;
@@ -152,21 +154,21 @@ async function run_pynon() {
             //NO VIDEO FOUND ERROR
             else if (message.indexOf('Err002')>=0){
                 console.log('Resulted in Error Code 002');
-                errorAlert('', 'basic', "Can't see any video on this page?", swalColour);
+                errorAlert('', 'basic', "Can't see any video on this page?", swalColour, '');
             }
             //SECURE VIDEO ERROR
             else if (message.indexOf('Err003')>=0){
                 console.log('Resulted in Error Code 003');
-                errorAlert('', 'basic', 'This is a secure video, sorry!', swalColour);
+                errorAlert('', 'basic', 'This is a secure video, sorry!', swalColour, '');
             }
             //NO URL ERROR
             else if (message.indexOf('Err004')>=0){
                 console.log('Resulted in Error Code 004');
-                errorAlert('', 'basic', 'No URL input!', swalColour);
+                errorAlert('', 'basic', 'No URL input!', swalColour, '');
             }
             else if (message.indexOf('Err005')>=0){
                 console.log('Resulted in Error Code 002');
-                errorAlert('', 'basic', "Geo-restricted page", swalColour);
+                errorAlert('', 'basic', "Geo-restricted page", swalColour, '');
             }
             //GENERIC EXTRACTOR
             else if (message.indexOf('Generic')>=0){
@@ -206,16 +208,16 @@ async function run_pynon() {
                                     );
                                     successAlert('','', swalColour);
                                 } catch (error) {
-                                    errorAlert(error, 'download', '', swalColour);
+                                    errorAlert(error, 'download', '', swalColour, '');
                                 }
 
                             })();
                         } else {
                             var order = 'normal';
                         
-                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                            execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                 if (error) {
-                                    errorAlert(error, 'download', '', swalColour);
+                                    errorAlert(error, 'download', '', swalColour, '');
                                 }
                                 else{
                                     var message = stdout;
@@ -280,10 +282,10 @@ async function run_pynon() {
                                             runningAlert();
                                             var order = 'normal';
                 
-                                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                            execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                                 if (error) {
                                                     console.log('Youtube Normal Download Fail');
-                                                    errorAlert(error, 'download', '', swalColour);
+                                                    errorAlert(error, 'download', '', swalColour, '');
                                                 }
                                                 else{
                                                     var message = stdout;
@@ -309,10 +311,10 @@ async function run_pynon() {
                                             
                                                     var order = 'high';
                                                     
-                                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                                    execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                                         if (error) {
                                                             console.log('High Quality Youtube Downloader Error, Details:')
-                                                            errorAlert(error, 'download', '', swalColour);
+                                                            errorAlert(error, 'download', '', swalColour, '');
                                                         }
                                                         else{
                                                             var message = stdout;
@@ -327,10 +329,10 @@ async function run_pynon() {
                                         if (dlquality === 'live') {
                                             runningAlert();
                                             var order = 'live';
-                                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                            execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                                 if (error) {
                                                     console.log('Livestream Youtube Grabber Error, Details:')
-                                                    errorAlert(error, 'download', '', swalColour);
+                                                    errorAlert(error, 'download', '', swalColour, '');
                                                 }
                                                 else {
                                                     successAlert('live', stdout, swalColour);
@@ -368,10 +370,10 @@ async function run_pynon() {
                                 
                                 var order = 'normal';
 
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                     if (error) {
                                         console.log('Parliament TV Download Error, Details');
-                                        errorAlert(error, 'download', '', swalColour);
+                                        errorAlert(error, 'download', '', swalColour, '');
                                     }
                                     else {
                                         var message = stdout;
@@ -385,10 +387,10 @@ async function run_pynon() {
 
                                 var order = 'live';
 
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                     if (error) {
                                         console.log('Parliament TV Live Grab Error, Details');
-                                        errorAlert(error, 'download', '', swalColour);
+                                        errorAlert(error, 'download', '', swalColour, '');
                                     }
                                     else {
                                         var livestreamurl = stdout.replace('\\r/','/');
@@ -422,11 +424,11 @@ async function run_pynon() {
                                 runningAlert();
                                 console.log('final url is ' + finalURL);
                                 var order = 'normal';
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                     if (error) {
                                         console.log('Periscope live grab error, details:');
                                         error = error + stdout;
-                                        errorAlert(error, 'download', '', swalColour);
+                                        errorAlert(error, 'download', '', swalColour, '');
                                         console.log('Stdout is:');
                                         console.log(stdout);
                                         lineBreak();
@@ -440,9 +442,9 @@ async function run_pynon() {
                             if (dlquality === 'live') {
                                 runningAlert();
                                 var order = 'periscopefail';
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                     if (error) {
-                                        errorAlert(error + stdout, 'download', '', swalColour);
+                                        errorAlert(error + stdout, 'download', '', swalColour, '');
                                         lineBreak();
                                     }
                                     else {
@@ -465,14 +467,14 @@ async function run_pynon() {
                         var order = 'normal';
 
                         let extractorOptions = {
-                            "cwd": extractorPath,
+                            "cwd": versionInfo.extractorPath,
                             "maxBuffer": 1024 * 30720,
                         };
 
-                        execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                        execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                             if (error) {
                                 console.log ('ITV Hub download error, details:')
-                                errorAlert(error + stdout, 'download', '', swalColour);
+                                errorAlert(error + stdout, 'download', '', swalColour, '');
                                 console.log('stdout log here:');
                                 console.log(stdout);
                                 lineBreak();
@@ -603,10 +605,10 @@ async function run_pynon() {
                             preConfirm: () => {
                                 runningAlert();
                                 var order = 'normal';
-                                execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                     if (error) {
                                         console.log ('Instagram downloader error, details:')
-                                        errorAlert(error, 'download', '', swalColour);
+                                        errorAlert(error, 'download', '', swalColour, '');
                                     }
                                     else{
                                         var message = stdout;
@@ -622,7 +624,7 @@ async function run_pynon() {
                         console.log('itsa story')
                         if (instaUse === '' || instaPass === ''){
                             console.log ('Error Code 006: No Instagram Details')
-                            errorAlert('', 'basic', 'No instagram login details found in settings. Required for story downloads!', swalColour);
+                            errorAlert('', 'basic', 'No instagram login details found in settings. Required for story downloads!', swalColour, '');
                         } else {
                             Swal.fire({
                                 icon: 'success',
@@ -639,10 +641,10 @@ async function run_pynon() {
 
                                     var finalURL = inputURL.replace(/\/\?hl=../gm, "")
         
-                                    execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                    execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                         if (error) {
                                             console.log ('Stories downloader error, details:')
-                                            errorAlert(error, 'download', '', swalColour);
+                                            errorAlert(error, 'download', '', swalColour, '');
                                         }
                                         else{
                                             var message = stdout;
@@ -674,10 +676,10 @@ async function run_pynon() {
 
                             var order = 'normal';
 
-                            execFile(ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                            execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
                                 if (error) {
                                     console.log ('Generic downloader error, details:')
-                                    errorAlert(error, 'download', '', swalColour);
+                                    errorAlert(error, 'download', '', swalColour, '');
                                 }
                                 else{
                                     var message = stdout;

@@ -1,9 +1,12 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.docReady = exports.progressBar = exports.lineBreak = exports.swalColours = exports.copyString = exports.fs = exports.win = exports.remote = void 0;
-exports.remote = require('electron').remote;
+exports.docReady = exports.progressBar = exports.lineBreak = exports.swalColours = exports.copyString = exports.storage = exports.path = exports.fs = exports.win = exports.ipcRenderer = exports.remote = exports.app = void 0;
+exports.app = (_a = require('electron'), _a.app), exports.remote = _a.remote, exports.ipcRenderer = _a.ipcRenderer;
 exports.win = exports.remote.getCurrentWindow();
 exports.fs = require('fs');
+exports.path = require('path');
+exports.storage = require('electron-json-storage');
 function copyString(str) {
     var el = document.createElement('textarea');
     el.value = str;
@@ -64,4 +67,3 @@ function docReady(fn) {
 }
 exports.docReady = docReady;
 ;
-//# sourceMappingURL=utils.js.map

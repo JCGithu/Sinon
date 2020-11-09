@@ -11,4 +11,3 @@ window.addEventListener('DOMContentLoaded', function () {
         replaceText(type + "-version", process.versions[type]);
     }
 });
-//# sourceMappingURL=preload.js.map

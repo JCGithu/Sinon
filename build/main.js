@@ -15,7 +15,8 @@ function createWindow() {
         fullscreenable: false,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     });
     mainWindow.loadFile('./GUI/GUI.html');
@@ -45,4 +46,3 @@ ipcMain.on('waveDone', function (event, digits) {
     console.log('Wave done recieved');
     event.reply('waveDoneReply', digits);
 });
-//# sourceMappingURL=main.js.map

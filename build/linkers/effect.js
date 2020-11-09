@@ -43,10 +43,8 @@ var socialBlur = require('./effects/blur').socialBlur;
 var concat = require('./effects/concat').concat;
 var wave = require('./effects/wave').wave;
 var sweetalert2_1 = require("sweetalert2");
-var rimraf = require("rimraf");
 function run_effect() {
     return __awaiter(this, void 0, void 0, function () {
-        //WAVE
         // SINGLE
         function singleEffect(format) {
             return __awaiter(this, void 0, void 0, function () {
@@ -125,7 +123,7 @@ function run_effect() {
                         backdrop: swalColour.loading,
                         target: document.getElementById('swalframe'),
                         preConfirm: (function () { return __awaiter(_this, void 0, void 0, function () {
-                            var custom_get, custom_get, custom_two, custom_get, custom_three, multi, nextStep;
+                            var custom_get, custom_get, custom_two, custom_get, custom_three, multi, nextStep, effectFile;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
@@ -180,4 +178,3 @@ function run_effect() {
     });
 }
 ;
-//# sourceMappingURL=effect.js.map

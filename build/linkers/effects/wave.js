@@ -40,17 +40,20 @@ var convertAlert_1 = require("../alerts/convertAlert");
 var errorAlert_1 = require("../alerts/errorAlert");
 var successAlert_1 = require("../alerts/successAlert");
 var utils_1 = require("../Utilities/utils");
+var OS_FF_1 = require("../Utilities/OS&FF");
+var fileSetUp_1 = require("../Utilities/fileSetUp");
+var rimraf = require("rimraf");
 function wave(multi, swalColour, format) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            return [2 /*return*/, new Promise(function (resolve, reject) {
+            return [2 /*return*/, new Promise(function (resolve) {
                     effectFile.forEach(function (fileSelected) {
-                        var fileSettings = effectSetUp(fileSelected);
+                        var fileSettings = fileSetUp_1.effectSetUp(fileSelected);
                         var finalOutput = fileSettings.outputFile + '-waveform.mov';
                         console.log('Final output: ', finalOutput);
                         utils_1.lineBreak();
                         convertAlert_1.convertAlert(swalColour);
-                        ffmpeg(fileSelected)
+                        OS_FF_1.ffmpeg(fileSelected)
                             .fps(25)
                             .format('mov')
                             .videoCodec('png')
@@ -87,4 +90,3 @@ function wave(multi, swalColour, format) {
 module.exports = {
     wave: wave
 };
-//# sourceMappingURL=wave.js.map

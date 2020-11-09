@@ -1,14 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var version = require("process").version;
-var remote = require('electron').remote;
-var dialog = require('electron').remote.dialog;
-var win = remote.getCurrentWindow();
 var utils_1 = require("./Utilities/utils");
-var settingDelete_1 = require("./settings/settingDelete");
+var OS_FF_1 = require("./Utilities/OS&FF");
+var app = require('electron').app;
+var settings_1 = require("./Utilities/settings");
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 utils_1.docReady(function () {
+    var userDataPath = app.getPath('userData');
+    var storagePath = utils_1.path.join(userDataPath, '/.');
+    console.log('haha');
     //Frame Style
     document.getElementsByClassName("maindiv")[0].style.borderRadius = "10%";
     //Dark Mode
@@ -30,11 +31,9 @@ utils_1.docReady(function () {
         }, 1000);
     };
     //Close App
-    document.getElementById('close').addEventListener('click', function () { win.close(); });
+    document.getElementById('close').addEventListener('click', function () { utils_1.win.close(); });
     //Initial Settings Check
-    var userData = app.getPath('userData');
     var storage = require('electron-json-storage');
-    var storagePath = path.join(userData, '/.');
     storage.setDataPath(storagePath);
     var dataPath = storage.getDataPath();
     storage.has('settings', function (error, data) {
@@ -43,7 +42,7 @@ utils_1.docReady(function () {
         if (data) {
         }
         else {
-            settingSet();
+            settings_1.settingSet();
         }
     });
     //Settings Boot Up
@@ -100,7 +99,7 @@ utils_1.docReady(function () {
     var locals = document.getElementById('geoFormat');
     function autoSave() {
         clearTimeout(waitTimer);
-        waitTimer = setTimeout(settingSave, 5000);
+        waitTimer = setTimeout(settings_1.settingSave, 5000);
     }
     ;
     for (var _i = 0, _a = switches[Symbol.iterator](); _i < _a.length; _i++) {
@@ -122,13 +121,12 @@ utils_1.docReady(function () {
     });
     //Settings Delete
     document.getElementById('settingDelete').addEventListener("click", function () {
-        settingDelete_1.settingDelete();
+        settings_1.settingDelete();
     });
     //Console Startup Log
     utils_1.lineBreak();
-    console.log('FFmpeg ::: ' + ffmpegPath);
-    console.log('OS ::: ' + OSName);
+    console.log('FFmpeg ::: ' + OS_FF_1.versionInfo.ffmpegPath);
+    console.log('OS ::: ' + OS_FF_1.versionInfo.OS);
     console.log('Settings file ::: ' + dataPath);
     utils_1.lineBreak();
 });
-//# sourceMappingURL=settings.js.map

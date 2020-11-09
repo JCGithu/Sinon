@@ -1,15 +1,16 @@
-const { version } = require("process");
-const { remote } = require('electron');
-const { dialog } = require('electron').remote;
-const win = remote.getCurrentWindow();
+import { remote, win, path, docReady, lineBreak } from './Utilities/utils';
+import { versionInfo } from './Utilities/OS&FF';
+const { app } = require('electron');
 
-import { docReady, lineBreak } from './Utilities/utils';
-import { settingDelete } from './settings/settingDelete';
+import { settingDelete, settingSet, settingSave } from './Utilities/settings';
 
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 
 docReady(function(){
+    const userDataPath = app.getPath('userData');
+    const storagePath = path.join(userDataPath, '/.');
+    console.log('haha');
     //Frame Style
     (document.getElementsByClassName("maindiv")[0] as HTMLElement).style.borderRadius = "10%";
 
@@ -36,10 +37,7 @@ docReady(function(){
 
     //Initial Settings Check
 
-    const userData = app.getPath('userData');
-
     const storage = require('electron-json-storage');
-    const storagePath = path.join(userData, '/.');
     storage.setDataPath(storagePath)
     const dataPath = storage.getDataPath();
     
@@ -129,8 +127,8 @@ docReady(function(){
 
     //Console Startup Log
     lineBreak();
-    console.log('FFmpeg ::: ' + ffmpegPath);
-    console.log('OS ::: ' + OSName);
+    console.log('FFmpeg ::: ' + versionInfo.ffmpegPath);
+    console.log('OS ::: ' + versionInfo.OS);
     console.log('Settings file ::: ' + dataPath);
     lineBreak();
 });

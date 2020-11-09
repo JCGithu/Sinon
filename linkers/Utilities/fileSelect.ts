@@ -1,4 +1,5 @@
 const { dialog } = require('electron').remote;
+let effectFile;
 
 document.getElementById('downloadtext').addEventListener('click', function(){
     dialog.showOpenDialog({

@@ -41,6 +41,7 @@ var execFile = require('child_process').execFile;
 var convertAlert_1 = require("../alerts/convertAlert");
 var successAlert_1 = require("../alerts/successAlert");
 var utils_1 = require("../Utilities/utils");
+var OS_FF_1 = require("../Utilities/OS&FF");
 var sweetalert2_1 = require("sweetalert2");
 function gifConvert(convertInfo, swalColour) {
     return __awaiter(this, void 0, void 0, function () {
@@ -67,7 +68,7 @@ function gifConvert(convertInfo, swalColour) {
                             finalOutputName = path.parse(convertInfo.file).name + '-SinonConverted.gif';
                         }
                         var OptimalOutput_1 = convertInfo.outputFile + '_basic.gif';
-                        ffmpeg(convertInfo.file).format('gif').fps(12).complexFilter([
+                        OS_FF_1.ffmpeg(convertInfo.file).format('gif').fps(12).complexFilter([
                             '[0:v]mpdecimate[frames]',
                             '[frames]scale=w=trunc(oh*a/2)*2:h=360[rescaled]'
                         ], 'rescaled').on('progress', function (progress) {
@@ -217,7 +218,7 @@ function gifConvert(convertInfo, swalColour) {
                                     finalOutputName = path.parse(convertInfo.file).name + '-SinonConverted.gif';
                                 }
                                 var OptimalOutput_2 = convertInfo.outputFile + '_advanced.gif';
-                                ffmpeg(convertInfo.file).format('gif').fps(fps).complexFilter([
+                                OS_FF_1.ffmpeg(convertInfo.file).format('gif').fps(fps).complexFilter([
                                     '[0:v]mpdecimate[frames]', reRez, gifCrop
                                 ], 'cropped').on('progress', function (progress) {
                                     document.getElementById("progressText").textContent = (Math.round(progress.percent * 100) / 100).toFixed() + '%';
@@ -257,4 +258,3 @@ function gifConvert(convertInfo, swalColour) {
 module.exports = {
     gifConvert: gifConvert
 };
-//# sourceMappingURL=gif.js.map

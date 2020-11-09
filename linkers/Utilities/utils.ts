@@ -1,6 +1,8 @@
-export const { remote } = require('electron');
+export const { app, remote, ipcRenderer } = require('electron');
 export const win = remote.getCurrentWindow();
 export const fs = require('fs');
+export const path = require('path');
+export const storage = require('electron-json-storage');
 
 export function copyString (str) {
     var el = document.createElement('textarea');
