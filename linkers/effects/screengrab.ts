@@ -17,7 +17,7 @@ async function screengrabs (multi, swalColour, format){
             inputAttributes: {
                 min: "1",
                 max: "20",
-                step: "1"
+                step: "1",
             },
             inputValue: 1,
             confirmButtonText: 'Grab!',

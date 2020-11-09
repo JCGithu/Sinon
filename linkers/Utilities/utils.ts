@@ -1,4 +1,6 @@
 export const { app, remote, ipcRenderer } = require('electron');
+
+console.log('wahuha '+app);
 export const win = remote.getCurrentWindow();
 export const fs = require('fs');
 export const path = require('path');

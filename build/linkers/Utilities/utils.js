@@ -3,6 +3,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.docReady = exports.progressBar = exports.lineBreak = exports.swalColours = exports.copyString = exports.storage = exports.path = exports.fs = exports.win = exports.ipcRenderer = exports.remote = exports.app = void 0;
 exports.app = (_a = require('electron'), _a.app), exports.remote = _a.remote, exports.ipcRenderer = _a.ipcRenderer;
+console.log('wahuha ' + exports.app);
 exports.win = exports.remote.getCurrentWindow();
 exports.fs = require('fs');
 exports.path = require('path');

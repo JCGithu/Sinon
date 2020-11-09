@@ -1,6 +1,10 @@
 import { remote, win, path, docReady, lineBreak } from './Utilities/utils';
 import { versionInfo } from './Utilities/OS&FF';
-const { app } = require('electron');
+import { app } from 'electron';
+
+console.log('ruroh')
+console.log(app);
+console.log('ruroh 2')
 
 import { settingDelete, settingSet, settingSave } from './Utilities/settings';
 

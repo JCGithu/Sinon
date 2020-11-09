@@ -38,10 +38,10 @@ document.getElementById('downloadtext').addEventListener('click', function () {
         console.log(data.filePaths);
         var convertFile = data.filePaths;
         var fileTextBox = document.getElementById('downloadFile');
-        fileTextBox.value = convertFile;
+        fileTextBox.value = convertFile.toString();
         var inputText = document.getElementById('downloadFile');
         var runButton = document.getElementById("runTool");
-        if (convertFile < 1) {
+        if (convertFile.length < 1) {
             runButton.classList.remove('active');
         }
         else {

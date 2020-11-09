@@ -20,7 +20,7 @@ document.getElementById('downloadtext').addEventListener('click', function(){
     }).then((data) => {
         console.log(data.filePaths)
         var downloadPath = data.filePaths;
-        (<HTMLInputElement>document.getElementById('inputURL')).value = downloadPath;
+        (<HTMLInputElement>document.getElementById('inputURL')).value = downloadPath.toString();
         var waitTimer;
         clearTimeout(waitTimer);
         waitTimer = setTimeout(settingSave, 5000);

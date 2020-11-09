@@ -42,12 +42,12 @@ document.getElementById('downloadtext').addEventListener('click', function(){
         console.log(data.filePaths);
         var convertFile = data.filePaths;
         let fileTextBox = document.getElementById('downloadFile') as HTMLInputElement
-        fileTextBox.value = convertFile;
+        fileTextBox.value = convertFile.toString();
         
         let inputText = document.getElementById('downloadFile');
         let runButton = document.getElementById("runTool");
 
-        if(convertFile < 1){
+        if(convertFile.length < 1){
             runButton.classList.remove('active');
         } else {
             runButton.classList.add('active');

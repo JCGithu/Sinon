@@ -2,12 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var utils_1 = require("./Utilities/utils");
 var OS_FF_1 = require("./Utilities/OS&FF");
-var app = require('electron').app;
+var electron_1 = require("electron");
+console.log('ruroh');
+console.log(electron_1.app);
+console.log('ruroh 2');
 var settings_1 = require("./Utilities/settings");
 NodeList.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 HTMLCollection.prototype[Symbol.iterator] = Array.prototype[Symbol.iterator];
 utils_1.docReady(function () {
-    var userDataPath = app.getPath('userData');
+    var userDataPath = electron_1.app.getPath('userData');
     var storagePath = utils_1.path.join(userDataPath, '/.');
     console.log('haha');
     //Frame Style

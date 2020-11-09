@@ -35,8 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var sweetalert2_1 = require("sweetalert2");
+var sweetalert2_1 = __importDefault(require("sweetalert2"));
 var dialog = require('electron').remote.dialog;
 var execFile = require('child_process').execFile;
 var spawn = require('child_process').spawn;
@@ -55,7 +58,7 @@ document.getElementById('downloadtext').addEventListener('click', function () {
     }).then(function (data) {
         console.log(data.filePaths);
         var downloadPath = data.filePaths;
-        document.getElementById('inputURL').value = downloadPath;
+        document.getElementById('inputURL').value = downloadPath.toString();
         var waitTimer;
         clearTimeout(waitTimer);
         waitTimer = setTimeout(settings_1.settingSave, 5000);

@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorAlert = void 0;
 var utils_1 = require("../Utilities/utils");
-var sweetalert2_1 = require("sweetalert2");
+var sweetalert2_1 = __importDefault(require("sweetalert2"));
 function errorAlert(error, errorType, errorText, swalColour, instaDeets) {
     var instaUse = document.getElementById('InstaUse');
     var instaPass = document.getElementById('InstaPass');
