@@ -5,92 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinon</title>
     <link rel="stylesheet" type="text/css" href="./main.css">
-    <script>
-        require ('../build/linkers/settings.js');
-        require ('../build/linkers/animations.js');
-    </script>
 </head>
 
 <body>
     <div class=corners id='swalframe'>
-        <div class="wavecontainer">
-            <div class="wave"></div>
-            <div class="wave"></div>
-        </div>
-        <div class="toolMenu">
-            <h2>Tools</h2>
-            <a id='MenuD' class="grow-on-hover">Downloader</a><br>
-            <a id='MenuC' class="grow-on-hover">Converter</a><br>
-            <a id='MenuE' class="grow-on-hover">Effects</a><br>
-            <a id='toolClose' class="grow-on-hover">&#171;</a><br>
-        </div>
-        <div class = "optionsbg">
-            <div class="colourstrip" id="optionstrip"></div>
-            <h1>Options</h1>
-            <div class="optionsblock">
-                <div class="optionscontainer">
-                    <div class='optionscontainertwo'>
-                        <a>Dark Mode</a>
-                        <input class="container_toggle" type="checkbox" id="darkswitch" name="mode">
-                        <label for="darkswitch">Toggle</label>
-                        <a style="margin-top: 10px;">Auto-delete URL on completion</a>
-                        <input class="container_toggle" type="checkbox" id="urlswitch" name="urlwipe">
-                        <label for="urlswitch">Toggle</label>
-                        <a style="margin-top: 10px;">Country select</a>
-                        <select id='geoFormat' class="geoFormat" classNamePrefix='conv'>
-                            <option value='UK'>UK</option>
-                            <option value='US'>US</option>
-                        </select>
-                        <a style="margin-top: 10px;">Custom Proxy</a>
-                        <input type="text" id="proxyInput" placeholder="Enter Custom Proxy" style='width: 60vw !important'>
-                        <p>Proxies are only used if a website is <br> not available in your country</p>
-                        <a>Instagram Username</a>
-                        <input type="text" id="InstaUse" placeholder="Enter Instagram Username" style='width: 60vw !important'>
-                        <a style="margin-top: 10px;">Instagram Password</a>
-                        <input type="text" id="InstaPass" placeholder="Enter Instagram Password" style='width: 60vw !important'>
-                        <button id="settingDelete" class="grow-on-hover">Delete settings</button>
-                    </div>
-                </div>
-            </div>
-            <svg id="closeOptions" viewBox="0 0 512 512">
-                <use xlink:href="../imgs/tools.svg#downArrow"></use>
-            </svg>
-        </div>
-        <div class="docbg">
-            <div id='docbar'></div>
-            <h1>Documentation</h1>
-                <div class="docstuff">
-                    <div data-include = './changelog.html'></div>
-                </div>
-            <svg id="closedocs" viewBox="0 0 512 512">
-                <use xlink:href="../imgs/tools.svg#downArrow"></use>
-            </svg>
-        </div>
+        <main id='sinon'></main>
     </div>
-        <div class='maindiv'>
-            <header>
-                <svg id="toolbar" viewBox="0 0 448 512">
-                    <use xlink:href="../imgs/tools.svg#toolBox"></use>
-                </svg>
-                <div class="colourstrip"></div>
-                <div class="banner">
-                    <svg id="close" viewBox="0 0 512 512">
-                        <use xlink:href="../imgs/tools.svg#closeBox"></use>
-                    </svg>
-                    <svg id="optionsIcon" viewBox="0 0 640 512">
-                        <use xlink:href="../imgs/tools.svg#optionsBox"></use>
-                    </svg>
-                    <a style="font-size: 8pt;" class="grow-on-hover" id="ver">Version 1.2.4</a>
-                </div>
-            </header>
-            <h1 class="mainTitle">
-                <span class="text-wrapper">
-                    <span class="letters">Sinon</span>
-                </span>
-            </h1>
-            <div id='currentTool'></div>
-        </div>
+    <div class='maindiv'>
+        <div id='currentTool'></div>
     </div>
+    <script type="module" src='../linkers/index.js'></script>
     <script src="../linkers/csi.min.js"></script> <!-- Data replacement script -->
 </body>
 </html>

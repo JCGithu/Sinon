@@ -105,9 +105,9 @@ body {
 /* Title Animation */
 .mainTitle {
   position: absolute;
-  top: 0;
+  top: 10vh;
   left: 0;
-  bottom: 105vh;
+  bottom: 0;
   right: 0;
   margin: auto;
   padding-bottom: 0.2em;
@@ -262,6 +262,7 @@ header {
   bottom: 100vh;
   z-index: 5;
   -webkit-transition: all 1000ms ease;
+  transition: all 1000ms ease;
 }
 
 .docbg h1 {
@@ -316,6 +317,7 @@ header {
   top: 100vh;
   z-index: 5;
   -webkit-transition: all 1000ms ease;
+  transition: all 1000ms ease;
 }
 
 .optionsbg h1 {
@@ -457,6 +459,7 @@ html.transition *:after {
   -webkit-filter: drop-shadow(0px 0px 0px #fff) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
           filter: drop-shadow(0px 0px 0px #fff) drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.5));
   -webkit-transition: all 500ms ease;
+  transition: all 500ms ease;
 }
 
 .toolMenu a:hover {
@@ -571,6 +574,7 @@ button {
   font-weight: bold;
   width: 50%;
   -webkit-transition: opacity 500ms ease 400ms, height 500ms ease 100ms, font-size 400ms ease, color 400ms ease;
+  transition: opacity 500ms ease 400ms, height 500ms ease 100ms, font-size 400ms ease, color 400ms ease;
   color: rgba(255, 255, 255, 0);
   opacity: 0;
   height: 0;
@@ -584,6 +588,7 @@ button {
   font-size: small !important;
   color: white !important;
   -webkit-transition: opacity 500ms ease 200ms, height 700ms ease, font-size 400ms ease 300ms, color 200ms ease 200ms !important;
+  transition: opacity 500ms ease 200ms, height 700ms ease, font-size 400ms ease 300ms, color 200ms ease 200ms !important;
 }
 
 /* Converter */

@@ -2,7 +2,7 @@
   "name": "sinon",
   "version": "1.2.4",
   "description": "A video tool that's actually useful",
-  "main": "./build/main.js",
+  "main": "./main.js",
   "scripts": {
     "start": "electron .",
     "win": "electron-packager . --app-version 1.2.4 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
@@ -51,6 +51,8 @@
     "got": "^11.5.1",
     "p5": "^1.1.9",
     "rimraf": "^3.0.2",
-    "sweetalert2": "^10.9.0"
+    "sweetalert2": "^10.9.0",
+    "vue": "^2.6.12",
+    "vue-class-component": "^7.2.6"
   }
 }
