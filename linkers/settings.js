@@ -1,11 +1,5 @@
-import { remote, win, path, docReady, lineBreak } from './Utilities/utils';
-import { versionInfo } from './Utilities/OS&FF';
-
-console.log('ruroh')
-console.log(app);
-console.log('ruroh 2')
-
-import { settingDelete, settingSet, settingSave } from './Utilities/settings';
+import { docReady, lineBreak } from './Utilities/utils.js';
+import { settingDelete, settingSet, settingSave } from './Utilities/storage.js';
 
 docReady(function(){
     const userDataPath = app.getPath('userData');
@@ -37,7 +31,6 @@ docReady(function(){
 
     //Initial Settings Check
 
-    const storage = require('electron-json-storage');
     storage.setDataPath(storagePath)
     const dataPath = storage.getDataPath();
     

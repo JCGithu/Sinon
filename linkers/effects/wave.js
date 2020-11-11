@@ -1,16 +1,13 @@
-import { convertAlert } from '../alerts/convertAlert';
-import { errorAlert } from '../alerts/errorAlert';
-import { successAlert } from '../alerts/successAlert';
+import { convertAlert } from '../alerts/convertAlert.js';
+import { errorAlert } from '../alerts/errorAlert.js';
+import { successAlert } from '../alerts/successAlert.js';
 
-import { remote, win, lineBreak } from '../Utilities/utils';
-import { ffmpeg } from '../Utilities/OS&FF';
-import { effectSetUp } from '../Utilities/fileSetUp'; 
+import { lineBreak } from '../Utilities/utils.js';
+import { effectSetUp } from '../Utilities/fileSetUp.js'; 
 
-const rimraf  = require("rimraf");
-
-async function wave(multi, swalColour, format){
+export async function wave(multi, swalColour, format){
     return new Promise ((resolve) => {
-        effectFile.forEach(function(fileSelected: any){
+        effectFile.forEach(function(fileSelected){
             let fileSettings = effectSetUp(fileSelected);
             var finalOutput = fileSettings.outputFile + '-waveform.mov'
             console.log('Final output: ', finalOutput)
@@ -23,7 +20,7 @@ async function wave(multi, swalColour, format){
             .complexFilter(['aformat=channel_layouts=mono,compand=attacks=0:points=-80/-115|-35.1/-80|-35/-35|20/20=gain=-6,showwaves=s=2000x720:mode=cline:r=25:colors=#ffffff,format=yuva420p,colorkey=0x000000:0.1:0.5[v]'],'v')
             .outputOptions([
                 '-map 0:a',
-            ]).on('progress', function(progress: { percent: number; timemark: any; }) {
+            ]).on('progress', function(progress) {
                 if (progress.percent === undefined){
                     document.getElementById("progressText").textContent = (progress.timemark).match('\d\d\:\d\d\:\d\d)');
                 } else {
@@ -33,10 +30,10 @@ async function wave(multi, swalColour, format){
                     win.setProgressBar(percentage);
                 }
             })
-            .on('error', function(err: any, stdout: any, stderr: any) {
+            .on('error', function(err) {
                 errorAlert('', 'effect', err, swalColour, '');
             })
-            .save(finalOutput).on('end', function(stdout: any, stderr: any) {
+            .save(finalOutput).on('end', function() {
                 console.log('Conversion Success!');
                 resolve();
                 if (multi == false) {
@@ -46,8 +43,4 @@ async function wave(multi, swalColour, format){
             });
         })
     });
-}
-
-module.exports = {
-    wave
-}
+};

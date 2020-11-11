@@ -1,14 +1,11 @@
-import Swal,{ SweetAlertOptions } from 'sweetalert2';
+import { lineBreak } from '../Utilities/utils.js';
+import { effectSetUp } from '../Utilities/fileSetUp.js';
 
-import { remote, win, lineBreak } from '../Utilities/utils';
-import { effectSetUp } from '../Utilities/fileSetUp';
-import { ffmpeg } from '../Utilities/OS&FF';
+import { convertAlert } from '../alerts/convertAlert.js';
+import { errorAlert } from '../alerts/errorAlert.js';
+import { successAlert } from '../alerts/successAlert.js';
 
-import { convertAlert } from '../alerts/convertAlert';
-import { errorAlert } from '../alerts/errorAlert';
-import { successAlert } from '../alerts/successAlert';
-
-async function socialBlur (multi, swalColour, format){
+export async function socialBlur (multi, swalColour, format){
     return new Promise ((resolve) => {
         Swal.fire({
             icon: 'info',
@@ -79,9 +76,4 @@ async function socialBlur (multi, swalColour, format){
             )}
         });
     });
-}
-
-
-module.exports = {
-    socialBlur
 }

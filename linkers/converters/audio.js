@@ -1,10 +1,7 @@
-import Swal  from 'sweetalert2';
-
-import { remote, win, lineBreak } from '../Utilities/utils';
-import { ffmpeg } from '../Utilities/OS&FF';
-import { successAlert } from '../alerts/successAlert';
-import { convertAlert } from '../alerts/convertAlert';
-import { errorAlert } from '../alerts/errorAlert';
+import { lineBreak } from '../Utilities/utils.js';
+import { successAlert } from '../alerts/successAlert.js';
+import { convertAlert } from '../alerts/convertAlert.js';
+import { errorAlert } from '../alerts/errorAlert.js';
 
 async function audioConvert(convertInfo, swalColour){
     Swal.fire({
@@ -45,6 +42,4 @@ async function audioConvert(convertInfo, swalColour){
     });
 };
 
-module.exports = {
-    audioConvert
-}
+export default audioConvert

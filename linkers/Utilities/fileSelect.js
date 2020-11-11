@@ -1,4 +1,3 @@
-const { dialog } = require('electron').remote;
 let effectFile;
 
 document.getElementById('downloadtext').addEventListener('click', function(){
@@ -10,10 +9,10 @@ document.getElementById('downloadtext').addEventListener('click', function(){
         ],
         properties: ['openFile', 'multiSelections'],
         title: 'Pick A File'
-    }).then((data: { filePaths: any; }) => {
+    }).then((data) => {
         console.log(data.filePaths)
         effectFile = data.filePaths;
-        let downloadFile = document.getElementById('downloadFile') as HTMLInputElement
+        let downloadFile = document.getElementById('downloadFile');
         downloadFile.value = effectFile;
 
         let runButton = document.getElementById("runTool");
@@ -41,7 +40,7 @@ document.getElementById('downloadtext').addEventListener('click', function(){
     }).then((data) => {
         console.log(data.filePaths);
         var convertFile = data.filePaths;
-        let fileTextBox = document.getElementById('downloadFile') as HTMLInputElement
+        let fileTextBox = document.getElementById('downloadFile');
         fileTextBox.value = convertFile.toString();
         
         let inputText = document.getElementById('downloadFile');

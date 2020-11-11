@@ -1,5 +1,3 @@
-import Swal,{ SweetAlertOptions } from 'sweetalert2';
-
 export function convertAlert(swalColour){
     Swal.fire({
         title: 'Generating...',

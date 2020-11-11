@@ -1,8 +1,8 @@
-const { videoConvert } = require('./converters/video');
-const { audioConvert } = require('./converters/audio');
-const { gifConvert } = require('./converters/gif');
+import videoConvert from './converters/video.js';
+import audioConvert from './converters/audio.js';
+import gifConvert from './converters/gif.js';
 
-import { swalColours, lineBreak } from './Utilities/utils';
+import { swalColours, lineBreak } from './Utilities/utils.js';
 
 async function run_convert(){
     lineBreak();

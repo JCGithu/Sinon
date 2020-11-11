@@ -1,11 +1,8 @@
-import Swal from 'sweetalert2';
+import { lineBreak, progressBar } from '../Utilities/utils.js';
 
-import { lineBreak, progressBar } from '../Utilities/utils';
-import { ffmpeg } from '../Utilities/OS&FF';
-
-import { successAlert } from '../alerts/successAlert';
-import { convertAlert } from '../alerts/convertAlert';
-import { errorAlert } from '../alerts/errorAlert';
+import { successAlert } from '../alerts/successAlert.js';
+import { convertAlert } from '../alerts/convertAlert.js';
+import { errorAlert } from '../alerts/errorAlert.js';
 
 async function videoConvert(convertInfo, swalColour){
     Swal.fire({
@@ -68,7 +65,4 @@ async function videoConvert(convertInfo, swalColour){
     });
 }
 
-
-module.exports = {
-    videoConvert
-}
+export default videoConvert

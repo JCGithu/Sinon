@@ -12,6 +12,7 @@ class Block {
     }
     showComponent(name){
         this.currentComponent = this.components[name];
+        console.log(this.currentComponent);
         this.updateView();
     }
     updateView(){

@@ -1,12 +1,10 @@
-import { swalColours, lineBreak } from './Utilities/utils';
+import { swalColours, lineBreak } from './Utilities/utils.js';
 
 //Effects
-const { screengrabs } = require('./effects/screengrab');
-const { socialBlur } = require('./effects/blur');
-const { concat } = require('./effects/concat');
-const { wave } = require('./effects/wave');
-
-import Swal from 'sweetalert2';
+import { screengrabs } from './effects/screengrab.js';
+import { socialBlur } from './effects/blur.js';
+import { concat } from './effects/concat.js';
+import { wave } from './effects/wave.js';
 
 async function run_effect(){
     lineBreak();

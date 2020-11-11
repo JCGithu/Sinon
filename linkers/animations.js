@@ -1,27 +1,35 @@
-const anime = require('animejs');
+import { docReady } from './Utilities/utils.js';
 
-import { docReady, storage } from './Utilities/utils.js';
+const pageElements = {
+    toolMenu: '',
+    docs: '',
+    docBar: '',
+    options: '',
+    optionsBar: '',
+    currentTool: '',
+};
 
-export function startAnimation(){
+const toolElements = {
+    downPage: '../GUI/tool_down.html',
+    convPage: '../GUI/tool_conv.html',
+    effectPage: '../GUI/tool_effect.html',
+    downloader: "import ('../linkers/pynon.js');",
+    effector: "import ('../linkers/effect.js');",
+    converter: "import ('../linkers/convertor.js')",
+};
+
+function startAnimation(){
 
     //Animation Variables
-    const toolMenu = document.getElementsByClassName('toolMenu')[0];
-    const docs = document.getElementsByClassName('docbg')[0];
-    const docBar = document.getElementById('docbar');
-    const options = document.getElementsByClassName('optionsbg')[0];
-    const optionsBar = document.getElementById('optionstrip');
-    var currentTool = document.getElementById('currentTool');
+    pageElements.toolMenu = document.getElementsByClassName('toolMenu')[0];
+    pageElements.docs = document.getElementsByClassName('docbg')[0];
+    pageElements.docBar = document.getElementById('docbar');
+    pageElements.options = document.getElementsByClassName('optionsbg')[0];
+    pageElements.optionsBar = document.getElementById('optionstrip');
+    pageElements.currentTool = document.getElementById('currentTool');
 
     //Tool Transition Variables
     var xhr= new XMLHttpRequest();
-    var downPage = '../GUI/tool_down.html';
-    var convPage = '../GUI/tool_conv.html';
-    var effectPage = '../GUI/tool_effect.html';
-
-    let downloader = "require ('../build/linkers/pynon.js');"
-    let effector = "require ('../build/linkers/effect.js');"
-    let converter = "require ('../build/linkers/convertor.js');"
-
     let menuCurrent = 'down';
 
     //Title Animation
@@ -45,12 +53,27 @@ export function startAnimation(){
     });
 
     //Tool Transitions
-    
+    function toolReplace(page, intro){
+        xhr.open('GET', page, true);
+        xhr.onreadystatechange= function() {
+            document.getElementById('currentTool').innerHTML = this.responseText;
+        };
+        xhr.onload = () => {
+            if (intro){
+                console.log('huzzah');
+                let script = document.createElement("script");
+                //script.innerHTML = downloader, effector, converter;
+                script.id = 'jsTool';
+                document.body.appendChild(script);
+            }
+        };
+        xhr.send();
+    };
     
     //Toolbar Animations
 
     document.getElementById('toolbar').addEventListener('click', function(){
-        toolMenu.classList.add('toolOpen');
+        pageElements.toolMenu.classList.add('toolOpen');
     });
 
     function folderLoad(){
@@ -65,92 +88,60 @@ export function startAnimation(){
     }
 
     document.getElementById('toolClose').addEventListener("click", function(){
-        toolMenu.classList.remove('toolOpen');
+        pageElements.toolMenu.classList.remove('toolOpen');
     });
+
+    let menus = document.querySelectorAll('#MenuD, #MenuC, #MenuE');
+    let pages = [toolElements.downPage, toolElements.convPage, toolElements.effectPage];
+
+    for (let i = 0; i < menus.length; i++) {
+        menus[i].addEventListener("click", function(info){
+            if (menuCurrent !== info.target.id) {
+                setTimeout(function(){
+                    if (document.getElementById('downloadfolder')){folderLoad()}
+                }, 800);
+                pageElements.currentTool.classList.add('toolChange');
+                setTimeout(function(){
+                    toolReplace(pages[i], false);
+                }, 700);
+                setTimeout(function(){
+                    pageElements.currentTool.classList.remove('toolChange');
+                }, 1500);
+                pageElements.toolMenu.classList.remove('toolOpen');
+            } else {
+                pageElements.toolMenu.classList.remove('toolOpen');
+            };
+            menuCurrent = info.target.id;
+        });
+    }
     
-    function animationRemove (){
-        currentTool.classList.remove('toolChange');
-    };
-
-    function swap (menuRun){
-        currentTool.classList.add('toolChange');
-        setTimeout(menuRun, 700);
-        setTimeout(animationRemove, 1500);
-        toolMenu.classList.remove('toolOpen');
-    };
-
-    document.getElementById('MenuD').addEventListener("click", function(){
-        if (menuCurrent !== 'down') {
-            setTimeout(folderLoad, 800);
-            swap (toolReplace(downPage, false));
-        } else {
-            toolMenu.classList.remove('toolOpen');
-        };
-        menuCurrent = 'down';
-    });
-
-    document.getElementById('MenuC').addEventListener("click", function(){
-        if (menuCurrent !== 'conv') {
-            swap (toolReplace(convPage, false));
-        } else {
-            toolMenu.classList.remove('toolOpen');
-        };
-        menuCurrent = 'conv';
-    })
-
-    document.getElementById('MenuE').addEventListener("click", function(){
-        if (menuCurrent !== 'effect') {
-            swap (toolReplace(effectPage, false));
-        }else{
-            toolMenu.classList.remove('toolOpen');
-        };
-        menuCurrent = 'effect';
-    });
-
-    toolReplace(downPage, true);
+    //toolReplace(toolElements.downPage, true);
     documentationTransition();
     optionsTransition();
 }
 
 docReady(startAnimation);
 
-function toolReplace(page, intro){
-    xhr.open('GET', page, true);
-    xhr.onreadystatechange= function() {
-        document.getElementById('currentTool').innerHTML = this.responseText;
-    };
-    xhr.onload = () => {
-        if (intro){
-            console.log('huzzah');
-            let script = document.createElement("script");
-            script.innerHTML = downloader, effector, converter;
-            script.id = 'jsTool';
-            document.body.appendChild(script);
-        }
-    };
-    xhr.send();
-};
-
 //Options Transition
 function optionsTransition(){
     document.getElementById('optionsIcon').addEventListener('click', function(){
-        options.classList.add('optionsOpen');
-        optionsBar.classList.add('stripAnimate');
+        pageElements.options.classList.add('optionsOpen');
+        pageElements.optionsBar.classList.add('stripAnimate');
     });
     document.getElementById('closeOptions').addEventListener('click', function(){
-        options.classList.remove('optionsOpen');
-        optionsBar.classList.remove('stripAnimate');
-        optionsBar.style.opacity = '0';
+        pageElements.options.classList.remove('optionsOpen');
+        pageElements.optionsBar.classList.remove('stripAnimate');
+        pageElements.optionsBar.style.opacity = '0';
     });
 }
 
 function documentationTransition(){
     document.getElementById('ver').addEventListener('click', function(){
-        docs.classList.add('docsOpen');
-        docBar.classList.add('stripAnimate');
+        pageElements.docs.classList.add('docsOpen');
+        pageElements.docBar.classList.add('stripAnimate');
     });
     document.getElementById('closedocs').addEventListener('click', function(){
-        docs.classList.remove('docsOpen');
-        docBar.classList.remove('stripAnimate');
+        pageElements.docs.classList.remove('docsOpen');
+        pageElements.docBar.classList.remove('stripAnimate');
     });
 }

@@ -1,5 +1,4 @@
-import Swal from 'sweetalert2';
-const { copyString } = require('../Utilities/utils');
+import { copyString } from '../Utilities/utils.js';
 
 export function successAlert(passType, passText, swalColour) {
     var swalOptions = {

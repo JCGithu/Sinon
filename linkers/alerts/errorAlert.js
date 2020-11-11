@@ -1,5 +1,4 @@
-import { copyString } from "../Utilities/utils";
-import Swal from 'sweetalert2';
+import { copyString } from "../Utilities/utils.js";
 
 export function errorAlert(error, errorType, errorText, swalColour, instaDeets) {
     let instaUse = document.getElementById('InstaUse')
@@ -38,8 +37,4 @@ export function errorAlert(error, errorType, errorText, swalColour, instaDeets) 
     }
 
     Swal.fire(swalOptions);
-};
-
-module.exports = {
-    errorAlert
 };

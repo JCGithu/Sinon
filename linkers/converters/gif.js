@@ -1,12 +1,7 @@
-const gifsicle = require('gifsicle');
-const { execFile } = require('child_process');
+import { convertAlert } from '../alerts/convertAlert.js';
+import { successAlert } from '../alerts/successAlert.js';
 
-import { convertAlert } from '../alerts/convertAlert';
-import { successAlert } from '../alerts/successAlert';
-
-import { remote, win, fs, lineBreak } from '../Utilities/utils';
-import { ffmpeg } from '../Utilities/OS&FF';
-import Swal  from 'sweetalert2';
+import { lineBreak } from '../Utilities/utils.js';
 
 async function gifConvert(convertInfo, swalColour){
     Swal.fire({
@@ -209,6 +204,4 @@ async function gifConvert(convertInfo, swalColour){
     });
 }
 
-module.exports = {
-    gifConvert
-}
+export default gifConvert

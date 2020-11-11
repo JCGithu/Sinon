@@ -1,17 +1,11 @@
-import Swal from 'sweetalert2';
-const { dialog } = require('electron').remote;
-const { execFile } = require('child_process');
-var spawn = require('child_process').spawn;
-
 //Utils
-import { lineBreak, swalColours, fs } from './Utilities/utils';
-import { versionInfo, extractorOptions, ffmpegOptions } from './Utilities/OS&FF';
-import { settingSave } from './Utilities/settings';
+import { lineBreak, swalColours } from './Utilities/utils.js';
+import { settingSave } from './Utilities/storage.js';
 
 // Alerts
-import { errorAlert } from './alerts/errorAlert';
-import { runningAlert } from './alerts/runningAlert';
-import { successAlert } from './alerts/successAlert';
+import { errorAlert } from './alerts/errorAlert.js';
+import { runningAlert } from './alerts/runningAlert.js';
+import { successAlert } from './alerts/successAlert.js';
 
 document.getElementById('downloadtext').addEventListener('click', function(){
     dialog.showOpenDialog({
@@ -188,11 +182,6 @@ async function run_pynon() {
                     preConfirm: (dlquality) => {
                         runningAlert();
                         if (finalURL.indexOf('.mp4')>=0 || finalURL.indexOf('.mp3')>=0){
-
-                            const stream = require('stream');
-                            const {promisify} = require('util');
-                            const got = require('got');
-
                             console.log ('got to the file section and the final url is: ', finalURL);
                             let fileName = /\/[^\/]+$/.exec(finalURL)
                             downloadPath = downloadPath.concat(fileName.toString().replace('/','\\'));

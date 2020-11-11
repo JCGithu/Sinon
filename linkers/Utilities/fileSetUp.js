@@ -1,4 +1,4 @@
-export function effectSetUp(fileSelected: any){
+export function effectSetUp(fileSelected){
     var fileSettings = {
         outputFile: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).name),
         inputFull: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).base),

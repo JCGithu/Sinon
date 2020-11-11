@@ -1,9 +1,5 @@
-const Swal = require('sweetalert2');
-
-import { storage } from './utils';
-
-import { successAlert } from '../alerts/successAlert';
-import { swalColours } from './utils';
+import { successAlert } from '../alerts/successAlert.js';
+import { swalColours } from './utils.js';
 
 export function settingDelete(){
     var swalColour = swalColours();
