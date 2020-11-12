@@ -16,7 +16,7 @@ const toolConv = {
             </div>
         </div>
         <div style="margin-top: 5vh">
-            <button style="position: absolute; left: 25%; z-index: 2;" id='runTool' class="grow-on-hover" onclick="run_convert()">Convert!</button>
+            <button style="position: absolute; left: 25%; z-index: 2;" id='convRun' class="grow-on-hover runButton">Convert!</button>
         </div>
         `
     }

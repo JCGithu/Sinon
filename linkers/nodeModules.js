@@ -10,6 +10,7 @@ const gifsicle = require('gifsicle');
 
 const win = remote.getCurrentWindow();
 const fs = require('fs');
+const fspromises = require('fs').promises;
 const path = require('path');
 const storage = require('electron-json-storage');
 const rimraf  = require("rimraf");

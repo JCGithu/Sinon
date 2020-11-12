@@ -17,6 +17,7 @@ import './animations.js';
 import './settings.js';
 
 import { docsReplace } from './Utilities/docsReplace.js';
+import { toolSwap } from './animations.js';
 
 const sinon = new Block('#sinon');
 
@@ -24,8 +25,8 @@ var bootComps = [wave, toolmenu, optionsPage, documentation, toolbar, mainTitle]
 var tools = [toolDown, toolConv, toolEffect];
 
 const toolKit = new Block('#currentTool');
-for await (let tool of tools){
-    sinon.addComponent(tool);
+for (let tool of tools){
+    toolKit.addComponent(tool);
 }
 toolKit.showComponent('toolDown');
 
@@ -36,10 +37,13 @@ async function sinonBoot(){
     sinon.loadAll();
     let target = document.getElementById('docText');
     if (target){
-        docsReplace(target);
+        docsReplace().then((data) => {
+            target.innerHTML = data
+        });
         import('./pynon.js');
         import('./effect.js');
         import('./converter.js');
+        toolSwap(toolKit);
     };
 }
 

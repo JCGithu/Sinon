@@ -9,15 +9,6 @@ const pageElements = {
     currentTool: '',
 };
 
-const toolElements = {
-    downPage: '../GUI/tool_down.html',
-    convPage: '../GUI/tool_conv.html',
-    effectPage: '../GUI/tool_effect.html',
-    downloader: "import ('../linkers/pynon.js');",
-    effector: "import ('../linkers/effect.js');",
-    converter: "import ('../linkers/convertor.js')",
-};
-
 function startAnimation(){
 
     //Animation Variables
@@ -29,7 +20,6 @@ function startAnimation(){
     pageElements.currentTool = document.getElementById('currentTool');
 
     //Tool Transition Variables
-    var xhr= new XMLHttpRequest();
     let menuCurrent = 'down';
 
     //Title Animation
@@ -52,77 +42,23 @@ function startAnimation(){
         easing: 'easeOutCubic',
     });
 
-    //Tool Transitions
-    function toolReplace(page, intro){
-        xhr.open('GET', page, true);
-        xhr.onreadystatechange= function() {
-            document.getElementById('currentTool').innerHTML = this.responseText;
-        };
-        xhr.onload = () => {
-            if (intro){
-                console.log('huzzah');
-                let script = document.createElement("script");
-                //script.innerHTML = downloader, effector, converter;
-                script.id = 'jsTool';
-                document.body.appendChild(script);
-            }
-        };
-        xhr.send();
-    };
-    
     //Toolbar Animations
-
     document.getElementById('toolbar').addEventListener('click', function(){
         pageElements.toolMenu.classList.add('toolOpen');
     });
-
-    function folderLoad(){
-        storage.get('settings', function(error, data) {
-        if (error) throw error;
-        if (data.downloadPath) {
-            if (data.downloadPath !== null){
-                document.getElementById('downloadfolder').value = data.downloadPath;
-            }
-        }
-        });
-    }
 
     document.getElementById('toolClose').addEventListener("click", function(){
         pageElements.toolMenu.classList.remove('toolOpen');
     });
 
-    let menus = document.querySelectorAll('#MenuD, #MenuC, #MenuE');
-    let pages = [toolElements.downPage, toolElements.convPage, toolElements.effectPage];
-
-    for (let i = 0; i < menus.length; i++) {
-        menus[i].addEventListener("click", function(info){
-            if (menuCurrent !== info.target.id) {
-                setTimeout(function(){
-                    if (document.getElementById('downloadfolder')){folderLoad()}
-                }, 800);
-                pageElements.currentTool.classList.add('toolChange');
-                setTimeout(function(){
-                    toolReplace(pages[i], false);
-                }, 700);
-                setTimeout(function(){
-                    pageElements.currentTool.classList.remove('toolChange');
-                }, 1500);
-                pageElements.toolMenu.classList.remove('toolOpen');
-            } else {
-                pageElements.toolMenu.classList.remove('toolOpen');
-            };
-            menuCurrent = info.target.id;
-        });
-    }
+    // Load auto download location
     
-    //toolReplace(toolElements.downPage, true);
     documentationTransition();
     optionsTransition();
 }
 
 docReady(startAnimation);
 
-//Options Transition
 function optionsTransition(){
     document.getElementById('optionsIcon').addEventListener('click', function(){
         pageElements.options.classList.add('optionsOpen');
@@ -144,4 +80,42 @@ function documentationTransition(){
         pageElements.docs.classList.remove('docsOpen');
         pageElements.docBar.classList.remove('stripAnimate');
     });
+}
+
+function folderLoad(){
+    storage.get('settings', function(error, data) {
+    if (error) throw error;
+    if (data.downloadPath) {
+        if (data.downloadPath !== null){
+            document.getElementById('downloadfolder').value = data.downloadPath;
+        }
+    }
+    });
+};
+
+export function toolSwap(toolKit){
+    let menus = document.querySelectorAll('#MenuD, #MenuC, #MenuE');
+    let pages = ['toolDown', 'toolConv', 'toolEffect'];
+    let menuCurrent = '#MenuD';
+
+    for (let i = 0; i < menus.length; i++) {
+        menus[i].addEventListener("click", function(info){
+            if (menuCurrent !== info.target.id) {
+                setTimeout(function(){
+                    if (document.getElementById('downloadfolder')){folderLoad()}
+                }, 800);
+                pageElements.currentTool.classList.add('toolChange');
+                setTimeout(function(){
+                    toolKit.showComponent(pages[i]);
+                }, 700);
+                setTimeout(function(){
+                    pageElements.currentTool.classList.remove('toolChange');
+                }, 1500);
+                pageElements.toolMenu.classList.remove('toolOpen');
+            } else {
+                pageElements.toolMenu.classList.remove('toolOpen');
+            };
+            menuCurrent = info.target.id;
+        });
+    }
 }

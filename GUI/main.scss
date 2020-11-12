@@ -482,7 +482,7 @@ button {
     z-index: 1;
 }
 
-#runTool {
+.runButton {
     font-weight: bold;
     width: 50%;
     transition: opacity 500ms ease 400ms, height 500ms ease 100ms, font-size 400ms ease, color 400ms ease;
@@ -490,6 +490,10 @@ button {
     opacity: 0;
     height: 0;
     font-size: xx-small;
+}
+
+#runTool {
+
 }
 
 .active {
@@ -633,7 +637,7 @@ svg {
         margin-left: 0;
     }
     100% {
-        margin-left: -1600px;
+        margin-left: -3200px;
     }
 }
 
@@ -648,7 +652,7 @@ svg {
 
 @keyframes toolSwap {
     0% {
-      left: 0vw;
+        left: 0vw;
     }
     50%{
         left: 100vw;

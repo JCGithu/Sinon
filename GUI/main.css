@@ -570,7 +570,7 @@ button {
   z-index: 1;
 }
 
-#runTool {
+.runButton {
   font-weight: bold;
   width: 50%;
   -webkit-transition: opacity 500ms ease 400ms, height 500ms ease 100ms, font-size 400ms ease, color 400ms ease;
@@ -741,7 +741,7 @@ svg:hover, svg:focus, svg:active {
     margin-left: 0;
   }
   100% {
-    margin-left: -1600px;
+    margin-left: -3200px;
   }
 }
 
@@ -750,7 +750,7 @@ svg:hover, svg:focus, svg:active {
     margin-left: 0;
   }
   100% {
-    margin-left: -1600px;
+    margin-left: -3200px;
   }
 }
 

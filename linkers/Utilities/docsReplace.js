@@ -1,6 +1,10 @@
-export function docsReplace(target) {
-    console.log('docs ran');
-    fs.readFile("./GUI/changelog.html", 'utf8', function (data) {
-        target.innerHTML = data;
+export async function docsReplace() {
+    return new Promise((resolve, reject) => {
+        fs.readFile("./GUI/changelog.html", 'utf8', function(err, data){
+            if (err){
+                reject(err);
+            }
+            resolve(data);
+        })
     });
 };

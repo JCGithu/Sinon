@@ -10,7 +10,7 @@ const toolDown = {
                 <button id="downloadtext">Pick Folder</button>
             </div>
             <div>
-                <button style="position: absolute; left: 25%; z-index: 2;" id='runTool' class="grow-on-hover" onclick="run_pynon()">Run!</button>
+                <button style="position: absolute; left: 25%; z-index: 2;" id='pynonRun' class="grow-on-hover runButton">Run!</button>
             </div>
         `
     }

@@ -2,6 +2,7 @@ class Block {
     constructor(selector){
         this.appElement = document.querySelector(selector);
         this.components = {};
+        this.toolRunning = '';
     }
     addComponent(component){
         this.components[component.name] = component;
@@ -12,13 +13,16 @@ class Block {
     }
     showComponent(name){
         this.currentComponent = this.components[name];
-        console.log(this.currentComponent);
         this.updateView();
     }
     updateView(){
         if (this.currentComponent){
             this.appElement.innerHTML = this.currentComponent.view(this.currentComponent.model);
+            this.toolRunning = this.currentComponent;
         }
+    }
+    logTool(){
+        return this.toolRunning;
     }
     loadAll(){
         var allComps = ' ';
