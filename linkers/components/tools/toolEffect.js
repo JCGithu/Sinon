@@ -1,10 +1,10 @@
 const toolEffect = {
     name: 'toolEffect',
-    view(){
+    view() {
         return `
         <div style="margin-bottom: 5vh">
-            <input type="text" id= 'downloadFile' placeholder="">
-            <button id="downloadtext">Choose a File</button>
+            <input type="text" id= 'downloadFile' class="inputBox" placeholder="">
+            <button  id="effectFileButton" class="fileButton">Choose a File</button>
         </div>
         <div style='display: flex; flex-direction: row; justify-content: center; align-items: center;'>
             <div class='select'>
@@ -21,8 +21,8 @@ const toolEffect = {
         <div style="margin-top: 5vh">
             <button style="position: absolute; left: 25%; z-index: 2;" id='effectRun' class="grow-on-hover runButton">Generate!</button>
         </div>
-        `
-    }
-}
+        `;
+    },
+};
 
-export default toolEffect
+export default toolEffect;

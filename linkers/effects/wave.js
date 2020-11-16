@@ -5,9 +5,9 @@ import { successAlert } from '../alerts/successAlert.js';
 import { lineBreak } from '../Utilities/utils.js';
 import { effectSetUp } from '../Utilities/fileSetUp.js'; 
 
-export async function wave(multi, swalColour, format){
+export async function wave(multi, swalColour, format, targetFiles){
     return new Promise ((resolve) => {
-        effectFile.forEach(function(fileSelected){
+        targetFiles.forEach(function(fileSelected){
             let fileSettings = effectSetUp(fileSelected);
             var finalOutput = fileSettings.outputFile + '-waveform.mov'
             console.log('Final output: ', finalOutput)

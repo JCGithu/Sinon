@@ -3,8 +3,8 @@ const toolConv = {
     view(){
         return `
         <div style="margin-bottom: 5vh">
-            <input type="text" id= 'downloadFile' placeholder="">
-            <button id="downloadtext">Choose a File</button>
+            <input type="text" id= 'downloadFile' class="inputBox" placeholder="">
+            <button id="convFileButton" class="fileButton">Choose a File</button>
         </div>
         <div style='display: flex; flex-direction: column; justify-content: center; align-items: center;'>
             <div class='select'>
@@ -21,5 +21,6 @@ const toolConv = {
         `
     }
 }
+
 
 export default toolConv

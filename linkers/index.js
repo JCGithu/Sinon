@@ -40,9 +40,7 @@ async function sinonBoot(){
         docsReplace().then((data) => {
             target.innerHTML = data
         });
-        import('./pynon.js');
-        import('./effect.js');
-        import('./converter.js');
+        import('./Utilities/toolFunctions.js');
         toolSwap(toolKit);
     };
 }

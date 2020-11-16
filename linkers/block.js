@@ -1,36 +1,43 @@
 class Block {
-    constructor(selector){
+    constructor(selector) {
         this.appElement = document.querySelector(selector);
         this.components = {};
         this.toolRunning = '';
     }
-    addComponent(component){
+    addComponent(component) {
         this.components[component.name] = component;
     }
-    bootComponent(component){
+    bootComponent(component) {
         this.addComponent(component);
         this.loadAll();
     }
-    showComponent(name){
+    showComponent(name) {
         this.currentComponent = this.components[name];
         this.updateView();
     }
-    updateView(){
-        if (this.currentComponent){
-            this.appElement.innerHTML = this.currentComponent.view(this.currentComponent.model);
+    updateView() {
+        if (this.currentComponent) {
+            this.appElement.innerHTML = this.currentComponent.view(
+                this.currentComponent.model
+            );
             this.toolRunning = this.currentComponent;
         }
     }
-    logTool(){
+    logComponent() {
+        return this.appElement;
+    }
+    logTool() {
         return this.toolRunning;
     }
-    loadAll(){
+    loadAll() {
         var allComps = ' ';
-        for (const comp in this.components){
-            allComps = allComps + (this.components[comp].view(this.components[comp].model));
+        for (const comp in this.components) {
+            allComps =
+                allComps +
+                this.components[comp].view(this.components[comp].model);
             this.appElement.innerHTML = allComps;
-        };
+        }
     }
 }
 
-export default Block
+export default Block;

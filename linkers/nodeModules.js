@@ -1,5 +1,5 @@
 const { remote, ipcRenderer } = require('electron');
-const { Swal } = require('sweetalert2');
+const Swal = require('sweetalert2');
 const { app, dialog } = require('electron').remote;
 const { execFile } = require('child_process');
 const spawn = require('child_process').spawn;
@@ -18,7 +18,7 @@ const anime = require('animejs');
 
 const FFmpegStatic = require('ffmpeg-static-electron');
 const ffmpeg = require('fluent-ffmpeg');
-const extractorPath = path.join(__dirname, '/../../engine/dist/extractor');
+const extractorPath = path.join(__dirname, '/../engine/dist/extractor');
 const ffmpegPath = FFmpegStatic.path;
 ffmpeg.setFfmpegPath(ffmpegPath);
 

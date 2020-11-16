@@ -426,7 +426,7 @@ html.transition *:after {
     margin-bottom: 5vh;
 }
 
-#downloadfolder{
+.fileButton, #downloadfolder{
     margin: 0;
     width: 70%;
     border-radius: 20px 0 0 20px !important;
@@ -438,7 +438,7 @@ html.transition *:after {
     border-radius: 20px 0 0 20px !important;
 }
 
-#downloadtext {
+#downFileButton, #convFileButton, #effectFileButton {
     margin: 0;
     width: 28%;
     border-radius: 0 20px 20px 0 !important;
@@ -571,17 +571,35 @@ canvas{
 }
 
 .swal-running{
-    font-size: 0.65rem !important;
-    border-radius: 40px !important;
-    transform: scale(1) !important;
-    bottom:40vh !important;
+    //font-size: 0.65rem !important;
+    //border-radius: 40px !important;
+    //transform: scale(1) !important;
+    //bottom:40vh !important;
 }
 
-.swal2-backdrop-show{
+.swalContainer{
     border-radius: 0px 0px 20px 20px !important;
-    border: -50px !important;
-    transform: scale(1,0.96);
-    top:-7vh !important;
+    //border: -50px !important;
+}
+
+.swal2-container {
+    border-radius: 0px 0px 20px 20px !important;
+    bottom:0 !important;
+}
+
+.swal2-popup{
+    top:0vh !important;
+    font-size: 0.65rem !important;
+    border-radius: 20px !important;
+    //transform: scale(0.7) !important;
+}
+
+.swal2-toast-shown{
+    top: 0vh !important;
+}
+
+.swal2-icon{
+    margin: 1em auto 1.3em !important;
 }
 
 #swal-input1, #swal-input2 {

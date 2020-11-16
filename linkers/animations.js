@@ -9,8 +9,7 @@ const pageElements = {
     currentTool: '',
 };
 
-function startAnimation(){
-
+function startAnimation() {
     //Animation Variables
     pageElements.toolMenu = document.getElementsByClassName('toolMenu')[0];
     pageElements.docs = document.getElementsByClassName('docbg')[0];
@@ -24,98 +23,119 @@ function startAnimation(){
 
     //Title Animation
     let textWrapper = document.querySelector('.mainTitle .letters');
-    textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+    textWrapper.innerHTML = textWrapper.textContent.replace(
+        /\S/g,
+        "<span class='letter'>$&</span>"
+    );
     anime.timeline().add({
         targets: '.mainTitle .letter',
-        translateY: [-200,0],
-        opacity: [0,1],
-        easing: "easeOutExpo",
+        translateY: [-200, 0],
+        opacity: [0, 1],
+        easing: 'easeOutExpo',
         duration: 5400,
-        delay: (el, i) => (60 + (i*2)) * i
+        delay: (el, i) => (60 + i * 2) * i,
     });
 
     //Wave Load
     anime({
         targets: '.wavecontainer',
-        translateY:[400,270],
+        translateY: [400, 270],
         duration: 4000,
         easing: 'easeOutCubic',
     });
 
     //Toolbar Animations
-    document.getElementById('toolbar').addEventListener('click', function(){
+    document.getElementById('toolbar').addEventListener('click', function () {
         pageElements.toolMenu.classList.add('toolOpen');
     });
 
-    document.getElementById('toolClose').addEventListener("click", function(){
+    document.getElementById('toolClose').addEventListener('click', function () {
         pageElements.toolMenu.classList.remove('toolOpen');
     });
 
+    let inputText = document.querySelector('.inputBox');
+    let runButton = document.querySelector('.runButton');
+
+    //
+    inputText.addEventListener('keyup', function () {
+        if (inputText.value.length < 1) {
+            runButton.classList.remove('active');
+        } else {
+            runButton.classList.add('active');
+        }
+    });
+
     // Load auto download location
-    
+
     documentationTransition();
     optionsTransition();
 }
 
 docReady(startAnimation);
 
-function optionsTransition(){
-    document.getElementById('optionsIcon').addEventListener('click', function(){
-        pageElements.options.classList.add('optionsOpen');
-        pageElements.optionsBar.classList.add('stripAnimate');
-    });
-    document.getElementById('closeOptions').addEventListener('click', function(){
-        pageElements.options.classList.remove('optionsOpen');
-        pageElements.optionsBar.classList.remove('stripAnimate');
-        pageElements.optionsBar.style.opacity = '0';
-    });
+function optionsTransition() {
+    document
+        .getElementById('optionsIcon')
+        .addEventListener('click', function () {
+            pageElements.options.classList.add('optionsOpen');
+            pageElements.optionsBar.classList.add('stripAnimate');
+        });
+    document
+        .getElementById('closeOptions')
+        .addEventListener('click', function () {
+            pageElements.options.classList.remove('optionsOpen');
+            pageElements.optionsBar.classList.remove('stripAnimate');
+            pageElements.optionsBar.style.opacity = '0';
+        });
 }
 
-function documentationTransition(){
-    document.getElementById('ver').addEventListener('click', function(){
+function documentationTransition() {
+    document.getElementById('ver').addEventListener('click', function () {
         pageElements.docs.classList.add('docsOpen');
         pageElements.docBar.classList.add('stripAnimate');
     });
-    document.getElementById('closedocs').addEventListener('click', function(){
+    document.getElementById('closedocs').addEventListener('click', function () {
         pageElements.docs.classList.remove('docsOpen');
         pageElements.docBar.classList.remove('stripAnimate');
     });
 }
 
-function folderLoad(){
-    storage.get('settings', function(error, data) {
-    if (error) throw error;
-    if (data.downloadPath) {
-        if (data.downloadPath !== null){
-            document.getElementById('downloadfolder').value = data.downloadPath;
+function folderLoad() {
+    storage.get('settings', function (error, data) {
+        if (error) throw error;
+        if (data.downloadPath) {
+            if (data.downloadPath !== null) {
+                document.getElementById('downloadfolder').value =
+                    data.downloadPath;
+            }
         }
-    }
     });
-};
+}
 
-export function toolSwap(toolKit){
+export function toolSwap(toolKit) {
     let menus = document.querySelectorAll('#MenuD, #MenuC, #MenuE');
     let pages = ['toolDown', 'toolConv', 'toolEffect'];
     let menuCurrent = '#MenuD';
 
     for (let i = 0; i < menus.length; i++) {
-        menus[i].addEventListener("click", function(info){
+        menus[i].addEventListener('click', function (info) {
             if (menuCurrent !== info.target.id) {
-                setTimeout(function(){
-                    if (document.getElementById('downloadfolder')){folderLoad()}
+                setTimeout(function () {
+                    if (document.getElementById('downloadfolder')) {
+                        folderLoad();
+                    }
                 }, 800);
                 pageElements.currentTool.classList.add('toolChange');
-                setTimeout(function(){
+                setTimeout(function () {
                     toolKit.showComponent(pages[i]);
                 }, 700);
-                setTimeout(function(){
+                setTimeout(function () {
                     pageElements.currentTool.classList.remove('toolChange');
                 }, 1500);
                 pageElements.toolMenu.classList.remove('toolOpen');
             } else {
                 pageElements.toolMenu.classList.remove('toolOpen');
-            };
-            menuCurrent = info.target.id;
+            }
         });
     }
 }

@@ -4,35 +4,33 @@ import gifConvert from './converters/gif.js';
 
 import { swalColours, lineBreak } from './Utilities/utils.js';
 
-async function run_convert(){
+async function run_convert(targetFiles) {
     lineBreak();
     let swalColour = swalColours();
     var convertFile = document.getElementById('downloadFile').value;
-    var e = document.getElementById("convertFormat");
+    var e = document.getElementById('convertFormat');
+    var fileInfo = [];
+
+    targetFiles.forEach(function(targetFile){
+        let out = path.join(path.parse(targetFile).dir, path.parse(targetFile).name);
+        let file = {
+            input: targetFile,
+            output: out,
+            ext: path.parse(targetFile).ext
+        }
+        fileInfo.push(file);
+    });
+
     let convertInfo = {
-        file: convertFile,
+        targets: fileInfo,
         format: e.options[e.selectedIndex].value,
-        outputFile: path.join(path.parse(convertFile).dir, path.parse(convertFile).name),
-        inputExt: path.parse(convertFile).ext
-    }
+    };
 
     console.log('Converter running');
     console.log(convertInfo);
     lineBreak();
 
-    //VIDEO
-    
-    if (convertInfo.format.indexOf('video')>=0){
-        videoConvert(convertInfo, swalColour);
-    } 
+    eval(convertInfo.format + 'Convert(convertInfo, swalColour)');
+}
 
-    //AUDIO
-    if (convertInfo.format.indexOf('audio')>=0){
-        audioConvert(convertInfo, swalColour);
-    }
-
-    //GIF
-    if (convertInfo.format.indexOf('gif')>=0){
-        gifConvert(convertInfo, swalColour);
-    }
-};
+export default run_convert;

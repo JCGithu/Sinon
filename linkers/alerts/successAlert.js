@@ -10,9 +10,10 @@ export function successAlert(passType, passText, swalColour) {
     }
 
     if (passType == 'live'){
-        console.log('This livestream URL was found:')
+        console.log('This livestream URL was found:');
         console.log(passText);
         swalOptions.title = 'Code found!';
+        swalOptions.text = '';
         swalOptions.confirmButtonText = 'Copy to Clipboard';
         swalOptions.preConfirm = () => {
             copyString(passText.replace(/(\r\n|\n|\r)/gm, "").replace(" ",""));

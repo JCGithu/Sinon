@@ -4,7 +4,6 @@ import { settingDelete, settingSet, settingSave } from './Utilities/storage.js';
 docReady(function(){
     const userDataPath = app.getPath('userData');
     const storagePath = path.join(userDataPath, '/.');
-    console.log('haha');
     //Frame Style
     document.getElementsByClassName("maindiv")[0].style.borderRadius = "10%";
 
@@ -12,11 +11,11 @@ docReady(function(){
     var checkbox = document.querySelector('input[name=mode]');
     checkbox.addEventListener('change', function() {
         if(this.checked) {
-            trans()
-            document.documentElement.setAttribute('data-theme', 'dark')
+            trans();
+            document.documentElement.setAttribute('data-theme', 'dark');
         } else {
-            trans()
-            document.documentElement.setAttribute('data-theme', 'light')
+            trans();
+            document.documentElement.setAttribute('data-theme', 'light');
         }
     })
     let trans = () => {
@@ -49,7 +48,7 @@ docReady(function(){
         let darkSwitch = document.getElementById("darkswitch");
         let urlSwitch = document.getElementById("urlswitch");
         let geoFormat = document.getElementById('geoFormat');
-        let downloadFolder = document.getElementById('downloadfolder');
+        let downloadfolder = document.getElementById('downloadfolder');
         let insta = {
             username: document.getElementById('InstaUse').value,
             password: document.getElementById('InstaPass').value
@@ -77,10 +76,10 @@ docReady(function(){
                 insta.password = data.InstaPass;
             }
             if (data.downloadPath !== null){
-                downloadFolder.value = data.downloadPath;
+                downloadfolder.value = data.downloadPath;
             }
         } else {
-            downloadFolder.value = '';
+            downloadfolder.value = '';
             insta.username = '';
             insta.password = '';
             proxyInput.value = '';

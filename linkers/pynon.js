@@ -7,34 +7,10 @@ import { errorAlert } from './alerts/errorAlert.js';
 import { runningAlert } from './alerts/runningAlert.js';
 import { successAlert } from './alerts/successAlert.js';
 
-document.getElementById('downloadtext').addEventListener('click', function(){
-    dialog.showOpenDialog({
-        properties: ['openDirectory'],
-        title: 'Pick A Download Folder'
-    }).then((data) => {
-        console.log(data.filePaths)
-        var downloadPath = data.filePaths;
-        document.getElementById('inputURL').value = downloadPath.toString();
-        var waitTimer;
-        clearTimeout(waitTimer);
-        waitTimer = setTimeout(settingSave, 5000);
-    });
-});
-var inputText = document.getElementById("inputURL");
-var runButton = document.getElementById("runTool");
-
-inputText.addEventListener("keyup", function(){
-    if (inputText.value.length < 1){
-        runButton.classList.remove('active');
-    } else {
-        runButton.classList.add('active');
-    };
-});
-
 async function run_pynon() {
     //Inputs
     let inputURL = document.getElementById('inputURL').value;
-    let downloadPath = document.getElementById('downloadFolder').value;
+    let downloadPath = document.getElementById('downloadfolder').value;
     let order = 'extract';
     let finalURL = '';
     let geo = document.getElementById('geoFormat').value;
@@ -42,7 +18,7 @@ async function run_pynon() {
     let instaUse = document.getElementById('InstaUse').value;
     let instaPass = document.getElementById('InstaPass').value;
     
-    let proxyInput = document.getElementById('proxyInput')
+    let proxyInput = document.getElementById('proxyInput');
     
 
     let swalColour = swalColours();
@@ -56,26 +32,27 @@ async function run_pynon() {
 
     console.log('Function has started!')
     function inputCheck(inputURL, downloadPath, order, finalURL, userProxy, geo){
-        console.log('Input URl: ' + inputURL)
-        console.log('Download Path: ' + downloadPath)
-        console.log('Pynon orders: ' + order)
-        console.log('Extractor path is: ' + versionInfo.extractorPath)
-        console.log('Geo is: ' + geo)
+        console.log('Input URl: ' + inputURL);
+        console.log('Download Path: ' + downloadPath);
+        console.log('Pynon orders: ' + order);
+        console.log('Extractor path is: ' + versionInfo.extractorPath);
+        console.log('Geo is: ' + geo);
         if (userProxy == ''){
-            console.log('No user proxy inputted')
+            console.log('No user proxy inputted');
         } else {
-            console.log('User Proxy is: ' + userProxy)
+            console.log('User Proxy is: ' + userProxy);
         }
         if (instaUse == ''){
-            console.log('No Instagram username inputted')
+            console.log('No Instagram username inputted');
         } else {
-            console.log('Instagram username is: ' + instaUse)
+            console.log('Instagram username is: ' + instaUse);
         }
         if (instaPass == ''){
-            console.log('No instagram password inputted')
+            console.log('No instagram password inputted');
         } else {
-            console.log('Instagram password is: ' + instaPass)
+            console.log('Instagram password is: ' + instaPass);
         }
+        console.log(versionInfo.ExtractorSet);
     }
     inputCheck(inputURL, downloadPath, order, finalURL, userProxy, geo);
     lineBreak();
@@ -103,6 +80,7 @@ async function run_pynon() {
 
     execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
         if (error) {
+            console.log(stdout);
             errorAlert(error, 'proxy', 'Looks like a proxy error. Try again or use another method to rip the video for now.', swalColour, '');
         }
         else {
@@ -332,6 +310,88 @@ async function run_pynon() {
                                 }
                             );
                         });
+                    } else{
+                        Swal.fire({
+                            icon: 'success',
+                            title: "Video found!",
+                            text: "Nice one, now click download to grab this clip",
+                            input: 'select',
+                            inputOptions: {
+                                normal: 'Normal Resolution',
+                                high: 'High Resolution',
+                                live: 'Grab .m3u8 Code'
+                            },
+                            inputPlaceholder: 'Select Quality',
+                            showCancelButton: true,
+                            confirmButtonText: 'Download',
+                            showLoaderOnConfirm: true,
+                            backdrop: swalColour.loading,
+                            target: document.getElementById('swalframe'),
+                            preConfirm: (dlquality) => {
+                                    if (dlquality === 'normal') {
+                                        runningAlert();
+                                        var order = 'normal';
+            
+                                        execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                            if (error) {
+                                                console.log('Youtube Normal Download Fail');
+                                                errorAlert(error, 'download', '', swalColour, '');
+                                            }
+                                            else{
+                                                var message = stdout;
+                                                console.log('Normal Youtube Downloader Output:')
+                                                console.log(message);
+                                                successAlert('','', swalColour);
+                                            }
+                                        });
+                                    }
+                                    if (dlquality === 'high') {
+            
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: "Heads Up",
+                                            text: "High quality downloads can take roughly 4x longer to process. Only use when needed.",
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Continue',
+                                            showLoaderOnConfirm: true,
+                                            backdrop: swalColour.loading,
+                                            target: document.getElementById('swalframe'),
+                                            preConfirm: () => {
+                                                runningAlert();
+                                        
+                                                var order = 'high';
+                                                
+                                                execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                                    if (error) {
+                                                        console.log('High Quality Youtube Downloader Error, Details:')
+                                                        errorAlert(error, 'download', '', swalColour, '');
+                                                    }
+                                                    else{
+                                                        var message = stdout;
+                                                        console.log('High Quality Youtube Downloader Output:')
+                                                        console.log(message);
+                                                        successAlert('','', swalColour);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                    if (dlquality === 'live') {
+                                        runningAlert();
+                                        var order = 'live';
+                                        execFile(versionInfo.ExtractorSet, [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass], extractorOptions, (error, stdout, stderr) => {
+                                            if (error) {
+                                                console.log('Livestream Youtube Grabber Error, Details:')
+                                                errorAlert(error, 'download', '', swalColour, '');
+                                            }
+                                            else {
+                                                successAlert('live', stdout, swalColour);
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+                        );
                     }
                 }
                 // PARLIAMENT TV EXTRACTOR SETTINGS
@@ -692,3 +752,5 @@ async function run_pynon() {
         }
     });
 };
+
+export default run_pynon

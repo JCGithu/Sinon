@@ -4,7 +4,7 @@ import { successAlert } from '../alerts/successAlert.js';
 import { convertAlert } from '../alerts/convertAlert.js';
 import { errorAlert } from '../alerts/errorAlert.js';
 
-export async function screengrabs (multi, swalColour, format){
+export async function screengrabs (multi, swalColour, format, targetFiles){
     return new Promise ((resolve) => {
         Swal.fire({
             icon: 'info',
@@ -23,7 +23,7 @@ export async function screengrabs (multi, swalColour, format){
             target: document.getElementById('swalframe'),
             preConfirm: (grabNum) => {
                 convertAlert(swalColour);
-                effectFile.forEach(function(fileSelected){
+                targetFiles.forEach(function(fileSelected){
                     let fileSettings = effectSetUp(fileSelected);
                     ffmpeg(fileSelected).screenshots({
                         count: grabNum,

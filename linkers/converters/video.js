@@ -4,65 +4,76 @@ import { successAlert } from '../alerts/successAlert.js';
 import { convertAlert } from '../alerts/convertAlert.js';
 import { errorAlert } from '../alerts/errorAlert.js';
 
-async function videoConvert(convertInfo, swalColour){
-    Swal.fire({
+async function videoConvert(convertInfo, swalColour) {
+    let swalSet = {
         icon: 'info',
-        title: "File format",
-        text: "What format of video would you like to convert to?",
         input: 'select',
+        confirmButtonText: 'Run!',
+        showLoaderOnConfirm: true,
+        backdrop: swalColour.loading,
+        target: document.getElementById('swalframe'),
+    };
+
+    Swal.fire(Object.assign({
+        title: 'File format',
+        text: 'What format of video would you like to convert to?',
         inputOptions: {
             mp4: '.mp4',
             mov: '.mov',
             avi: '.avi',
             webm: '.webm',
         },
-        confirmButtonText: 'Run!',
-        showLoaderOnConfirm: true,
-        backdrop: swalColour.loading,
-        target: document.getElementById('swalframe'),
         preConfirm: (videoForm) => {
-            let videoFormCap = videoForm.toUpperCase();
-            let finalOutput = convertInfo. outputFile + '.' + videoForm;
-            if (convertInfo.inputExt.indexOf('.' + videoForm)>=0 || convertInfo.inputExt.indexOf('.' + videoFormCap)>=0){
-                finalOutput = convertInfo.outputFile + '-SinonConverted.' + videoForm;
-            }
-            console.log('Final output: ', finalOutput)
-            lineBreak();
-
-            Swal.fire({
-                icon: 'info',
-                title: "Convert, how?",
-                text: "Remuxing is significantly faster for some formats (MKV, MOV, etc), however may lose additional audio and subtitle tracks",
-                input: 'select',
+            Swal.fire(Object.assign({
+                title: 'Convert, how?',
+                text: 'Remuxing is significantly faster for some formats (MKV, MOV, etc), however may lose additional audio and subtitle tracks',
                 inputOptions: {
                     convert: 'Convert',
                     remux: 'Remux',
                 },
-                confirmButtonText: 'Run!',
-                showLoaderOnConfirm: true,
-                backdrop: swalColour.Loading,
-                target: document.getElementById('swalframe'),
                 preConfirm: (videoConv) => {
                     convertAlert(swalColour);
-                    if (videoConv == 'convert'){
-                        var runMP4 = ffmpeg(convertInfo.file).format(videoForm).on('progress', function(progress) {progressBar(progress, '')}).save(finalOutput);
-                    } else {
-                        var runMP4 = ffmpeg(convertInfo.file).videoCodec('copy').audioCodec('aac').outputOptions([
-                            '-map 0:v', '-map 0:a:?',
-                        ]).output(finalOutput).on('progress', function(progress) {progressBar(progress, '')})
+                    let i = 0;
+                    function convertTHATFILE(){
+                        lineBreak();
+                        console.log(convertInfo.targets[i]);
+                        console.log(i);
+                        let finalOutput = convertInfo.targets[i].output + '.' + videoForm;
+                        if (convertInfo.targets[i].ext.indexOf('.' + videoForm) >= 0 || convertInfo.targets[i].ext.indexOf('.' + videoForm.toUpperCase()) >= 0) {
+                            finalOutput = convertInfo.targets[i].output + '-SinonConverted.' + videoForm;
+                        }
+                        console.log('Final output: ', finalOutput);
+                        var runMP4 = ffmpeg(convertInfo.targets[i].input);
+                        if (videoConv == 'convert') {
+                            runMP4.format(videoForm)
+                            runMP4.save(finalOutput);
+                        } else {
+                            runMP4.videoCodec('copy');
+                            runMP4.audioCodec('aac');
+                            runMP4.outputOptions(['-map 0:v','-map 0:a:?',]);
+                            runMP4.output(finalOutput);
+                        }
+                        runMP4.on('error', (err,stdout,stderr) => {
+                            err = err + stdout + stderr;
+                            errorAlert(err, 'convert', '', swalColour, '');
+                        }).on('progress', (progress) => {
+                            progressBar(progress, '');
+                        }).on('end', () => {
+                            console.log('finished!');
+                            win.setProgressBar(-1);
+                            i++
+                            if (i >= convertInfo.targets.length - 1){
+                                successAlert('convert','',swalColour);
+                            } else {
+                                convertTHATFILE();
+                            }
+                        }).run();
                     }
-                    runMP4.on('error', function(err, stdout, stderr) {
-                        err = err + stdout + stderr;
-                        errorAlert(err, 'convert', '', swalColour, '');
-                    });
-                    runMP4.on('end', function() {
-                        successAlert('convert', '', swalColour);
-                    }).run();
-                    console.log(videoForm + ' running');
-                }
-            });
-        }
-    });
+                    convertTHATFILE();
+                },
+            }, swalSet));
+        },
+    }, swalSet));
 }
 
-export default videoConvert
+export default videoConvert;

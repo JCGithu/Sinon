@@ -5,12 +5,12 @@ import { convertAlert } from '../alerts/convertAlert.js';
 import { errorAlert } from '../alerts/errorAlert.js';
 import { successAlert } from '../alerts/successAlert.js';
 
-export async function concat(multi, swalColour, format){
+export async function concat(multi, swalColour, format, targetFiles){
     return new Promise ((resolve) => {
         let ffmpegInputs = ffmpeg();
         let fileSettings;
         var getInputs = new Promise((resolve) => {
-            effectFile.forEach(async function(fileSelected, index, array){
+            targetFiles.forEach(async function(fileSelected, index, array){
                 fileSettings = effectSetUp(fileSelected);
                 ffmpegInputs = ffmpegInputs.input(fileSettings.inputFull);
                 if (index === array.length -1) resolve();
