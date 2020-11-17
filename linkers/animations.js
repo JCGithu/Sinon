@@ -9,6 +9,8 @@ const pageElements = {
     currentTool: '',
 };
 
+var inputText, runButton;
+
 function startAnimation() {
     //Animation Variables
     pageElements.toolMenu = document.getElementsByClassName('toolMenu')[0];
@@ -53,19 +55,9 @@ function startAnimation() {
         pageElements.toolMenu.classList.remove('toolOpen');
     });
 
-    let inputText = document.querySelector('.inputBox');
-    let runButton = document.querySelector('.runButton');
-
-    //
-    inputText.addEventListener('keyup', function () {
-        if (inputText.value.length < 1) {
-            runButton.classList.remove('active');
-        } else {
-            runButton.classList.add('active');
-        }
-    });
-
-    // Load auto download location
+    inputText = document.querySelector('.inputBox');
+    runButton = document.querySelector('.runButton');
+    runButtonReset();
 
     documentationTransition();
     optionsTransition();
@@ -132,10 +124,29 @@ export function toolSwap(toolKit) {
                 setTimeout(function () {
                     pageElements.currentTool.classList.remove('toolChange');
                 }, 1500);
+                setTimeout(function() {
+                    runButtonReset();
+                }, 800);
                 pageElements.toolMenu.classList.remove('toolOpen');
             } else {
                 pageElements.toolMenu.classList.remove('toolOpen');
             }
         });
+    }
+}
+
+function runButtonReset(){
+    inputText = document.querySelector('.inputBox');
+    runButton = document.querySelector('.runButton');
+    inputText.addEventListener('input', function () {
+        runButtonShow(inputText);
+    });
+}
+
+export function runButtonShow(inputText){
+    if (inputText.value.length < 1) {
+        runButton.classList.remove('active');
+    } else {
+        runButton.classList.add('active');
     }
 }

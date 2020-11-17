@@ -1,4 +1,5 @@
 import { settingSave } from './storage.js'
+import { runButtonShow } from '../animations.js';
 
 import pynon from '../pynon.js';
 import effect from '../effect.js';
@@ -31,6 +32,8 @@ document.body.addEventListener( 'click', function ( event ) {
             targetFiles = data.filePaths;
             let fileTextBox = document.getElementById('downloadFile');
             fileTextBox.value = targetFiles.toString();
+            let inputText = document.querySelector('.inputBox');
+            runButtonShow(inputText);
         });
     };
     if (event.target.classList.contains('runButton'))
