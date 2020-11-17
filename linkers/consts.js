@@ -7,6 +7,7 @@ const stream = require('stream');
 const {promisify} = require('util');
 const got = require('got');
 const gifsicle = require('gifsicle');
+const axios = require("axios");
 
 const win = remote.getCurrentWindow();
 const fs = require('fs');

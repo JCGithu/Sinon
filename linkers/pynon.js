@@ -17,7 +17,6 @@ async function run_pynon() {
     let userProxy = '';
     let instaUse = document.getElementById('InstaUse').value;
     let instaPass = document.getElementById('InstaPass').value;
-    
     let proxyInput = document.getElementById('proxyInput');
     
 

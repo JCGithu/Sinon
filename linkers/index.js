@@ -18,6 +18,7 @@ import './settings.js';
 
 import { docsReplace } from './Utilities/docsReplace.js';
 import { toolSwap } from './animations.js';
+import proxyGenerator from './Utilities/proxy.js';
 
 const sinon = new Block('#sinon');
 
@@ -36,12 +37,18 @@ async function sinonBoot(){
     }
     sinon.loadAll();
     let target = document.getElementById('docText');
+    let proxyInput = document.getElementById('proxyInput');
     if (target){
         docsReplace().then((data) => {
             target.innerHTML = data
         });
         import('./Utilities/toolFunctions.js');
         toolSwap(toolKit);
+        if (proxyInput.value == undefined || proxyInput.value == null || proxyInput.value == ''){
+            proxyGenerator().then((proxy) =>{
+                proxyInput.value = proxy;
+            });
+        }
     };
 }
 

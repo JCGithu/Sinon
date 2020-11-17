@@ -1,6 +1,8 @@
 import { successAlert } from '../alerts/successAlert.js';
 import { swalColours } from './utils.js';
 
+import proxyGenerator from './proxy.js';
+
 export function settingDelete(){
     var swalColour = swalColours();
     Swal.fire({
@@ -27,7 +29,7 @@ export function settingSave() {
     let URLSwitch = document.getElementById('urlswitch')
     let darkSwitch = document.getElementById('darkswitch')
     let geoFormat = document.getElementById('geoFormat')
-    let proxyInput = document.getElementById('proxyInput') 
+    let proxyInput = document.getElementById('proxyInput')
     let InstaUse = document.getElementById('InstaUse')
     let InstaPass = document.getElementById('InstaPass')
     let downloadfolder = document.getElementById('downloadfolder')
@@ -36,7 +38,7 @@ export function settingSave() {
         UrlWipe: URLSwitch.checked,
         DarkMode: darkSwitch.checked,
         Geo: geoFormat.value ,
-        CustomProxy : proxyInput.value,
+        CustomProxy : ip,
         InstaUse : InstaUse.value,
         InstaPass : InstaPass.value,
         downloadPath : downloadfolder.value 
@@ -58,5 +60,5 @@ export function settingSet() {
     }, function(error) {
         if (error) throw error;
     })
-    console.log('Setting File Created!')
+    console.log('Setting File Created!');
 };

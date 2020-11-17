@@ -41,18 +41,16 @@
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
-    "@types/animejs": "^3.1.2",
     "animejs": "^3.2.1",
     "axios": "^0.20.0",
     "electron-json-storage": "^4.1.8",
+    "eslint-config-airbnb": "^18.2.1",
     "ffmpeg-static-electron": "^2.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "gifsicle": "^5.1.0",
     "got": "^11.5.1",
     "p5": "^1.1.9",
     "rimraf": "^3.0.2",
-    "sweetalert2": "^10.9.0",
-    "vue": "^2.6.12",
-    "vue-class-component": "^7.2.6"
+    "sweetalert2": "^10.9.0"
   }
 }
