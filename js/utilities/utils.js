@@ -13,10 +13,11 @@ function copyString(str) {
 
 function swalColours() {
   let darkSwitch = document.getElementById('darkswitch');
+  console.log('swal colour check');
   if (darkSwitch.checked) {
     (swalColour.fail = '#232323'), (swalColour.loading = '#2c3e50'), (swalColour.pass = '#2c3e50');
   } else {
-    (swalColour.fail = '#ED6A5A'), (swalColour.loading = '#rgba(0,0,0,0.4)'), (swalColour.pass = '#30bced');
+    (swalColour.fail = '#ED6A5A'), (swalColour.loading = 'rgba(0,0,0,0.4)'), (swalColour.pass = '#30bced');
   }
 }
 

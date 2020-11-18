@@ -2,6 +2,8 @@ const { successAlert } = require('../alerts/successAlert.js');
 const { swalColours } = require('./utils.js');
 const proxyGenerator = require('./proxy.js');
 
+const storage = require('electron-json-storage');
+
 function settingDelete() {
   var swalColour = swalColours();
   Swal.fire({

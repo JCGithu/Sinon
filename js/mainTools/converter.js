@@ -1,12 +1,12 @@
-const videoConvert = require('./converters/video.js');
-const audioConvert = require('./converters/audio.js');
-const gifConvert = require('./converters/gif.js');
+const videoConvert = require('../converters/video.js');
+const audioConvert = require('../converters/audio.js');
+const gifConvert = require('../converters/gif.js');
 
-const { swalColours, lineBreak } = require('./Utilities/utils.js');
+const { swalColours, lineBreak } = require('../utilities/utils.js');
 
 async function run_convert(targetFiles) {
   lineBreak();
-  let swalColour = swalColours();
+  swalColours();
   var convertFile = document.getElementById('downloadFile').value;
   var e = document.getElementById('convertFormat');
   var fileInfo = [];

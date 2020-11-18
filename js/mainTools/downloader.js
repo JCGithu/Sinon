@@ -1,13 +1,15 @@
 //Utils
-const { lineBreak, swalColours } = require('./Utilities/utils.js');
-const { settingSave } = require('./Utilities/storage.js');
+const { lineBreak, swalColours } = require('../utilities/utils');
+const { settingSave } = require('../utilities/storage');
+const { execFile } = require('child_process');
+const spawn = require('child_process').spawn;
 
 // Alerts
-const { errorAlert } = require('./alerts/errorAlert.js');
-const { runningAlert } = require('./alerts/runningAlert.js');
-const { successAlert } = require('./alerts/successAlert.js');
+const errorAlert = require('../alerts/errorAlert');
+const runningAlert = require('../alerts/runningAlert');
+const successAlert = require('../alerts/successAlert');
 
-async function run_pynon() {
+async function downloader() {
   //Inputs
   let inputURL = document.getElementById('inputURL').value;
   let downloadPath = document.getElementById('downloadfolder').value;
@@ -19,7 +21,7 @@ async function run_pynon() {
   let instaPass = document.getElementById('InstaPass').value;
   let proxyInput = document.getElementById('proxyInput');
 
-  let swalColour = swalColours();
+  swalColours();
 
   //Reset UserProxy
   if (proxyInput.value === undefined || proxyInput.value === null) {
@@ -91,7 +93,6 @@ async function run_pynon() {
           ''
         );
       } else {
-        console.log('Initial output = require(Extractor is:');
         console.log(stdout);
         lineBreak();
         const message = stdout;
@@ -964,4 +965,4 @@ async function run_pynon() {
   );
 }
 
-module.exports = run_pynon;
+module.exports = downloader;

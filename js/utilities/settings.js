@@ -1,5 +1,6 @@
-const { docReady, lineBreak } = require('./Utilities/utils.js');
-const { settingDelete, settingSet, settingSave } = require('./Utilities/storage.js');
+const { docReady, lineBreak } = require('./utils.js');
+const storage = require('electron-json-storage');
+const { settingDelete, settingSet, settingSave } = require('./storage.js');
 
 docReady(function () {
   const userDataPath = app.getPath('userData');

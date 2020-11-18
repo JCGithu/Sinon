@@ -1,4 +1,7 @@
-const { docReady } = require('./Utilities/utils.js');
+const { docReady } = require('./utils');
+const anime = require('animejs');
+
+const storage = require('electron-json-storage');
 
 const pageElements = {
   toolMenu: '',

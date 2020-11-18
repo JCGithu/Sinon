@@ -1,4 +1,4 @@
-const { effectSetUp } = require('../Utilities/fileSetUp.js');
+const { effectSetUp } = require('../utilities/fileSetUp.js');
 
 const { successAlert } = require('../alerts/successAlert.js');
 const { convertAlert } = require('../alerts/convertAlert.js');

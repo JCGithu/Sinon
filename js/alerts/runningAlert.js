@@ -2,12 +2,11 @@ function runningAlert() {
   var swalOptions = {
     title: 'Running!',
     position: 'center',
-    backdrop: false,
     toast: true,
-    showLoading: true,
     customClass: 'swal-running',
-    willOpen: () => {
+    didOpen: () => {
       Swal.isLoading();
+      Swal.showLoading();
     },
     target: document.getElementById('swalframe'),
     showCancelButton: false,

@@ -1,14 +1,14 @@
 html {
   --mainBackground: #fff;
-  --toolMenu: linear-gradient(90deg, rgba(0,128,128,.9) 0%, rgba(69, 189, 159,.8) 100%);
-  --optionsBg: linear-gradient(0deg, #5fccbf 0%, #4CBBAE 100%);
-  --optionsBloom: inset 0px 0px 33px 0px rgba(63, 50, 50, 0.2), 0px 0px 33px 0px rgba(255,255,255,.1);
+  --toolMenu: linear-gradient(90deg, rgba(0, 128, 128, 0.9) 0%, rgba(69, 189, 159, 0.8) 100%);
+  --optionsBg: linear-gradient(0deg, #5fccbf 0%, #4cbbae 100%);
+  --optionsBloom: inset 0px 0px 33px 0px rgba(63, 50, 50, 0.2), 0px 0px 33px 0px rgba(255, 255, 255, 0.1);
   --fontColour: #000000;
   --inverseFont: #fff;
-  --icons: rgba(0,0,0,.25);
-  --switchOn: rgb(100,228,195);
+  --icons: rgba(0, 0, 0, 0.25);
+  --switchOn: rgb(100, 228, 195);
   --switchOff: #232323;
-  --hover: #ED6A5A;
+  --hover: #ed6a5a;
 }
 
 html[data-theme='dark'] {
@@ -16,12 +16,12 @@ html[data-theme='dark'] {
   --toolMenu: #2c3e50;
   --fontColour: #fff;
   --inverseFont: #000000;
-  --icons: rgba(256,256,256,.2);
+  --icons: rgba(256, 256, 256, 0.2);
   --optionsBg: #232323;
-  --optionsBloom: inset 0px 0px 33px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(255,255,255);
-  --switchOn: linear-gradient(90deg, rgba(0,128,128,1) 0%, rgba(100,228,195,1) 100%);
-  --switchOff:#000000;
-  --hover: #ED6A5A;
+  --optionsBloom: inset 0px 0px 33px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(255, 255, 255);
+  --switchOn: linear-gradient(90deg, rgba(0, 128, 128, 1) 0%, rgba(100, 228, 195, 1) 100%);
+  --switchOff: #000000;
+  --hover: #ed6a5a;
 }
 
 body {
@@ -36,8 +36,8 @@ body {
 }
 
 .corners {
-  Height: 98vh;
-  Width: 100vw;
+  height: 98vh;
+  width: 100vw;
   top: 0px;
   border-radius: 0px 0px 20px 20px;
   background-color: var(--mainBackground);
@@ -140,7 +140,10 @@ h2 {
   color: white;
 }
 
-a, h3, li, h4 {
+a,
+h3,
+li,
+h4 {
   font-family: baloo !important;
   color: var(--fontColour);
 }
@@ -243,7 +246,8 @@ header {
   color: teal !important;
 }
 
-#closeOptions, #closedocs {
+#closeOptions,
+#closedocs {
   position: absolute;
   z-index: 6;
   bottom: 7vh;
@@ -498,7 +502,8 @@ html.transition *:after {
   margin-bottom: 5vh;
 }
 
-.fileButton, #downloadfolder {
+.fileButton,
+#downloadfolder {
   margin: 0;
   width: 70%;
   border-radius: 20px 0 0 20px !important;
@@ -510,7 +515,9 @@ html.transition *:after {
   border-radius: 20px 0 0 20px !important;
 }
 
-#downFileButton, #convFileButton, #effectFileButton {
+#downFileButton,
+#convFileButton,
+#effectFileButton {
   margin: 0;
   width: 28%;
   border-radius: 0 20px 20px 0 !important;
@@ -524,7 +531,7 @@ input {
   height: 50% !important;
 }
 
-input[type=text] {
+input[type='text'] {
   border-radius: 8px;
   border: 0px;
   color: black;
@@ -533,29 +540,29 @@ input[type=text] {
   text-align: center;
 }
 
-input[type=text]:focus {
+input[type='text']:focus {
   color: black;
   background-color: white;
   border-radius: 20px;
 }
 
-input[type=text]::-webkit-input-placeholder {
+input[type='text']::-webkit-input-placeholder {
   color: grey;
 }
 
-input[type=text]:-ms-input-placeholder {
+input[type='text']:-ms-input-placeholder {
   color: grey;
 }
 
-input[type=text]::-ms-input-placeholder {
+input[type='text']::-ms-input-placeholder {
   color: grey;
 }
 
-input[type=text]::placeholder {
+input[type='text']::placeholder {
   color: grey;
 }
 
-input[type=checkbox] {
+input[type='checkbox'] {
   height: 0;
   width: 0;
   visibility: hidden;
@@ -592,7 +599,8 @@ button {
 }
 
 /* Converter */
-.convFormat, .geoFormat {
+.convFormat,
+.geoFormat {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -605,7 +613,7 @@ button {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
-  padding: 0 .5em;
+  padding: 0 0.5em;
   color: #fff;
   cursor: pointer;
   font-family: baloo;
@@ -640,8 +648,8 @@ button {
   background: teal;
   cursor: pointer;
   pointer-events: none;
-  -webkit-transition: .25s all ease;
-  transition: .25s all ease;
+  -webkit-transition: 0.25s all ease;
+  transition: 0.25s all ease;
 }
 
 .select:hover::after {
@@ -680,11 +688,26 @@ canvas {
   top: 0vh !important;
 }
 
+.swal2-loading {
+  -webkit-box-orient: vertical !important;
+  -webkit-box-direction: normal !important;
+      -ms-flex-direction: column !important;
+          flex-direction: column !important;
+  margin: auto !important;
+}
+
+.swal2-loader {
+  margin: 5px !important;
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+}
+
 .swal2-icon {
   margin: 1em auto 1.3em !important;
 }
 
-#swal-input1, #swal-input2 {
+#swal-input1,
+#swal-input2 {
   border-radius: 8px;
   border: 0px;
   color: black;
@@ -762,7 +785,8 @@ svg:hover, svg:focus, svg:active {
 }
 
 @-webkit-keyframes swell {
-  0%, 100% {
+  0%,
+  100% {
     -webkit-transform: translate3d(0, -25px, 0);
             transform: translate3d(0, -25px, 0);
   }
@@ -773,7 +797,8 @@ svg:hover, svg:focus, svg:active {
 }
 
 @keyframes swell {
-  0%, 100% {
+  0%,
+  100% {
     -webkit-transform: translate3d(0, -25px, 0);
             transform: translate3d(0, -25px, 0);
   }

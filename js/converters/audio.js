@@ -1,4 +1,4 @@
-const { lineBreak } = require('../Utilities/utils.js');
+const { lineBreak } = require('../utilities/utils.js');
 const { successAlert } = require('../alerts/successAlert.js');
 const { convertAlert } = require('../alerts/convertAlert.js');
 const { errorAlert } = require('../alerts/errorAlert.js');

@@ -2,8 +2,8 @@ const { convertAlert } = require('../alerts/convertAlert.js');
 const { errorAlert } = require('../alerts/errorAlert.js');
 const { successAlert } = require('../alerts/successAlert.js');
 
-const { lineBreak } = require('../Utilities/utils.js');
-const { effectSetUp } = require('../Utilities/fileSetUp.js');
+const { lineBreak } = require('../utilities/utils.js');
+const { effectSetUp } = require('../utilities/fileSetUp.js');
 
 async function wave(multi, swalColour, format, targetFiles) {
   return new Promise((resolve) => {

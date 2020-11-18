@@ -1,4 +1,4 @@
-const { copyString } = require('../Utilities/utils.js');
+const { copyString } = require('../utilities/utils.js');
 
 function errorAlert(error, errorType, errorText, swalColour, instaDeets) {
   let instaUse = document.getElementById('InstaUse');

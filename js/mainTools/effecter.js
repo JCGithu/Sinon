@@ -1,10 +1,10 @@
-const { swalColours, lineBreak } = require('./Utilities/utils.js');
+const { swalColours, lineBreak } = require('../utilities/utils.js');
 
 //Effects
-const { screengrabs } = require('./effects/screengrab.js');
-const { socialBlur } = require('./effects/blur.js');
-const { concat } = require('./effects/concat.js');
-const { wave } = require('./effects/wave.js');
+const { screengrabs } = require('../effects/screengrab.js');
+const { socialBlur } = require('../effects/blur.js');
+const { concat } = require('../effects/concat.js');
+const { wave } = require('../effects/wave.js');
 
 async function run_effect(targetFiles) {
   lineBreak();

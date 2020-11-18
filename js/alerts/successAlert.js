@@ -1,4 +1,4 @@
-const { copyString } = require('../Utilities/utils.js');
+const { copyString } = require('../utilities/utils.js');
 
 function successAlert(passType, passText, swalColour) {
   var swalOptions = {
