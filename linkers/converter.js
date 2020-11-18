@@ -1,8 +1,8 @@
-import videoConvert from './converters/video.js';
-import audioConvert from './converters/audio.js';
-import gifConvert from './converters/gif.js';
+const videoConvert = require('./converters/video.js');
+const audioConvert = require('./converters/audio.js');
+const gifConvert = require('./converters/gif.js');
 
-import { swalColours, lineBreak } from './Utilities/utils.js';
+const { swalColours, lineBreak } = require('./Utilities/utils.js');
 
 async function run_convert(targetFiles) {
   lineBreak();
@@ -11,19 +11,19 @@ async function run_convert(targetFiles) {
   var e = document.getElementById('convertFormat');
   var fileInfo = [];
 
-  targetFiles.forEach(function(targetFile){
-      let out = path.join(path.parse(targetFile).dir, path.parse(targetFile).name);
-      let file = {
-          input: targetFile,
-          output: out,
-          ext: path.parse(targetFile).ext
-      }
-      fileInfo.push(file);
+  targetFiles.forEach(function (targetFile) {
+    let out = path.join(path.parse(targetFile).dir, path.parse(targetFile).name);
+    let file = {
+      input: targetFile,
+      output: out,
+      ext: path.parse(targetFile).ext,
+    };
+    fileInfo.push(file);
   });
 
   let convertInfo = {
-      targets: fileInfo,
-      format: e.options[e.selectedIndex].value,
+    targets: fileInfo,
+    format: e.options[e.selectedIndex].value,
   };
 
   console.log('Converter running');
@@ -33,4 +33,4 @@ async function run_convert(targetFiles) {
   eval(convertInfo.format + 'Convert(convertInfo, swalColour)');
 }
 
-export default run_convert;
+module.exports = run_convert;

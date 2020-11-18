@@ -1,8 +1,8 @@
-import { lineBreak, progressBar } from '../Utilities/utils.js';
+const { lineBreak, progressBar } = require('../Utilities/utils.js');
 
-import { successAlert } from '../alerts/successAlert.js';
-import { convertAlert } from '../alerts/convertAlert.js';
-import { errorAlert } from '../alerts/errorAlert.js';
+const { successAlert } = require('../alerts/successAlert.js');
+const { convertAlert } = require('../alerts/convertAlert.js');
+const { errorAlert } = require('../alerts/errorAlert.js');
 
 async function videoConvert(convertInfo, swalColour) {
   let swalSet = {
@@ -43,19 +43,12 @@ async function videoConvert(convertInfo, swalColour) {
                     lineBreak();
                     console.log(convertInfo.targets[i]);
                     console.log(i);
-                    let finalOutput =
-                      convertInfo.targets[i].output + '.' + videoForm;
+                    let finalOutput = convertInfo.targets[i].output + '.' + videoForm;
                     if (
-                      convertInfo.targets[i].ext.indexOf('.' + videoForm) >=
-                        0 ||
-                      convertInfo.targets[i].ext.indexOf(
-                        '.' + videoForm.toUpperCase()
-                      ) >= 0
+                      convertInfo.targets[i].ext.indexOf('.' + videoForm) >= 0 ||
+                      convertInfo.targets[i].ext.indexOf('.' + videoForm.toUpperCase()) >= 0
                     ) {
-                      finalOutput =
-                        convertInfo.targets[i].output +
-                        '-SinonConverted.' +
-                        videoForm;
+                      finalOutput = convertInfo.targets[i].output + '-SinonConverted.' + videoForm;
                     }
                     console.log('Final output: ', finalOutput);
                     var runMP4 = ffmpeg(convertInfo.targets[i].input);
@@ -101,4 +94,4 @@ async function videoConvert(convertInfo, swalColour) {
   );
 }
 
-export default videoConvert;
+module.exports = videoConvert;
