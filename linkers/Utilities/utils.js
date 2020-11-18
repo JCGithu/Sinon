@@ -14,15 +14,9 @@ function copyString(str) {
 function swalColours() {
   let darkSwitch = document.getElementById('darkswitch');
   if (darkSwitch.checked) {
-    swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50' };
-    return swalColour;
+    (swalColour.fail = '#232323'), (swalColour.loading = '#2c3e50'), (swalColour.pass = '#2c3e50');
   } else {
-    swalColour = {
-      fail: '#ED6A5A',
-      loading: 'rgba(0,0,0,0.4)',
-      pass: '#30bced',
-    };
-    return swalColour;
+    (swalColour.fail = '#ED6A5A'), (swalColour.loading = '#rgba(0,0,0,0.4)'), (swalColour.pass = '#30bced');
   }
 }
 
