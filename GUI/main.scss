@@ -500,9 +500,6 @@ button {
   font-size: xx-small;
 }
 
-#runTool {
-}
-
 .active {
   display: block !important;
   opacity: 1 !important;
@@ -576,13 +573,6 @@ canvas {
 .swal-size-sm {
   font-size: 0.65rem !important;
   border-radius: 40px !important;
-}
-
-.swal-running {
-  //font-size: 0.65rem !important;
-  //border-radius: 40px !important;
-  //transform: scale(1) !important;
-  //bottom:40vh !important;
 }
 
 .swalContainer {
