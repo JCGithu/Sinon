@@ -1,4 +1,4 @@
-function effectSetUp(fileSelected) {
+function fileSetUp(fileSelected) {
   var fileSettings = {
     outputFile: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).name),
     inputFull: path.join(path.parse(fileSelected).dir, path.parse(fileSelected).base),
@@ -10,4 +10,4 @@ function effectSetUp(fileSelected) {
   return fileSettings;
 }
 
-module.exports = effectSetUp;
+module.exports = fileSetUp;

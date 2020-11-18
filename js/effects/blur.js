@@ -1,9 +1,9 @@
 const { lineBreak } = require('../utilities/utils.js');
-const { effectSetUp } = require('../utilities/fileSetUp.js');
+const fileSetUp = require('../utilities/fileSetUp.js');
 
-const { convertAlert } = require('../alerts/convertAlert.js');
-const { errorAlert } = require('../alerts/errorAlert.js');
-const { successAlert } = require('../alerts/successAlert.js');
+const convertAlert = require('../alerts/convertAlert.js');
+const errorAlert = require('../alerts/errorAlert.js');
+const successAlert = require('../alerts/successAlert.js');
 
 async function socialBlur(multi, swalColour, format, targetFiles) {
   return new Promise((resolve) => {
@@ -30,7 +30,7 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
           var cropSetting = "[pxratio_fix]crop='if(lt(in_h,in_w),in_h,in_w):in_h'[cropped]";
         }
         targetFiles.forEach(function (fileSelected) {
-          let fileSettings = effectSetUp(fileSelected);
+          let fileSettings = fileSetUp(fileSelected);
           var finalOutput = fileSettings.outputFile + '-bgblurred.mp4';
           console.log('Final output: ', finalOutput);
           lineBreak();

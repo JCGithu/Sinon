@@ -1,11 +1,11 @@
-const { convertAlert } = require('../alerts/convertAlert.js');
-const { successAlert } = require('../alerts/successAlert.js');
+const convertAlert = require('../alerts/convertAlert.js');
+const successAlert = require('../alerts/successAlert.js');
 const { lineBreak } = require('../utilities/utils.js');
 
 const { execFile } = require('child_process');
 const gifsicle = require('gifsicle');
 
-async function gifConvert(convertInfo, swalColour) {
+async function gifConvert(convertInfo) {
   Swal.fire({
     icon: 'info',
     title: 'Settings',

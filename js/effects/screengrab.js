@@ -1,8 +1,8 @@
-const { effectSetUp } = require('../utilities/fileSetUp.js');
+const fileSetUp = require('../utilities/fileSetUp.js');
 
-const { successAlert } = require('../alerts/successAlert.js');
-const { convertAlert } = require('../alerts/convertAlert.js');
-const { errorAlert } = require('../alerts/errorAlert.js');
+const successAlert = require('../alerts/successAlert.js');
+const convertAlert = require('../alerts/convertAlert.js');
+const errorAlert = require('../alerts/errorAlert.js');
 
 async function screengrabs(multi, swalColour, format, targetFiles) {
   return new Promise((resolve) => {
@@ -24,7 +24,7 @@ async function screengrabs(multi, swalColour, format, targetFiles) {
       preConfirm: (grabNum) => {
         convertAlert(swalColour);
         targetFiles.forEach(function (fileSelected) {
-          let fileSettings = effectSetUp(fileSelected);
+          let fileSettings = fileSetUp(fileSelected);
           ffmpeg(fileSelected)
             .screenshots({
               count: grabNum,

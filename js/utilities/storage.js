@@ -1,4 +1,4 @@
-const { successAlert } = require('../alerts/successAlert.js');
+const successAlert = require('../alerts/successAlert.js');
 const { swalColours } = require('./utils.js');
 const proxyGenerator = require('./proxy.js');
 

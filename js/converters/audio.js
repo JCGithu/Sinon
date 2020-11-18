@@ -1,9 +1,9 @@
 const { lineBreak } = require('../utilities/utils.js');
-const { successAlert } = require('../alerts/successAlert.js');
-const { convertAlert } = require('../alerts/convertAlert.js');
-const { errorAlert } = require('../alerts/errorAlert.js');
+const successAlert = require('../alerts/successAlert.js');
+const convertAlert = require('../alerts/convertAlert.js');
+const errorAlert = require('../alerts/errorAlert.js');
 
-async function audioConvert(convertInfo, swalColour) {
+async function audioConvert(convertInfo) {
   Swal.fire({
     icon: 'info',
     title: 'File format',

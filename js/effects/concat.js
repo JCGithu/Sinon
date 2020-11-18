@@ -1,8 +1,8 @@
 const { progressBar, lineBreak } = require('../utilities/utils.js');
-const { effectSetUp } = require('../utilities/fileSetUp.js');
-const { convertAlert } = require('../alerts/convertAlert.js');
-const { errorAlert } = require('../alerts/errorAlert.js');
-const { successAlert } = require('../alerts/successAlert.js');
+const fileSetUp = require('../utilities/fileSetUp.js');
+const convertAlert = require('../alerts/convertAlert.js');
+const errorAlert = require('../alerts/errorAlert.js');
+const successAlert = require('../alerts/successAlert.js');
 
 async function concat(multi, swalColour, format, targetFiles) {
   return new Promise((resolve) => {
@@ -10,7 +10,7 @@ async function concat(multi, swalColour, format, targetFiles) {
     let fileSettings;
     var getInputs = new Promise((resolve) => {
       targetFiles.forEach(async function (fileSelected, index, array) {
-        fileSettings = effectSetUp(fileSelected);
+        fileSettings = fileSetUp(fileSelected);
         ffmpegInputs = ffmpegInputs.input(fileSettings.inputFull);
         if (index === array.length - 1) resolve();
         return ffmpegInputs;

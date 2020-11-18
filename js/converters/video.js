@@ -1,10 +1,10 @@
 const { lineBreak, progressBar } = require('../utilities/utils.js');
 
-const { successAlert } = require('../alerts/successAlert.js');
-const { convertAlert } = require('../alerts/convertAlert.js');
-const { errorAlert } = require('../alerts/errorAlert.js');
+const successAlert = require('../alerts/successAlert.js');
+const convertAlert = require('../alerts/convertAlert.js');
+const errorAlert = require('../alerts/errorAlert.js');
 
-async function videoConvert(convertInfo, swalColour) {
+async function videoConvert(convertInfo) {
   let swalSet = {
     icon: 'info',
     input: 'select',

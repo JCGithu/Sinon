@@ -1,14 +1,14 @@
 const { swalColours, lineBreak } = require('../utilities/utils.js');
 
 //Effects
-const { screengrabs } = require('../effects/screengrab.js');
-const { socialBlur } = require('../effects/blur.js');
-const { concat } = require('../effects/concat.js');
-const { wave } = require('../effects/wave.js');
+const screengrabs = require('../effects/screengrab.js');
+const socialBlur = require('../effects/blur.js');
+const concat = require('../effects/concat.js');
+const wave = require('../effects/wave.js');
 
 async function run_effect(targetFiles) {
   lineBreak();
-  let swalColour = swalColours();
+  swalColours();
   var outputFile, inputFull, inputExt, inputDir, pngFolder, inputName, finalOutput;
   var e = document.getElementById('convertFormat');
   let format = e.options[e.selectedIndex].value;

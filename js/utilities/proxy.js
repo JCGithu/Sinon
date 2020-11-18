@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 async function proxyGenerator() {
   let ip_addresses = [];
   let port_numbers = [];

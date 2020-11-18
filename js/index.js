@@ -1,3 +1,41 @@
+const { remote, ipcRenderer } = require('electron');
+const Swal = require('sweetalert2');
+const { app, dialog } = require('electron').remote;
+
+const win = remote.getCurrentWindow();
+const fs = require('fs');
+const path = require('path');
+
+const FFmpegStatic = require('ffmpeg-static-electron');
+const ffmpeg = require('fluent-ffmpeg');
+const ffmpegPath = FFmpegStatic.path;
+ffmpeg.setFfmpegPath(ffmpegPath);
+
+const ffmpegOptions = {
+  cwd: ffmpegPath,
+};
+
+const versionInfo = {
+  OS: '',
+  ExtractorSet: 'extractor',
+  ffmpegSet: 'ffmpeg',
+  ffmpegPath: ffmpegPath,
+  extractorPath: '',
+};
+
+var OSs = ['Win', 'Mac', 'X11', 'Linux'];
+var plat = ['Windows', 'MacOS', 'UNIX', 'Linux'];
+
+for (let i = 0; i > OSs.length; i++) {
+  if (navigator.appVersion.indexOf(OSs[i]) != -1) {
+    versionInfo.OS = plat[i];
+  }
+  if (navigator.appVersion.indexOf('Mac') != -1) {
+    versionInfo.ExtractorSet = './extractor';
+    versionInfo.ffmpegSet = './ffmpeg';
+  }
+}
+
 const Block = require('../js/block');
 const swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50' };
 

@@ -3,6 +3,15 @@ const { lineBreak, swalColours } = require('../utilities/utils');
 const { settingSave } = require('../utilities/storage');
 const { execFile } = require('child_process');
 const spawn = require('child_process').spawn;
+const stream = require('stream');
+const { promisify } = require('util');
+const got = require('got');
+
+const extractorPath = path.join(__dirname, '/../engine/dist/extractor');
+const extractorOptions = {
+  cwd: extractorPath,
+};
+versionInfo.extractorPath = extractorPath;
 
 // Alerts
 const errorAlert = require('../alerts/errorAlert');
