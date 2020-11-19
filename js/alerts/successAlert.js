@@ -19,10 +19,13 @@ function successAlert(passType, passText, swalColour) {
       copyString(passText.replace(/(\r\n|\n|\r)/gm, '').replace(' ', ''));
     };
   } else if (passType == 'convert') {
+    console.log('Convert success!');
     swalOptions.title = 'Conversion Success!';
   } else if (passType == 'effect') {
+    console.log('Effect success!');
     swalOptions.title = 'Effect Success!';
   } else if (passType == 'delete') {
+    console.log('File deleted!');
     swalOptions.title = 'Deleted!';
   }
 

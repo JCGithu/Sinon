@@ -26,8 +26,9 @@ function lineBreak() {
 }
 
 function progressBar(progress, format) {
+  let progressText = document.getElementById('progressText');
   if (progress.percent === undefined) {
-    document.getElementById('progressText').textContent = progress.timemark.match('dd:dd:dd)');
+    progressText.textContent = progress.timemark.match('dd:dd:dd)');
   } else {
     if (format.indexOf('concat') >= 0) {
       progress.percent = progress.percent / (effectFile.length + 1);
@@ -35,10 +36,13 @@ function progressBar(progress, format) {
     if (progress.percent > 100) {
       progress.percent = 99.9;
     }
-    document.getElementById('progressText').textContent = (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
-    console.log('Processing: ' + progress.percent + '% done');
-    let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
-    win.setProgressBar(percentage);
+
+    if (progressText) {
+      progressText.textContent = (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
+      console.log('Processing: ' + progress.percent + '% done');
+      let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
+      win.setProgressBar(percentage);
+    }
   }
 }
 

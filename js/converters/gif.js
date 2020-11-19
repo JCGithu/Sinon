@@ -1,6 +1,6 @@
 const convertAlert = require('../alerts/convertAlert.js');
 const successAlert = require('../alerts/successAlert.js');
-const { lineBreak } = require('../utilities/utils.js');
+const { lineBreak, progressBar } = require('../utilities/utils.js');
 
 const { execFile } = require('child_process');
 const gifsicle = require('gifsicle');
@@ -33,26 +33,19 @@ async function gifConvert(convertInfo) {
           .format('gif')
           .fps(12)
           .complexFilter(['[0:v]mpdecimate[frames]', '[frames]scale=w=trunc(oh*a/2)*2:h=360[rescaled]'], 'rescaled')
-          .on('progress', function (progress) {
-            document.getElementById('progressText').textContent =
-              (Math.round(progress.percent * 100) / 100).toFixed() + '%';
-            console.log('Processing: ' + progress.percent + '% done');
-            let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
-            win.setProgressBar(percentage);
+          .on('progress', (progress) => {
+            progressBar(progress, '');
           })
           .save(finalOutput)
           .on('end', function () {
             document.getElementById('progressText').textContent = 'Optimising';
             execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128', finalOutput], (err) => {
-              console.log('Conversion Success!');
               fs.unlink(finalOutput, function (err) {
                 if (err) throw err;
-                console.log('File deleted!');
               });
               successAlert('convert', '', swalColour);
             });
           });
-        console.log('gif running');
         console.log('Final output: ', finalOutput);
         lineBreak();
         convertAlert(swalColour);
@@ -124,6 +117,7 @@ async function gifConvert(convertInfo) {
             },
           ])
           .then((result) => {
+            console.log('gif running');
             if (result.value) {
               let rez, qual, fps, crop, compress;
               let gifValues = [rez, qual, fps, crop, compress];
@@ -183,22 +177,16 @@ async function gifConvert(convertInfo) {
                 .format('gif')
                 .fps(fps)
                 .complexFilter(['[0:v]mpdecimate[frames]', reRez, gifCrop], 'cropped')
-                .on('progress', function (progress) {
-                  document.getElementById('progressText').textContent =
-                    (Math.round(progress.percent * 100) / 100).toFixed() + '%';
-                  console.log('Processing: ' + progress.percent + '% done');
-                  let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
-                  win.setProgressBar(percentage);
+                .on('progress', (progress) => {
+                  progressBar(progress, '');
                 })
                 .save(finalOutput)
                 .on('end', function (stdout, stderr) {
                   if (opti == true) {
                     document.getElementById('progressText').textContent = 'Optimising';
                     execFile(gifsicle, ['-o', OptimalOutput, lossy, '-O3', cRange, finalOutput], (err) => {
-                      console.log('Conversion Success!');
                       fs.unlink(finalOutput, function (err) {
                         if (err) throw err;
-                        console.log('File deleted!');
                       });
                       successAlert('convert', '', swalColour);
                     });
@@ -206,7 +194,6 @@ async function gifConvert(convertInfo) {
                     successAlert('convert', '', swalColour);
                   }
                 });
-              console.log('gif running');
               console.log('Final output: ', finalOutput);
               lineBreak();
               convertAlert(swalColour);

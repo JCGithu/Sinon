@@ -7,7 +7,7 @@ const stream = require('stream');
 const { promisify } = require('util');
 const got = require('got');
 
-const extractorPath = path.join(__dirname, '/../engine/dist/extractor');
+const extractorPath = path.join(__dirname, '/../../engine/dist/extractor');
 const extractorOptions = {
   cwd: extractorPath,
 };
