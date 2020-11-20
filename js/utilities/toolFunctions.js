@@ -44,11 +44,12 @@ document.body.addEventListener('click', function (event) {
       });
   }
   if (event.target.classList.contains('runButton'))
-    if (event.target.id == 'pynonRun') {
-      downloader();
-    } else if (event.target.id == 'effectRun') {
-      effect(targetFiles);
-    } else {
-      convertor(targetFiles);
-    }
+    if (event.target.classList.contains('active'))
+      if (event.target.id == 'pynonRun') {
+        downloader();
+      } else if (event.target.id == 'effectRun') {
+        effect(targetFiles);
+      } else {
+        convertor(targetFiles);
+      }
 });

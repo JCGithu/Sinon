@@ -21,34 +21,10 @@ async function gifConvert(convertInfo) {
     target: document.getElementById('swalframe'),
     preConfirm: (gifQual) => {
       if (gifQual == 'basic') {
-        let finalOutput = convertInfo.outputFile + '.gif';
-        let finalOutputName = path.parse(convertInfo.file).name + '.gif';
-        if (convertInfo.inputExt.indexOf('.gif') >= 0) {
-          finalOutput = convertInfo.outputFile + '-SinonConverted.gif';
-          finalOutputName = path.parse(convertInfo.file).name + '-SinonConverted.gif';
-        }
-        let OptimalOutput = convertInfo.outputFile + '_basic.gif';
-
-        ffmpeg(convertInfo.file)
-          .format('gif')
-          .fps(12)
-          .complexFilter(['[0:v]mpdecimate[frames]', '[frames]scale=w=trunc(oh*a/2)*2:h=360[rescaled]'], 'rescaled')
-          .on('progress', (progress) => {
-            progressBar(progress, '');
-          })
-          .save(finalOutput)
-          .on('end', function () {
-            document.getElementById('progressText').textContent = 'Optimising';
-            execFile(gifsicle, ['-o', OptimalOutput, '--lossy=100', '-O3', '--colors=128', finalOutput], (err) => {
-              fs.unlink(finalOutput, function (err) {
-                if (err) throw err;
-              });
-              successAlert('convert', '', swalColour);
-            });
-          });
-        console.log('Final output: ', finalOutput);
-        lineBreak();
-        convertAlert(swalColour);
+        let basicVal = {
+          value: ['hLow', 'Mid', '12', 'None', '0'],
+        };
+        gifRun(basicVal, convertInfo);
       } else {
         Swal.mixin({
           confirmButtonText: 'Next &rarr;',
@@ -62,13 +38,12 @@ async function gifConvert(convertInfo) {
               text: 'Please choose the resolution of your GIF',
               input: 'select',
               inputOptions: {
-                High: '1080p',
+                high: '1080p',
                 hMid: '720p',
                 lMid: '480p',
-                hlow: '360p',
+                hLow: '360p',
                 low: '240p',
               },
-              inputPlaceholder: 'Select Resolution',
             },
             {
               title: 'Colour Quality',
@@ -79,7 +54,6 @@ async function gifConvert(convertInfo) {
                 Mid: 'Normal / 128',
                 Low: 'Optimised / 64',
               },
-              inputPlaceholder: 'Select Colour Range',
             },
             {
               title: 'Frame Rate',
@@ -106,7 +80,7 @@ async function gifConvert(convertInfo) {
             },
             {
               title: 'Compression',
-              text: 'Please your compression rate',
+              text: 'Please your compression rate </br> Please note this will increase conversion time.',
               input: 'range',
               inputAttributes: {
                 min: '0',
@@ -117,91 +91,111 @@ async function gifConvert(convertInfo) {
             },
           ])
           .then((result) => {
-            console.log('gif running');
-            if (result.value) {
-              let rez, qual, fps, crop, compress;
-              let gifValues = [rez, qual, fps, crop, compress];
-              let i = 0;
-              for (var gifValue in gifValues) {
-                gifValues[i] = result.value[i];
-                i++;
-              }
-              let reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=480[rescaled]';
-              let cRange = '--colors=128';
-              let gifCrop;
-
-              if (rez == 'High') {
-                reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=1080[rescaled]';
-              } else if (rez == 'hMid') {
-                reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=720[rescaled]';
-              } else if (rez == 'hlow') {
-                reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=360[rescaled]';
-              } else if (rez == 'low') {
-                reRez = '[frames]scale=w=trunc(oh*a/2)*2:h=240[rescaled]';
-              }
-
-              let opti = true;
-              if (compress == 0) {
-                opti = false;
-              }
-
-              if (qual == 'High') {
-                cRange = '--colors=256';
-              } else if (qual == 'Low') {
-                cRange = '--colors=64';
-              }
-
-              if (crop == 'None') {
-                gifCrop = '[rescaled]crop=w=iw[cropped]';
-              } else if (crop == 'Wide') {
-                gifCrop = "[rescaled]crop='in_w:if(lt(in_w,in_h),in_w*(9/16),in_h)'[cropped]";
-              } else if (crop == 'Square') {
-                gifCrop = "[rescaled]crop='if(lt(in_h,in_w),in_h,in_w):if(lt(in_w,in_h),in_w,in_h)'[cropped]";
-              } else if (crop == 'Vertical') {
-                gifCrop = '[rescaled]crop=w=ih*(9/16)[cropped]';
-              } else if (crop == 'Two') {
-                gifCrop = '[rescaled]crop=h=iw*0.5[cropped]';
-              }
-
-              let lossy = '--lossy=' + compress;
-
-              let finalOutput = convertInfo.outputFile + '.gif';
-              let finalOutputName = path.parse(convertInfo.file).name + '.gif';
-              if (convertInfo.inputExt.indexOf('.gif') >= 0) {
-                finalOutput = convertInfo.outputFile + '-SinonConverted.gif';
-                finalOutputName = path.parse(convertInfo.file).name + '-SinonConverted.gif';
-              }
-              let OptimalOutput = convertInfo.outputFile + '_advanced.gif';
-
-              ffmpeg(convertInfo.file)
-                .format('gif')
-                .fps(fps)
-                .complexFilter(['[0:v]mpdecimate[frames]', reRez, gifCrop], 'cropped')
-                .on('progress', (progress) => {
-                  progressBar(progress, '');
-                })
-                .save(finalOutput)
-                .on('end', function (stdout, stderr) {
-                  if (opti == true) {
-                    document.getElementById('progressText').textContent = 'Optimising';
-                    execFile(gifsicle, ['-o', OptimalOutput, lossy, '-O3', cRange, finalOutput], (err) => {
-                      fs.unlink(finalOutput, function (err) {
-                        if (err) throw err;
-                      });
-                      successAlert('convert', '', swalColour);
-                    });
-                  } else {
-                    successAlert('convert', '', swalColour);
-                  }
-                });
-              console.log('Final output: ', finalOutput);
-              lineBreak();
-              convertAlert(swalColour);
-            }
+            gifRun(result, convertInfo);
           });
       }
     },
   });
+}
+
+function gifRun(result, convertInfo) {
+  convertAlert(swalColour);
+  let i = -1;
+  function convertTHATFILE() {
+    i++;
+    if (i == convertInfo.targets.length) {
+      console.log(i);
+      successAlert('convert', '', swalColour);
+      win.setProgressBar(-1);
+      console.log('finished!');
+      lineBreak();
+    } else if (i > convertInfo.targets.length) {
+      return;
+    } else {
+      console.log(convertInfo.targets[i]);
+      console.log(i);
+      console.log('gif running');
+      console.log(result);
+      if (result.value) {
+        let opti = true;
+        let rez = ['high', 'hMid', 'lMid', 'hLow', 'low'];
+        let rezRange = [1080, 720, 480, 360, 240];
+        let qual = ['High', 'Mid', 'Low'];
+        let qualRange = [256, 128, 64];
+        let crop = ['None', 'Wide', 'Square', 'Vertical', 'Two'];
+        let cropRange = [
+          'w=iw',
+          "'in_w:if(lt(in_w,in_h),in_w*(9/16),in_h)'",
+          "'if(lt(in_h,in_w),in_h,in_w):if(lt(in_w,in_h),in_w,in_h)'",
+          'w=ih*(9/16)',
+          'h=iw*0.5',
+        ];
+
+        let finalOutput = convertInfo.targets[i].output + '.gif';
+        if (convertInfo.targets[i].ext.indexOf('.gif') >= 0) {
+          finalOutput = convertInfo.targets[i].output + '-SinonConverted.gif';
+        }
+        let OptimalOutput = convertInfo.targets[i].output + '_advanced.gif';
+
+        async function getOptions() {
+          return new Promise((resolve) => {
+            let gifOptions = {};
+            gifOptions.fps = result.value[2];
+            if (result.value[4] == 0) {
+              opti = false;
+            }
+            gifOptions.lossy = '--lossy=' + result.value[4];
+            for (let i = 0; i < rez.length + 1; i++) {
+              if (result.value[0] == rez[i]) {
+                gifOptions.resolution = `[frames]scale=w=trunc(oh*a/2)*2:h=${rezRange[i]}[rescaled]`;
+              }
+              if (result.value[1] == qual[i]) {
+                gifOptions.colour = `--colors=${qualRange[i]}`;
+              }
+              if (result.value[3] == crop[i]) {
+                gifOptions.crop = `[rescaled]crop=${cropRange[i]}[cropped]`;
+              }
+              if (i == rez.length) {
+                resolve(gifOptions);
+              }
+            }
+          });
+        }
+        getOptions().then((gifOptions) => {
+          console.log(gifOptions);
+          ffmpeg(convertInfo.targets[i].input)
+            .format('gif')
+            .fps(gifOptions.fps)
+            .complexFilter(['[0:v]mpdecimate[frames]', gifOptions.resolution, gifOptions.crop], 'cropped')
+            .on('progress', (progress) => {
+              progressBar(progress, '');
+            })
+            .save(finalOutput)
+            .on('end', () => {
+              if (opti) {
+                document.getElementById('progressText').textContent = 'Optimising';
+                execFile(
+                  gifsicle,
+                  ['-o', OptimalOutput, gifOptions.lossy, '-O3', gifOptions.colour, finalOutput],
+                  () => {
+                    fs.unlink(finalOutput, function (err) {
+                      if (err) throw err;
+                      convertTHATFILE();
+                    });
+                  }
+                );
+              } else {
+                convertTHATFILE();
+              }
+            });
+        });
+        console.log('Final output: ', finalOutput);
+        lineBreak();
+        convertAlert(swalColour);
+      }
+    }
+  }
+  convertTHATFILE();
 }
 
 module.exports = gifConvert;

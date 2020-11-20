@@ -1,4 +1,4 @@
-const { lineBreak } = require('../utilities/utils.js');
+const { lineBreak, progressBar } = require('../utilities/utils.js');
 const successAlert = require('../alerts/successAlert.js');
 const convertAlert = require('../alerts/convertAlert.js');
 const errorAlert = require('../alerts/errorAlert.js');
@@ -18,33 +18,48 @@ async function audioConvert(convertInfo) {
     backdrop: swalColour.loading,
     target: document.getElementById('swalframe'),
     preConfirm: (audioForm) => {
-      let audioFormCap = audioForm.toUpperCase();
-      let finalOutput = convertInfo.outputFile + '.' + audioForm;
-      if (convertInfo.inputExt.indexOf('.' + audioForm) >= 0 || convertInfo.inputExt.indexOf('.' + audioFormCap) >= 0) {
-        finalOutput = convertInfo.outputFile + '-SinonConverted.' + audioForm;
-      }
-      console.log('Final output: ', finalOutput);
-      lineBreak();
       convertAlert(swalColour);
-      ffmpeg(convertInfo.file)
-        .format(audioForm)
-        .noVideo()
-        .on('progress', function (progress) {
-          document.getElementById('progressText').textContent =
-            (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
-          console.log('Processing: ' + progress.percent + '% done');
-          let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
-          win.setProgressBar(percentage);
-        })
-        .on('error', function (err, stdout, stderr) {
-          err = err + stdout + stderr;
-          errorAlert(err, 'convert', '', swalColour, '');
-        })
-        .save(finalOutput)
-        .on('end', function (stdout, stderr) {
+      let i = -1;
+      function convertTHATFILE() {
+        i++;
+        if (i == convertInfo.targets.length) {
+          console.log(i);
           successAlert('convert', '', swalColour);
-        });
-      console.log(audioForm + ' running');
+          win.setProgressBar(-1);
+          console.log('finished!');
+          lineBreak();
+        } else if (i > convertInfo.targets.length) {
+          return;
+        } else {
+          console.log(convertInfo.targets[i]);
+          console.log(i);
+          let finalOutput = convertInfo.targets[i].output + '.' + audioForm;
+          if (
+            convertInfo.targets[i].ext.indexOf('.' + audioForm) >= 0 ||
+            convertInfo.targets[i].ext.indexOf('.' + audioForm.toUpperCase()) >= 0
+          ) {
+            finalOutput = convertInfo.targets[i].output + '-SinonConverted.' + audioForm;
+          }
+          console.log('Final output: ', finalOutput);
+          lineBreak();
+          ffmpeg(convertInfo.targets[i].input)
+            .format(audioForm)
+            .noVideo()
+            .on('progress', (progress) => {
+              progressBar(progress, '');
+            })
+            .on('error', function (err, stdout, stderr) {
+              err = err + stdout + stderr;
+              errorAlert(err, 'convert', '', swalColour, '');
+            })
+            .save(finalOutput)
+            .on('end', () => {
+              convertTHATFILE();
+            });
+          console.log(audioForm + ' running');
+        }
+      }
+      convertTHATFILE();
     },
   });
 }

@@ -13,7 +13,6 @@ function copyString(str) {
 
 function swalColours() {
   let darkSwitch = document.getElementById('darkswitch');
-  console.log('swal colour check');
   if (darkSwitch.checked) {
     (swalColour.fail = '#232323'), (swalColour.loading = '#2c3e50'), (swalColour.pass = '#2c3e50');
   } else {
