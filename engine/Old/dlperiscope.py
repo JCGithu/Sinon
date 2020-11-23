@@ -5,8 +5,8 @@ from bs4 import BeautifulSoup
 import sys
 import youtube_dl
 
-def m3u8(parsedURL):
-    pscpcode = str((re.findall('/w/(.*.)', parsedURL))).replace('"','').replace("]","").replace("[","").replace("'","")
+def m3u8(initialurl):
+    pscpcode = str((re.findall('/w/(.*.)', initialurl))).replace('"','').replace("]","").replace("[","").replace("'","")
     perijson = 'https://proxsee.pscp.tv/api/v2/accessVideoPublic?broadcast_id=' + pscpcode + '&replay_redirect=false'
     source = requests.get(perijson ,verify=True)
     data = source.json()
@@ -35,7 +35,7 @@ def m3u8(parsedURL):
         }
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            r = ydl.extract_info(parsedURL, False)
+            r = ydl.extract_info(initialurl, False)
             print (r['formats'][-1]['url'])
     else:
         if 'replay_url' in data:

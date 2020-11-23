@@ -27,6 +27,8 @@ function successAlert(passType, passText, swalColour) {
   } else if (passType == 'delete') {
     console.log('File deleted!');
     swalOptions.title = 'Deleted!';
+  } else if (passType == 'normal' || passType == 'high') {
+    swalOptions.text = 'Video downloaded';
   }
 
   Swal.fire(swalOptions);

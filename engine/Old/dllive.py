@@ -6,7 +6,7 @@ import sys
 import subprocess
 import re
 
-def download(parsedURL):
+def download(finalurl):
     
     class MyLogger(object):
         def debug(self, msg):
@@ -22,10 +22,14 @@ def download(parsedURL):
         if d['status'] == 'finished':
             print ('Live URL extract success')
 
-
+    if 'parliamentlive.tv' in finalurl:
+        feednumber = re.findall('x\/(.*?.*)', str(finalurl))
+        feednumbertwo = str(feednumber).replace('[','').replace(']','').replace("'","")
+        anotherurl = 'https://ukparliament.cdn.eurovisioncdn.net/live/' + str(feednumbertwo) + '/live.isml/live-audio_track_0_eng=64000-video=1300000.m3u8'
+        print (anotherurl)
         
     else:
-        if 'pscp.tv' in parsedURL:
+        if 'pscp.tv' in finalurl:
             ydl_opts = {
                 'forceurl': True,
                 'format': 'lhlsweb/lhls/hls/best',
@@ -34,7 +38,7 @@ def download(parsedURL):
             }
 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                r = ydl.extract_info(parsedURL, False)
+                r = ydl.extract_info(finalurl, False)
                 print (r['formats'][-1]['url'])
 
             sys.stdout.flush()
@@ -46,7 +50,7 @@ def download(parsedURL):
             }
 
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                r = ydl.extract_info(parsedURL, False)
+                r = ydl.extract_info(finalurl, False)
                 rtwo = (r['formats'])
                 if '/96/' in str(rtwo):
                     print (r['formats'][-2]['url'])

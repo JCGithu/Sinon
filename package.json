@@ -4,7 +4,8 @@
   "description": "A video tool that's actually useful",
   "main": "./main.js",
   "scripts": {
-    "start": "electron .",
+    "loggerStart": "set ELECTRON_ENABLE_LOGGING=1",
+    "start": "electron . --enable-logging",
     "win": "electron-packager . --app-version 1.2.4 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
     "mac": "electron-packager . --app-version 1.2.4 --prune=true --platform darwin --icon ./imgs/sinon.icns --overwrite",
     "linux": "electron-packager . --app-version 1.2.4 --prune=true --platform linux --arch x64 --icon ./imgs/sinon.icns --overwrite",
@@ -36,21 +37,24 @@
   "author": "Colloquial",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^10.1.5",
     "electron-builder": "^22.8.0",
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
     "animejs": "^3.2.1",
     "axios": "^0.20.0",
+    "electron": "^11.0.2",
     "electron-json-storage": "^4.1.8",
     "eslint-config-airbnb": "^18.2.1",
     "ffmpeg-static-electron": "^2.0.1",
     "fluent-ffmpeg": "^2.1.2",
     "gifsicle": "^5.1.0",
     "got": "^11.5.1",
+    "knex": "^0.21.12",
     "p5": "^1.1.9",
+    "parse-url": "^5.0.2",
     "rimraf": "^3.0.2",
+    "sqlite3": "^5.0.0",
     "sweetalert2": "^10.9.0"
   }
 }
