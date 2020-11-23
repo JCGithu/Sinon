@@ -31,31 +31,31 @@ for (let i = 0; i > OSs.length; i++) {
     versionInfo.OS = plat[i];
   }
   if (navigator.appVersion.indexOf('Mac') != -1) {
-    versionInfo.ExtractorSet = './extractor';
-    versionInfo.ffmpegSet = './ffmpeg';
+    versionInfo.ExtractorSet = '../scripts/extractor';
+    versionInfo.ffmpegSet = '../scripts/ffmpeg';
   }
 }
 
 win.webContents.openDevTools();
 
-const Block = require('../js/block');
+const Block = require('../scripts/block');
 const swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50' };
 
 //Components
-const wave = require('../js/components/wave');
-const toolmenu = require('../js/components/toolmenu');
-const optionsPage = require('../js/components/optionsPage');
-const documentation = require('../js/components/documentation');
-const toolbar = require('../js/components/toolbar');
-const mainTitle = require('../js/components/title');
+const wave = require('../scripts/components/wave');
+const toolmenu = require('../scripts/components/toolmenu');
+const optionsPage = require('../scripts/components/optionsPage');
+const documentation = require('../scripts/components/documentation');
+const toolbar = require('../scripts/components/toolbar');
+const mainTitle = require('../scripts/components/title');
 
 //Tool components
-const toolDown = require('../js/components/tools/toolDown');
-const toolConv = require('../js/components/tools/toolConv');
-const toolEffect = require('../js/components/tools/toolEffect');
+const toolDown = require('../scripts/components/tools/toolDown');
+const toolConv = require('../scripts/components/tools/toolConv');
+const toolEffect = require('../scripts/components/tools/toolEffect');
 
-const { toolSwap } = require('../js/utilities/animations');
-const proxyGenerator = require('../js/utilities/proxy');
+const { toolSwap } = require('../scripts/utilities/animations');
+const proxyGenerator = require('../scripts/utilities/proxy');
 
 const sinon = new Block('#sinon');
 
@@ -77,9 +77,9 @@ async function sinonBoot() {
   let proxyInput = document.getElementById('proxyInput');
   if (target) {
     target.innerHTML = fs.readFileSync('./GUI/changelog.html', 'utf-8');
-    const animations = require('../js/utilities/animations');
-    const settings = require('../js/utilities/settings');
-    const tools = require('../js/utilities/toolFunctions');
+    const animations = require('../scripts/utilities/animations');
+    const settings = require('../scripts/utilities/settings');
+    const tools = require('../scripts/utilities/toolFunctions');
     toolSwap(toolKit);
     if (proxyInput.value == '') {
       proxyGenerator().then((proxy) => {
