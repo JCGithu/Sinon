@@ -15,18 +15,15 @@ function down_parliament(data) {
     target: document.getElementById('swalframe'),
     preConfirm: (dlquality) => {
       let quals = ['normal', 'live'];
+      runningAlert();
       for (let i = 0; i < quals.length; i++) {
-        if (dlquality == quals[i]) {
-          order = quals[i];
-          runningAlert();
+        if (dlquality == 'normal') {
           execFile(
             versionInfo.ExtractorSet,
             [
               data.URL,
               data.path,
               order,
-              data.URL,
-              data.geo,
               data.proxy,
               versionInfo.ffmpegPath,
               data.instaUse,
@@ -42,6 +39,13 @@ function down_parliament(data) {
               }
             }
           );
+        } else {
+          //Python to change to JS
+/*           if 'parliamentlive.tv' in parsedURL:
+          feednumber = re.findall('x\/(.*?.*)', str(parsedURL))
+          feednumbertwo = str(feednumber).replace('[','').replace(']','').replace("'","")
+          anotherurl = 'https://ukparliament.cdn.eurovisioncdn.net/live/' + str(feednumbertwo) + '/live.isml/live-audio_track_0_eng=64000-video=1300000.m3u8'
+          print (anotherurl) */
         }
       }
     },
