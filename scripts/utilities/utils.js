@@ -61,4 +61,20 @@ function URLwipe() {
   }
 }
 
-module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe };
+const axios = require('axios');
+
+async function versionChecker() {
+  return axios
+    .get('http://colloquial.studio/sinondata.json')
+    .then(async (response) => {
+      let element = document.getElementById('ver');
+      if (element.innerHTML !== response.data.version){
+        element.style = 'color:var(--hover)'
+        let docs = document.getElementById('documentation');
+        let docText = `<h4 style="color:var(--hover)">// Current version of Sinon is ${response.data.version}</h4>`+ docs.innerHTML;
+        docs.innerHTML = docText; 
+      }
+    });
+}
+
+module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe, versionChecker};
