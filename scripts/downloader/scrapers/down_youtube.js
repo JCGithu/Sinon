@@ -11,8 +11,6 @@ let swalInfo = {
 };
 
 function down_youtube(data, extractorOptions) {
-  console.log('YOUTUBE RAN');
-  console.log(extractorOptions);
   if (data.URL.indexOf('&list=') >= 0) {
     console.log('Playlist found');
     Swal.fire(
@@ -35,14 +33,14 @@ function down_youtube(data, extractorOptions) {
       if (result.value == 'no') {
         data.URL = data.URL.replace(/&list=.*/g, '');
       }
-      run_youtube(data);
+      run_youtube(data, extractorOptions);
     });
   } else {
-    run_youtube(data);
+    run_youtube(data, extractorOptions);
   }
 }
 
-function run_youtube(data) {
+function run_youtube(data, extractorOptions) {
   Swal.fire(
     Object.assign(
       {
