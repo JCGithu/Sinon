@@ -18,7 +18,7 @@ import youtube_dl
 
 #REAL INPUTS
 
-test = True
+test = False
 
 if test is True :
 	parsedURL = 'https://www.youtube.com/watch?v=fuWTcmjnEGY'
@@ -108,7 +108,7 @@ def download(downloadPath, parsedURL, ffmpegPath):
 			with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 				ydl.download([parsedURL])
 
-if 'basic' in options or 'high' in options:
+if 'normal' in options or 'high' in options:
     download(downloadPath, parsedURL, ffmpegPath)
 
 if 'live' in options:
