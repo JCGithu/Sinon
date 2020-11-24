@@ -125,5 +125,4 @@ docReady(function () {
   console.log('FFmpeg ::: ' + versionInfo.ffmpegPath);
   console.log('OS ::: ' + versionInfo.OS);
   console.log('Settings file ::: ' + dataPath);
-  lineBreak();
 });
