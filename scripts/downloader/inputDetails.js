@@ -9,7 +9,6 @@ function inputDetails() {
     instapass: document.getElementById('InstaPass').value,
   };
   console.log(input);
-  lineBreak();
 
   if (input.URL.indexOf('tiktok.com') >= 0) {
     input.URL = input.URL.replace(/\?lang=../gm, '');
