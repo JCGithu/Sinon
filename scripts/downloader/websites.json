@@ -4,8 +4,8 @@
     "proxy": false
   },
   "twitter":{
-      "category": "skip",
-      "proxy": false
+    "category": "skip",
+    "proxy": false
   },
   "reddit":{
     "category": "skip",
