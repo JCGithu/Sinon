@@ -18,12 +18,12 @@ import youtube_dl
 
 #REAL INPUTS
 
-test = False
+test = True
 
 if test is True :
-	parsedURL = 'https://www.youtube.com/watch?v=fuWTcmjnEGY'
+	parsedURL = 'https://www.youtube.com/watch?v=cQy8l6ikXFA'
 	downloadPath = r"C:\\Users\\jackc\\Desktop\\metro"
-	options = 'basic'
+	options = 'normal'
 	userProxy = ''
 	ffmpegPath = r''
 	instaUse = ''
@@ -58,17 +58,16 @@ def download(downloadPath, parsedURL, ffmpegPath):
 				print('Success')
 
 	ydl_opts = {
-		'format': 'best',
+		'format': 'best[ext=mp4]/best',
 		'logger': MyLogger(),
 		'progress_hooks': [download_hook],
-		'outtmpl': downloadPath + '/%(title)s.mp4',
+		'outtmpl':downloadPath + '/%(title)s.%(ext)s',
 		'ffmpeg_location': ffmpegPath,
 		'verbose': True,
 	}
 	if 'high' in options:
 		ydl_opts['format'] = 'bestvideo+bestaudio/best'
 		ydl_opts['updatetime'] = False
-		ydl_opts['outtmpl'] = downloadPath + '/%(title)s.%(ext)s'
 		ydl_opts['postprocessors'] = [{
 				'key': 'FFmpegVideoConvertor',
 				'preferedformat': 'mp4',
@@ -80,10 +79,6 @@ def download(downloadPath, parsedURL, ffmpegPath):
 
 	if 'itv.com/hub' in parsedURL:
 		ydl_opts['quiet'] = True
-
-	extensionlist = ('cloudfront.net', '.mpd', 'itv.com/hub')
-	if any(s in parsedURL for s in extensionlist):
-		ydl_opts['outtmpl'] = downloadPath + '/%(title)s.%(ext)s'
 
 	# Replace with JS
 	if 'pscp.tv' in parsedURL:
