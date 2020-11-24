@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, ipcMain, BrowserWindow, crashReporter } = require('electron');
+const { app, ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
 
 process.env.ELECTRON_ENABLE_LOGGING=1
@@ -25,9 +25,6 @@ function createWindow() {
   mainWindow.loadFile('./GUI/GUI.html');
   mainWindow.on('maximize', () => mainWindow.unmaximize());
 }
-
-app.setPath('crashDumps', 'C:\\Users\\jackc\\Documents\\Colloquial\\Sinon\\Sinon\\crash');
-crashReporter.start({ submitURL: 'http://nowhere', uploadToServer: false });
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
