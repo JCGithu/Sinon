@@ -14,7 +14,7 @@ const toolbar = {
 					<svg id="optionsIcon" viewBox="0 0 640 512">
 						<use xlink:href="../imgs/tools.svg#optionsBox"></use>
 					</svg>
-					<a style="font-size: 8pt;" class="grow-on-hover" id="ver">Version 1.2.4</a>
+					<a style="font-size: 8pt;" class="grow-on-hover" id="ver">Version 1.3</a>
 				</div>
 			</header>
     `;
