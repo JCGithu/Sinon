@@ -21,9 +21,6 @@ def download(parsedURL):
 		if d['status'] == 'finished':
 			print ('Live URL extract success')
 
-
-			
-	else:
 		if 'pscp.tv' in parsedURL:
 			ydl_opts = {
 				'forceurl': True,
