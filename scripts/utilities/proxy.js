@@ -1,4 +1,5 @@
 const axios = require('axios');
+const { lineBreak } = require('../utilities/utils'); 
 
 async function proxyGenerator() {
   let ip_addresses = [];
@@ -25,6 +26,7 @@ async function proxyGenerator() {
             if (response.status == 200) {
               ip = ip_addresses[i] + ':' + port_numbers[i];
               console.log('IP is : ' + ip);
+              lineBreak();
               resolve(ip);
             }
           });
