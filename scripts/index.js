@@ -55,6 +55,7 @@ const toolConv = require('../scripts/components/tools/toolConv');
 const toolEffect = require('../scripts/components/tools/toolEffect');
 
 const { toolSwap } = require('../scripts/utilities/animations');
+const { versionChecker } = require('../scripts/utilities/utils');
 const proxyGenerator = require('../scripts/utilities/proxy');
 
 const sinon = new Block('#sinon');
@@ -75,12 +76,14 @@ async function sinonBoot() {
   sinon.loadAll();
   let target = document.getElementById('docText');
   let proxyInput = document.getElementById('proxyInput');
+  let versionNumber = document.getElementById('ver');
   if (target) {
     target.innerHTML = fs.readFileSync('./GUI/changelog.html', 'utf-8');
     const animations = require('../scripts/utilities/animations');
     const settings = require('../scripts/utilities/settings');
     const tools = require('../scripts/utilities/toolFunctions');
     toolSwap(toolKit);
+    versionChecker();
     if (proxyInput.value == '') {
       proxyGenerator().then((proxy) => {
         proxyInput.value = proxy;
