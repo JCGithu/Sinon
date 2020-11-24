@@ -1,5 +1,6 @@
 const errorAlert = require('../alerts/errorAlert');
 var parse = require('parse-url');
+const axios = require('axios');
 
 function gateKeeper(input) {
   return new Promise((resolve) => {
@@ -24,8 +25,13 @@ function gateKeeper(input) {
         input.order = 'generic';
       }
       if (input.proxyUse == true) {
-        //Add proxy checker
-        resolve(input);
+        statusCheck().then((worked)=>{
+          if (worked){
+            resolve(input);
+          } else {
+            errorAlert('', 'basic', "Proxy error, can't reach site!");
+          }
+        })
       } else {
         resolve(input);
       }
@@ -33,6 +39,31 @@ function gateKeeper(input) {
 
     if (input.URL == '') {
       errorAlert('', 'basic', 'No URL inputted!');
+    }
+  });
+}
+
+
+
+async function statusCheck() {
+  let i = 0;
+  let proxyHost = input.proxy.split(':')
+  axios.get(input.URL, { proxy: {
+    host: proxyHost[0], 
+    port: proxyHost[1],
+  }})
+  .then(async (response) => {
+    if (response.status == 200){
+      return true
+    } else {
+      if (i > 5){
+        return false
+      } else {
+        proxyGenerator().then((newProxy) => {
+          input.proxy = newProxy
+          statusCheck()
+        });
+      }
     }
   });
 }
