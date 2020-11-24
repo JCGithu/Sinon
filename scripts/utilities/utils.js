@@ -53,14 +53,6 @@ function docReady(fn) {
   }
 }
 
-const knex = require('knex')({
-  client: 'sqlite3',
-  connection: {
-    filename: './websites.db',
-  },
-  useNullAsDefault: true,
-});
-
 function URLwipe() {
   let urlwipebox = document.querySelector('input[name=urlwipe]');
   if (urlwipebox.checked == true) {
@@ -69,4 +61,4 @@ function URLwipe() {
   }
 }
 
-module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, knex, URLwipe };
+module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe };
