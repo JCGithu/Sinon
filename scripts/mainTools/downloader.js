@@ -21,10 +21,6 @@ const convertAlert = require('../alerts/convertAlert');
 
 const inputDetails = require('../downloader/inputDetails');
 const gateKeeper = require('../downloader/gateKeeper');
-const { emit } = require('process');
-
-const sqlite3 = require('sqlite3').verbose();
-const { knex } = require('../utilities/utils');
 
 //Downloaders
 const down_bbc = require('../downloader/scrapers/down_bbc');
@@ -60,7 +56,6 @@ async function downloader() {
     ];
     for (let i = 0; i < category.length; i++) {
       if (data.category == category[i]) {
-        console.log(`down_${category[i]}`);
         versions[i](data, extractorOptions);
       }
     }
