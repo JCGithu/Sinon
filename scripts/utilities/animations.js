@@ -78,7 +78,7 @@ function optionsTransition() {
 }
 
 function documentationTransition() {
-  document.getElementById('ver').addEventListener('click', function () {
+  document.getElementById('version').addEventListener('click', function () {
     pageElements.docs.classList.add('docsOpen');
     pageElements.docBar.classList.add('stripAnimate');
   });
