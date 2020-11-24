@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['extractor.py', 'dllive.py', 'dlproxy.py', 'dlperiscope.py', 'dlstories.py'],
+a = Analysis(['extractor.py', 'dllive.py', 'dlperiscope.py', 'dlstories.py'],
              pathex=['C:\\Users\\jackc\\Documents\\Colloquial\\Sinon\\Sinon'],
              binaries=[],
              datas=[],
