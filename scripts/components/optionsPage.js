@@ -25,7 +25,7 @@ const optionsPage = {
 							<a>Instagram Username</a>
 							<input type="text" id="InstaUse" placeholder="Enter Instagram Username" style='width: 60vw !important'>
 							<a style="margin-top: 10px;">Instagram Password</a>
-							<input type="text" id="InstaPass" placeholder="Enter Instagram Password" style='width: 60vw !important'>
+							<input type="password" id="InstaPass" placeholder="Enter Instagram Password" style='width: 60vw !important'>
 							<button id="settingDelete" class="grow-on-hover">Delete settings</button>
 						</div>
 					</div>
