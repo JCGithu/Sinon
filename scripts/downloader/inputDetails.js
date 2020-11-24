@@ -2,7 +2,7 @@ const { lineBreak } = require('../utilities/utils');
 
 function inputDetails() {
   const input = {
-    URL: document.getElementById('inputURL').value,
+    URL: document.getElementById('inputURL').value.replace('https://', 'http://'),
     path: document.getElementById('downloadfolder').value,
     proxy: document.getElementById('proxyInput').value,
     instaUse: document.getElementById('InstaUse').value,
