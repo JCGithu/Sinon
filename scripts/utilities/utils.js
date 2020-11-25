@@ -77,4 +77,15 @@ async function versionChecker() {
     });
 }
 
-module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe, versionChecker};
+async function webCheck(input) {
+  return axios.get(input.URL)
+  .then(async (response) => {
+    if (response.status == 200){
+      return true
+    } else {
+      errorAlert('', 'basic', "Couldn't connect to URL", swalColour, '');
+    }
+    });
+}
+
+module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe, webCheck, versionChecker};
