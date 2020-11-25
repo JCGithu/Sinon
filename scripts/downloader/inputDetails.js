@@ -1,5 +1,3 @@
-const { lineBreak } = require('../utilities/utils');
-
 function inputDetails() {
   const input = {
     URL: document.getElementById('inputURL').value.replace('https://', 'http://'),
