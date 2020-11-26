@@ -1,6 +1,6 @@
 const { docReady, lineBreak } = require('./utils.js');
 const storage = require('electron-json-storage');
-const { settingDelete, settingSet, settingSave } = require('./storage.js');
+const { settingDelete, settingSet, proxySave, settingSave } = require('./storage.js');
 
 docReady(function () {
   const userDataPath = app.getPath('userData');
@@ -93,7 +93,7 @@ docReady(function () {
   var waitTimer;
 
   const switches = document.querySelectorAll('#urlswitch, #darkswitch');
-  const textSettings = document.querySelectorAll('#proxyInput, #InstaUse, #InstaPass');
+  const textSettings = document.querySelectorAll('#InstaUse, #InstaPass');
   const locals = document.getElementById('geoFormat');
 
   function autoSave() {
@@ -113,6 +113,12 @@ docReady(function () {
   locals.addEventListener('change', function () {
     autoSave();
   });
+
+  let proxyChange = document.getElementById('proxyInput');
+  proxyChange.addEventListener('keyup', function(){
+    waitTimer = setTimeout(proxySave, 5000);
+    clearTimeout(waitTimer);
+  })
 
   //Settings Delete
 
