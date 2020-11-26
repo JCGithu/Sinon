@@ -50,7 +50,7 @@ async function audioConvert(convertInfo) {
             })
             .on('error', function (err, stdout, stderr) {
               err = err + stdout + stderr;
-              errorAlert(err, 'convert', '', swalColour, '');
+              errorAlert(err, 'convert', '', swalColour);
             })
             .save(finalOutput)
             .on('end', () => {

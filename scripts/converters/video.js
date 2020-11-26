@@ -73,7 +73,7 @@ async function videoConvert(convertInfo) {
                       runMP4
                         .on('error', (err, stdout, stderr) => {
                           err = err + stdout + stderr;
-                          errorAlert(err, 'convert', '', swalColour, '');
+                          errorAlert(err, 'convert', '', swalColour);
                         })
                         .on('progress', (progress) => {
                           progressBar(progress, '');

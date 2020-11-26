@@ -21,7 +21,6 @@ function down_skip(data, extractorOptions) {
         [
           data.URL,
           data.path,
-          data.category,
           data.options,
           data.proxy,
           versionInfo.ffmpegPath,
@@ -32,7 +31,7 @@ function down_skip(data, extractorOptions) {
         (error) => {
           if (error) {
             console.log('Generic downloader error, details:');
-            errorAlert(error, 'download', '', swalColour, '');
+            errorAlert(error, 'download', '', swalColour);
           } else {
             if (data.URL.indexOf('twitter.com') >= 0) {
               successAlert(

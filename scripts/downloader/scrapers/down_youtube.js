@@ -68,7 +68,7 @@ function run_youtube(data, extractorOptions) {
                 extractorOptions,
                 (error, stdout) => {
                   if (error) {
-                    errorAlert(error, 'download', '', swalColour, '');
+                    errorAlert(error, 'download', '', swalColour);
                   } else {
                     console.log(stdout);
                     successAlert(quals[i], stdout, swalColour);

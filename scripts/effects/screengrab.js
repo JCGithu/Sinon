@@ -32,7 +32,7 @@ async function screengrabs(multi, swalColour, format, targetFiles) {
               filename: fileSettings.inputName + '-%d.png',
             })
             .on('error', function (err) {
-              errorAlert('', 'effect', err, swalColour, '');
+              errorAlert('', 'effect', err, swalColour);
             })
             .on('end', function () {
               console.log('Conversion Success!');

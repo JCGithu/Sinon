@@ -38,12 +38,14 @@ async function downloader() {
   const input = inputDetails();
 
   if (input.path === '') {
-    errorAlert('', 'basic', 'No download path given!', swalColour, '');
+    errorAlert('', 'basic', 'No download path given!', swalColour);
   }
 
   gateKeeper(input).then((data) => {
-    //IDEA: Function that pulls all catagory titles from db rather than listing
-    let category = ['generic', 'file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc'];
+    if (data == false){
+      errorAlert('', 'basic', "Couldn't connect to URL!", swalColour);
+    }
+    let category = ['generic','file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc'];
     let versions = [
       down_generic,
       down_file,
@@ -59,7 +61,6 @@ async function downloader() {
         versions[i](data, extractorOptions);
       }
     }
-    lineBreak();
     URLwipe();
   });
 }
