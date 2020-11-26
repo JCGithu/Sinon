@@ -1,6 +1,6 @@
 const { copyString } = require('../utilities/utils.js');
 
-function errorAlert(error, errorType, errorText, swalColour, instaDeets) {
+function errorAlert(error, errorType, errorText, swalColour) {
   let instaUse = document.getElementById('InstaUse');
   let instaPass = document.getElementById('InstaPass');
   error = error.toString().replace(instaPass.value, '').replace(instaUse.value, '');
