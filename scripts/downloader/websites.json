@@ -12,7 +12,7 @@
     "proxy":false
   },
   "instagram":{
-    "category": "skip",
+    "category": "instagram",
     "proxy":false
   },
   "facebook":{
