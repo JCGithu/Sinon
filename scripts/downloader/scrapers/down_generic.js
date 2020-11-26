@@ -1,6 +1,7 @@
-//FIX DATA INPUTs
+const runningAlert = require('../../alerts/runningAlert');
+const plainExec = require("../execs/plainExec");
 
-function down_generic(data) {
+function down_generic(data, extractorOptions) {
   Swal.fire({
     icon: 'error',
     title: 'Site not covered yet',
@@ -14,23 +15,8 @@ function down_generic(data) {
     target: document.getElementById('swalframe'),
     preConfirm: () => {
       runningAlert();
-      var order = 'normal';
-      execFile(
-        versionInfo.ExtractorSet,
-        [inputURL, downloadPath, order, finalURL, geo, userProxy, versionInfo.ffmpegPath, instaUse, instaPass],
-        extractorOptions,
-        (error, stdout) => {
-          if (error) {
-            console.log('Youtube Normal Download Fail');
-            errorAlert(error, 'download', '', swalColour, '');
-          } else {
-            var message = stdout;
-            console.log('Normal Youtube Downloader Output:');
-            console.log(message);
-            successAlert('', '', swalColour);
-          }
-        }
-      );
+      data.options = 'normal';
+      plainExec(data, extractorOptions)
     },
   });
 }
