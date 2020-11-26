@@ -1,8 +1,16 @@
-function down_file(data) {
+const axios = require('axios');
+const runningAlert = require('../../alerts/runningAlert');
+const successAlert = require('../../alerts/successAlert');
+const errorAlert = require('../../alerts/errorAlert');
+
+const { execFile } = require('child_process');
+
+const plainExec = require('../execs/plainExec');
+
+function down_file(data, extractorOptions) {
   let parsedURL = data.URL.replace(/\\\/|\/\\|\/\/|\\\\/g, '/')
     .replace(':/', '://')
     .replace(':///', '://');
-  lineBreak();
   let textInput = "<a>Seems like you've put in a direct file url.<br> Would you like to download?</a>";
   Swal.fire({
     icon: 'info',
@@ -27,37 +35,24 @@ function down_file(data) {
             await pipeline(got.stream(parsedURL), fs.createWriteStream(data.path));
             successAlert('', '', swalColour);
           } catch (error) {
-            errorAlert(error, 'download', '', swalColour, '');
+            errorAlert(error, 'download', '', swalColour);
           }
         })();
       } else {
-        data.order = 'normal';
-
-        execFile(
-          versionInfo.ExtractorSet,
-          [
-            data.URL,
-            data.path,
-            data.order,
-            parsedURL,
-            data.geo,
-            data.proxy,
-            versionInfo.ffmpegPath,
-            data.instaUse,
-            data.instaPass,
-          ],
-          extractorOptions,
-          (error, stdout) => {
-            if (error) {
-              errorAlert(error, 'download', '', swalColour, '');
-            } else {
-              var message = stdout;
-              console.log('Generic Downloader Output:');
-              console.log(message);
-              successAlert('', '', swalColour);
-            }
-          }
-        );
+        ffmpeg(parsedURL)
+        .format(videoForm)
+        .save(finalOutput)
+        .on('error', (err, stdout, stderr) => {
+          err = err + stdout + stderr;
+          errorAlert(err, 'convert', '', swalColour);
+        })
+        .on('progress', (progress) => {
+          progressBar(progress, '');
+        })
+        .on('end', () => {
+          successAlert('', '', swalColour);
+        })
+        .run();
       }
     },
   });
