@@ -18,7 +18,7 @@ import youtube_dl
 
 #REAL INPUTS
 
-test = True
+test = False
 
 if test is True :
 	parsedURL = 'https://www.youtube.com/watch?v=cQy8l6ikXFA'
@@ -28,6 +28,7 @@ if test is True :
 	ffmpegPath = r''
 	instaUse = ''
 	instaPass = ''
+	print('TEST IS STILL ON')
 else:
 	parsedURL = sys.argv[1]
 	downloadPath = sys.argv[2]
@@ -80,18 +81,6 @@ def download(downloadPath, parsedURL, ffmpegPath):
 	if 'itv.com/hub' in parsedURL:
 		ydl_opts['quiet'] = True
 
-	# Replace with JS
-	if 'pscp.tv' in parsedURL:
-		source = requests.get(parsedURL, verify=True).text
-		soup = BeautifulSoup(source, 'lxml')
-		texttwo = re.findall('\(@(.*?)\)', str(soup))
-		textthree = str(texttwo).replace('[', '').replace(']', '').replace("'", "")
-		ydl_opts['outtmpl'] = downloadPath + '/' + textthree + '.%(ext)s'
-
-		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-			r = ydl.extract_info(parsedURL, False)
-			parsedURL = (r['formats'][-1]['url'])
-
 	if "bbc.co.uk/iplayer" in parsedURL:
 		pidcode = str(re.findall('episode/(.*?)/',parsedURL)).replace('[','').replace(']','').replace("'","")
 		subprocess.call(['get_iplayer --pid=' + pidcode + ' --force --overwrite --tvmode=best --output="' + downloadPath + '"/'], shell=True)
@@ -109,10 +98,6 @@ if 'normal' in options or 'high' in options:
 if 'live' in options:
     import dllive
     dllive.download(parsedURL)
-
-if 'periscope' in options:
-    import dlperiscope
-    dlperiscope.m3u8(parsedURL)
 
 if 'stories' in options:
     import dlstories
