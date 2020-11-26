@@ -1,6 +1,5 @@
 const successAlert = require('../alerts/successAlert.js');
 const { swalColours } = require('./utils.js');
-const proxyGenerator = require('./proxy.js');
 
 const storage = require('electron-json-storage');
 
@@ -26,11 +25,30 @@ function settingDelete() {
   });
 }
 
+function proxySave(){
+  let proxyInput = document.getElementById('proxyInput');
+  storage.set(
+    'settings',
+    {
+      UrlWipe: URLSwitch.checked,
+      DarkMode: darkSwitch.checked,
+      Geo: geoFormat.value,
+      CustomProxy: proxyInput.value,
+      InstaUse: InstaUse.value,
+      InstaPass: InstaPass.value,
+      downloadPath: downloadfolder.value,
+    },
+    function (error) {
+      if (error) throw error;
+    }
+  );
+
+}
+
 function settingSave() {
   let URLSwitch = document.getElementById('urlswitch');
   let darkSwitch = document.getElementById('darkswitch');
   let geoFormat = document.getElementById('geoFormat');
-  let proxyInput = document.getElementById('proxyInput');
   let InstaUse = document.getElementById('InstaUse');
   let InstaPass = document.getElementById('InstaPass');
   let downloadfolder = document.getElementById('downloadfolder');
@@ -41,7 +59,6 @@ function settingSave() {
       UrlWipe: URLSwitch.checked,
       DarkMode: darkSwitch.checked,
       Geo: geoFormat.value,
-      CustomProxy: ip,
       InstaUse: InstaUse.value,
       InstaPass: InstaPass.value,
       downloadPath: downloadfolder.value,
@@ -72,4 +89,4 @@ function settingSet() {
   console.log('Setting File Created!');
 }
 
-module.exports = { settingSet, settingSave, settingDelete };
+module.exports = { settingSet, settingSave, proxySave, settingDelete };
