@@ -94,5 +94,9 @@
   "weibo":{
     "category": "skip",
     "proxy":false
+  },
+  "metro":{
+    "category": "mp4scrape",
+    "proxy":false
   }
 }
