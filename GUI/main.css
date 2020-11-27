@@ -700,6 +700,7 @@ canvas {
   margin: 5px !important;
   -webkit-transform: scale(0.8);
           transform: scale(0.8);
+  border-color: #008080 transparent #008080 transparent !important;
 }
 
 .swal2-icon {
@@ -714,6 +715,14 @@ canvas {
   background-color: lightgrey;
   font-family: baloo;
   text-align: center;
+}
+
+.swal2-container .select::after {
+  top: -2px;
+}
+
+.swal2-range output {
+  line-height: 1.6em !important;
 }
 
 #progressText {
