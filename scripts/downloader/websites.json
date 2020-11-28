@@ -98,5 +98,9 @@
   "metro":{
     "category": "mp4scrape",
     "proxy":false
+  },
+  "nbcsandiego":{
+    "category": "mp4scrape",
+    "proxy":false
   }
 }
