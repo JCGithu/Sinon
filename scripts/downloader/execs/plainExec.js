@@ -5,7 +5,6 @@ const errorAlert = require('../../alerts/errorAlert');
 const { lineBreak } = require('../../utilities/utils');
 
 function plainExec(data, extractorOptions){
-  console.log(data);
   execFile(
     versionInfo.ExtractorSet,
     [
