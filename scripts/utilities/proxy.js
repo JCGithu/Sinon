@@ -15,36 +15,32 @@ async function proxyGenerator() {
         ip_addresses.push(split[0]);
         port_numbers.push(split[1]);
       }
-
-      function testProxy(i) {
-        console.log('Trying IP number: ' + (i + 1));
-        var config = {
-          proxy: { host: ip_addresses[i], port: port_numbers[i] },
-        };
-        return new Promise((resolve) => {
+      let i = 0;
+      return new Promise((resolve) => {
+        function testProxy(){
+          console.log('Trying IP number: ' + (i + 1));
+          var config = {
+            proxy: { host: ip_addresses[i], port: port_numbers[i] },
+          };
           axios.get('https://httpbin.org/ip', config).then(async (response) => {
             if (response.status == 200) {
               ip = ip_addresses[i] + ':' + port_numbers[i];
               console.log('IP is : ' + ip);
               lineBreak();
-              resolve(ip);
+              if (ip == undefined){
+                i++
+                testProxy();
+              } else{
+                resolve(ip);
+              }
             }
+          }).catch(function (error) {
+            i++
+            testProxy();      
           });
-        });
-      }
-
-      async function runProxyTest(i) {
-        ip = await testProxy(i);
-      }
-
-      for (var i = 0; i < ip_addresses.length; i++) {
-        await runProxyTest(i);
-        if (ip == undefined) {
-          continue;
-        } else {
-          return ip;
         }
-      }
+        testProxy();
+      });
     })
     .catch(function (error) {
       console.log(error);
