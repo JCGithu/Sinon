@@ -207,6 +207,8 @@ def get_media_story(ffmpegPath, downloadPath, user_to_check, user_id, ig_client,
         if hq_videos:
             print("[I] Downloading video stories. ({:d} stories detected)".format(len(list_video_v)))
             print('-' * 70)
+            print(list_video_v)
+            print(list_video_a)
             for index, video in enumerate(list_video_v):
                 filename = video[0].split('/')[-1]
                 if taken_at:
@@ -344,8 +346,7 @@ def command_exists(command):
 	except OSError:
 		return False
 
-def start(downloadPath, finalurl, instaUse, instaPass, ffmpegPath):
-    user_to_check = (finalurl.replace('https://www.instagram.com/', '').replace('stories/','').replace('/','')).rstrip()
+def start(downloadPath, user_to_check, instaUse, instaPass, ffmpegPath):
     print ('user name provided is: ' + user_to_check)
 
     ig_client = login(instaUse, instaPass)
