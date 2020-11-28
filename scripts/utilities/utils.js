@@ -24,15 +24,15 @@ function lineBreak() {
   console.log('~=~=~=~=~=~=~=~=~=~=~=~');
 }
 
-function progressBar(progress, format) {
+function progressBar(progress, format, targetFiles) {
   let progressText = document.getElementById('progressText');
   if (progress.percent === undefined) {
     progressText.textContent = progress.timemark.match('dd:dd:dd)');
   } else {
     if (format.indexOf('concat') >= 0) {
-      progress.percent = progress.percent / (effectFile.length + 1);
+      progress.percent = progress.percent / (targetFiles.length);
     }
-    if (progress.percent > 100) {
+    if (progress.percent >= 100) {
       progress.percent = 99.9;
     }
 
@@ -77,15 +77,4 @@ async function versionChecker() {
     });
 }
 
-async function webCheck(input) {
-  return axios.get(input.URL)
-  .then(async (response) => {
-    if (response.status == 200){
-      return true
-    } else {
-      errorAlert('', 'basic', "Couldn't connect to URL", swalColour, '');
-    }
-    });
-}
-
-module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe, webCheck, versionChecker};
+module.exports = { docReady, lineBreak, progressBar, swalColours, copyString, URLwipe, versionChecker};
