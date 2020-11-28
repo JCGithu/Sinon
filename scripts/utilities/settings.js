@@ -53,8 +53,8 @@ docReady(function () {
     let geoFormat = document.getElementById('geoFormat');
     let downloadfolder = document.getElementById('downloadfolder');
     let insta = {
-      username: document.getElementById('InstaUse').value,
-      password: document.getElementById('InstaPass').value,
+      username: document.getElementById('InstaUse'),
+      password: document.getElementById('InstaPass'),
     };
     let proxyInput = document.getElementById('proxyInput');
 
@@ -73,10 +73,10 @@ docReady(function () {
         proxyInput.value = data.CustomProxy;
       }
       if (data.InstaUse !== null) {
-        insta.username = data.InstaUse;
+        insta.username.value = data.InstaUse;
       }
       if (data.InstaPass !== null) {
-        insta.password = data.InstaPass;
+        insta.password.value = data.InstaPass;
       }
       if (data.downloadPath !== null) {
         downloadfolder.value = data.downloadPath;
