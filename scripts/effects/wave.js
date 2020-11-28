@@ -7,9 +7,11 @@ const fileSetUp = require('../utilities/fileSetUp.js');
 
 async function wave(multi, swalColour, format, targetFiles) {
   return new Promise((resolve) => {
+    let outputFiles = [];
     targetFiles.forEach(function (fileSelected) {
       let fileSettings = fileSetUp(fileSelected);
       var finalOutput = fileSettings.outputFile + '-waveform.mov';
+      outputFiles.push(finalOutput);
       console.log('Final output: ', finalOutput);
       lineBreak();
       convertAlert(swalColour);
@@ -36,12 +38,12 @@ async function wave(multi, swalColour, format, targetFiles) {
           }
         })
         .on('error', function (err) {
-          errorAlert('', 'effect', err, swalColour, '');
+          errorAlert('', 'effect', err, swalColour);
         })
         .save(finalOutput)
         .on('end', function () {
           console.log('Conversion Success!');
-          resolve();
+          resolve(outputFiles);
           if (multi == false) {
             successAlert('effect', 'Wave created!', swalColour);
             win.setProgressBar(-1);

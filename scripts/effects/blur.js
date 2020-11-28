@@ -23,15 +23,15 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
       target: document.getElementById('swalframe'),
       preConfirm: (ratio) => {
         convertAlert(swalColour);
+        var cropSetting = "[pxratio_fix]crop='if(lt(in_h,in_w),in_h,in_w):in_h'[cropped]";
         if (ratio === 'vertical') {
-          var cropSetting = '[pxratio_fix]crop=w=ih*(9/16)[cropped]';
+          cropSetting = '[pxratio_fix]crop=w=ih*(9/16)[cropped]';
         }
-        if (ratio === 'square') {
-          var cropSetting = "[pxratio_fix]crop='if(lt(in_h,in_w),in_h,in_w):in_h'[cropped]";
-        }
+        let outputFiles = [];
         targetFiles.forEach(function (fileSelected) {
           let fileSettings = fileSetUp(fileSelected);
           var finalOutput = fileSettings.outputFile + '-bgblurred.mp4';
+          outputFiles.push(finalOutput);
           console.log('Final output: ', finalOutput);
           lineBreak();
           ffmpeg(fileSelected)
@@ -63,14 +63,14 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
               }
             })
             .on('error', function (err, stdout, stderr) {
-              errorAlert('', 'effect', err, swalColour, '');
+              errorAlert('', 'effect', err, swalColour);
             })
             .save(finalOutput)
             .on('end', function (stdout, stderr) {
-              console.log('Conversion Success!');
-              resolve();
+              resolve(outputFiles);
               win.setProgressBar(-1);
               if (multi == false) {
+                console.log('Conversion Success!');
                 successAlert('effect', 'Social blur applied', swalColour);
               }
             });
