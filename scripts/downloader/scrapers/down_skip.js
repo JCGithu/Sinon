@@ -16,6 +16,7 @@ function down_skip(data, extractorOptions) {
       if (data.URL.indexOf('itv.com/hub') >= 0) {
         extractorOptions.maxBuffer = 1024 * 30720;
       }
+      data.options = 'normal';
       execFile(
         versionInfo.ExtractorSet,
         [
@@ -28,8 +29,9 @@ function down_skip(data, extractorOptions) {
           data.instaPass,
         ],
         extractorOptions,
-        (error) => {
+        (error, stdout, stderr) => {
           if (error) {
+            console.log(stdout, stderr)
             console.log('Generic downloader error, details:');
             errorAlert(error, 'download', '', swalColour);
           } else {
