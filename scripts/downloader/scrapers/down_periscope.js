@@ -1,4 +1,13 @@
-function down_periscope(data) {
+const axios = require('axios');
+const runningAlert = require('../../alerts/runningAlert');
+const successAlert = require('../../alerts/successAlert');
+const errorAlert = require('../../alerts/errorAlert');
+
+const { progressBar } = require('../../utilities/utils');
+
+const plainExec = require('../execs/plainExec');
+
+function down_periscope(data, extractorOptions) {
   Swal.fire({
     icon: 'success',
     title: 'Video found!',
@@ -14,39 +23,41 @@ function down_periscope(data) {
     backdrop: swalColour.loading,
     target: document.getElementById('swalframe'),
     preConfirm: (dlquality) => {
-      let quals = ['normal', 'live'];
-      for (let i = 0; i < quals.length; i++) {
-        if (dlquality == quals[i]) {
-          runningAlert();
-          let order = quals[i];
-          execFile(
-            versionInfo.ExtractorSet,
-            [
-              data.URL,
-              data.path,
-              order,
-              data.URL,
-              data.geo,
-              data.proxy,
-              versionInfo.ffmpegPath,
-              data.instaUse,
-              data.instaPass,
-            ],
-            extractorOptions,
-            (error, stdout) => {
-              if (error) {
-                console.log('Periscope live grab error, details:');
-                error = error + stdout;
-                console.log(error);
-                errorAlert(error, 'download', '', swalColour, '');
-                lineBreak();
+      runningAlert();
+        var regex = /[0-9A-Za-z]+(?=\?)/g;
+        var token = data.URL.match(regex);
+        data.URL = `https://api.periscope.tv/api/v2/getAccessPublic?token=${token}`
+        axios
+        .get(data.URL)
+        .then(async (response, error) => {
+          if (error){
+            errorAlert(error, '', '', swalColour);
+          } else {
+            if (dlquality == 'normal'){
+              ffmpeg(response.data.replay_url)
+              .format('mp4')
+              .save(data.path + '\\periscope.mp4')
+              .on('error', (err, stdout, stderr) => {
+                console.log('hehe')
+                err = err + stdout + stderr;
+                errorAlert(err, 'convert', '', swalColour);
+              })
+              .on('progress', (progress) => {
+                progressBar(progress, '');
+              })
+              .on('end', () => {
+                successAlert('', '', swalColour);
+              })
+              .run();
+            } else {
+              if (response.data.hls_url){
+                successAlert('live', response.data.hls_url, swalColour);
               } else {
-                successAlert(quals[i], stdout, swalColour);
+                errorAlert('', 'basic', "No HLS URL found, is this livestream still running?", swalColour);
               }
             }
-          );
-        }
-      }
+          }
+        })
     },
   });
 }
