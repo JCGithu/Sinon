@@ -4,7 +4,7 @@ function inputDetails() {
     path: document.getElementById('downloadfolder').value,
     proxy: document.getElementById('proxyInput').value,
     instaUse: document.getElementById('InstaUse').value,
-    instapass: document.getElementById('InstaPass').value,
+    instaPass: document.getElementById('InstaPass').value,
   };
 
   if (input.URL.indexOf('tiktok.com') >= 0) {
