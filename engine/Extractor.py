@@ -21,9 +21,9 @@ import youtube_dl
 test = False
 
 if test is True :
-	parsedURL = 'https://www.youtube.com/watch?v=cQy8l6ikXFA'
+	parsedURL = 'https://twitter.com/caenhillcc/status/1332604393489911808'
 	downloadPath = r"C:\\Users\\jackc\\Desktop\\metro"
-	options = 'normal'
+	options = 'high'
 	userProxy = ''
 	ffmpegPath = r''
 	instaUse = ''
@@ -38,7 +38,7 @@ else:
 	instaUse = sys.argv[6]
 	instaPass = sys.argv[7]
 
-def download(downloadPath, parsedURL, ffmpegPath):
+def download(downloadPath, options, parsedURL, ffmpegPath):
 
 	print ('URL recieved is:')
 	print (parsedURL)
@@ -62,7 +62,7 @@ def download(downloadPath, parsedURL, ffmpegPath):
 		'format': 'best[ext=mp4]/best',
 		'logger': MyLogger(),
 		'progress_hooks': [download_hook],
-		'outtmpl':downloadPath + '/%(title)s.%(ext)s',
+		'outtmpl': downloadPath + '/%(title)s.%(ext)s',
 		'ffmpeg_location': ffmpegPath,
 		'verbose': True,
 	}
@@ -75,8 +75,8 @@ def download(downloadPath, parsedURL, ffmpegPath):
 		}]
 
 	if 'twitter.com' in parsedURL:
-		accountName = str(re.findall('twitter.com/(.*?)/status', parsedURL)).replace('[','').replace(']','').replace("'","")
-		ydl_opts['outtmpl'] = downloadPath + '/' + str(accountName) + '.%(ext)s',
+		accountName = re.findall(r'(?<=\/)[A-z0-9]+(?=\/status)', parsedURL)
+		ydl_opts['outtmpl'] = downloadPath + '/' + accountName[0] + '.mp4'
 
 	if 'itv.com/hub' in parsedURL:
 		ydl_opts['quiet'] = True
@@ -93,7 +93,7 @@ def download(downloadPath, parsedURL, ffmpegPath):
 				ydl.download([parsedURL])
 
 if 'normal' in options or 'high' in options:
-    download(downloadPath, parsedURL, ffmpegPath)
+    download(downloadPath, options, parsedURL, ffmpegPath)
 
 if 'live' in options:
     import dllive
