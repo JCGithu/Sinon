@@ -23,28 +23,44 @@ async function screengrabs(multi, swalColour, format, targetFiles) {
       target: document.getElementById('swalframe'),
       preConfirm: (grabNum) => {
         convertAlert(swalColour);
-        targetFiles.forEach(function (fileSelected) {
-          let fileSettings = fileSetUp(fileSelected);
-          ffmpeg(fileSelected)
-            .screenshots({
-              count: grabNum,
-              folder: fileSettings.inputDir,
-              filename: fileSettings.inputName + '-%d.png',
-            })
-            .on('error', function (err) {
-              errorAlert('', 'effect', err, swalColour);
-            })
-            .on('end', function () {
-              console.log('Conversion Success!');
-              resolve();
-              if (multi == false) {
-                successAlert('effect', 'Screenshots taken', swalColour);
-              }
-            });
+        numberGen(grabNum).then((stages)=>{
+          targetFiles.forEach(function (fileSelected) {
+            let fileSettings = fileSetUp(fileSelected);
+            console.log(stages);
+            ffmpeg(fileSelected)
+              .screenshots({
+                timestamps: stages,
+                folder: fileSettings.inputDir,
+                filename: fileSettings.inputName + '-%d.png',
+              })
+              .on('error', function (err) {
+                errorAlert('', 'effect', err, swalColour);
+              })
+              .on('end', function () {
+                console.log('Conversion Success!');
+                resolve();
+                if (multi == false) {
+                  successAlert('effect', 'Screenshots taken', swalColour);
+                }
+              });
+          });
         });
       },
     });
   });
+}
+
+function numberGen(grabNum){
+  let array = []
+  return new Promise((resolve) => {
+    for (let i =0; i <= grabNum; i++ ){
+      let percent = Math.floor((100/grabNum) * i)
+      array.push(`${percent}%`)
+      if (i == grabNum){
+        resolve(array)
+      }
+    }
+  })
 }
 
 module.exports = screengrabs;
