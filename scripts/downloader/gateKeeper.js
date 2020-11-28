@@ -5,36 +5,27 @@ const axios = require('axios');
 function gateKeeper(input) {
   return new Promise((resolve) => {
     fileExts = ['.mp4', '.mpd', '.m3u8', '.ts', '.mp4'];
+    let hostname = parse(input.URL).resource.replace('www.', '').split('.')[0];
 
     for (let i = 0; i < fileExts.length; i++) {
       if (input.URL.indexOf(fileExts[i]) >= 0) {
-        input.order = 'file';
-        input.proxyUse = 'check';
+        input.category = 'file';
+        input.proxyUse = false;
         resolve(input);
       }
     }
-
-    let hostname = parse(input.URL).resource.replace('www.', '').split('.')[0];
+    
     fs.readFile('./scripts/downloader/websites.json', (err, data) => {
       if (err) throw err;
       let websites = JSON.parse(data);
       if (websites[hostname]){
         input.category = websites[hostname].category;
         input.proxyUse = websites[hostname].proxy;
-      } else{
-        input.order = 'generic';
-      }
-      if (input.proxyUse == true) {
-        statusCheck().then((worked)=>{
-          if (worked){
-            resolve(input);
-          } else {
-            errorAlert('', 'basic', "Proxy error, can't reach site!");
-          }
-        })
       } else {
-        resolve(input);
+        input.category = 'generic';
       }
+
+      resolve(input);
     });
 
     if (input.URL == '') {
@@ -45,27 +36,38 @@ function gateKeeper(input) {
 
 
 
-async function statusCheck() {
+async function statusCheck(input) {
   let i = 0;
-  let proxyHost = input.proxy.split(':')
-  axios.get(input.URL, { proxy: {
-    host: proxyHost[0], 
-    port: proxyHost[1],
-  }})
-  .then(async (response) => {
-    if (response.status == 200){
-      return true
-    } else {
-      if (i > 5){
-        return false
+  let proxyInfo = {}
+  if (input.proxyUse == true){
+    let proxyHost = input.proxy.split(':')
+    proxyInfo = { proxy: {
+      host: proxyHost[0], 
+      port: proxyHost[1],
+    }}
+  }
+  console.log(input.URL);
+
+  if (input.URL.indexOf('pscp') >= 0) {
+    return true
+  }
+
+  return axios.get(input.URL)
+    .then(async (response) => {
+      if (response.status == 200){
+        return true
       } else {
-        proxyGenerator().then((newProxy) => {
-          input.proxy = newProxy
-          statusCheck()
-        });
+        if (i > 5 || useProxy == false){
+          console.log('failed');
+          return false
+        } else {
+          proxyGenerator().then((newProxy) => {
+            input.proxy = newProxy
+            statusCheck()
+          });
+        }
       }
-    }
-  });
+    }).catch((err)=>{});
 }
 
 module.exports = gateKeeper;
