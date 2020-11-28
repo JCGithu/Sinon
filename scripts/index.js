@@ -5,6 +5,7 @@ const { app, dialog } = require('electron').remote;
 const win = remote.getCurrentWindow();
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const FFmpegStatic = require('ffmpeg-static-electron');
 const ffmpeg = require('fluent-ffmpeg');
@@ -22,6 +23,9 @@ const versionInfo = {
   ffmpegPath: ffmpegPath,
   extractorPath: '',
 };
+
+const cpuCount = os.cpus().length
+//console.log(cpuCount)
 
 var OSs = ['Win', 'Mac', 'X11', 'Linux'];
 var plat = ['Windows', 'MacOS', 'UNIX', 'Linux'];
