@@ -12,20 +12,21 @@ async function run_effect(targetFiles) {
   var outputFile, inputFull, inputExt, inputDir, pngFolder, inputName, finalOutput;
   var e = document.getElementById('convertFormat');
   let format = e.options[e.selectedIndex].value;
+  var multi = false;
 
   // SINGLE
-  async function singleEffect(format) {
+  async function singleEffect(format, multi) {
     if (format.indexOf('wave') >= 0) {
-      await wave(multi, swalColour, format, targetFiles);
+      return wave(multi, swalColour, format, targetFiles);
     }
     if (format.indexOf('blur') >= 0) {
-      await socialBlur(multi, swalColour, format, targetFiles);
+      return socialBlur(multi, swalColour, format, targetFiles);
     }
     if (format.indexOf('grabs') >= 0) {
-      await screengrabs(multi, swalColour, format, targetFiles);
+      return screengrabs(multi, swalColour, format, targetFiles);
     }
     if (format.indexOf('concat') >= 0) {
-      await concat(multi, swalColour, format, targetFiles);
+      return concat(multi, swalColour, format, targetFiles);
     }
   }
 
@@ -66,37 +67,30 @@ async function run_effect(targetFiles) {
       backdrop: swalColour.loading,
       target: document.getElementById('swalframe'),
       preConfirm: async () => {
-        var custom_get = document.getElementById('custom_one');
-        format = custom_get.options[custom_get.selectedIndex].value;
-        var custom_get = document.getElementById('custom_two');
-        let custom_two = custom_get.options[custom_get.selectedIndex].value;
-        var custom_get = document.getElementById('custom_three');
-        let custom_three = custom_get.options[custom_get.selectedIndex].value;
-        var multi = true;
-        let nextStep = false;
-        console.log('Running effect one, code: ' + format);
-        await singleEffect(format);
-        format = custom_two;
-        let effectFile = [finalOutput];
-        console.log('Running effect two, code: ' + format);
-        await singleEffect(format);
-        if (custom_three.indexOf('blank') <= 0) {
-          format = custom_three;
-          effectFile = [finalOutput];
-          console.log('Running effect three, code: ' + format);
-          await singleEffect(format);
-        }
-        Swal.fire({
-          icon: 'success',
-          title: 'Merge Success!',
-          backdrop: swalColour.pass,
+        formats = [
+          document.getElementById('custom_one').options[document.getElementById('custom_one').selectedIndex].value,
+          document.getElementById('custom_two').options[document.getElementById('custom_two').selectedIndex].value,
+          document.getElementById('custom_three').options[document.getElementById('custom_three').selectedIndex].value,
+        ];
+        multi = true;
+        console.log(formats);
+        singleEffect(formats[0], multi).then((outputs) => {
+          if (formats[2] == 'blank') {
+            multi = false;
+          }
+          targetFiles = outputs;
+          singleEffect(formats[1], multi).then((outputs) => {
+            if (formats[2] !== 'blank') {
+              multi = false;
+              targetFiles = outputs;
+              singleEffect(formats[2], multi);
+            }
+          });
         });
-        console.log('Custom effect finished');
       },
     });
   } else {
-    var multi = false;
-    await singleEffect(format);
+    await singleEffect(format, multi);
   }
 }
 
