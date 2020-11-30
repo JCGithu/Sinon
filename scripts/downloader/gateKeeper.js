@@ -15,7 +15,7 @@ function gateKeeper(input) {
       }
     }
     
-    fs.readFile('./scripts/downloader/websites.json', (err, data) => {
+    fs.readFile(path.resolve(__dirname, './websites.json'), (err, data) => {
       if (err) throw err;
       let websites = JSON.parse(data);
       if (websites[hostname]){

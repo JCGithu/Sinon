@@ -82,7 +82,7 @@ async function sinonBoot() {
   let proxyInput = document.getElementById('proxyInput');
   let versionNumber = document.getElementById('ver');
   if (target) {
-    target.innerHTML = fs.readFileSync('./GUI/changelog.html', 'utf-8');
+    target.innerHTML = fs.readFileSync(path.resolve(__dirname, '../GUI/changelog.html'), 'utf-8');
     const animations = require('../scripts/utilities/animations');
     const settings = require('../scripts/utilities/settings');
     const tools = require('../scripts/utilities/toolFunctions');
