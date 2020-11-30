@@ -22,7 +22,15 @@ function plainExec(data, extractorOptions){
         errorAlert(error + stdout, 'download', '', swalColour);
       } else {
         console.log(stdout);
-        successAlert('', '', swalColour);
+        if (data.URL.indexOf('twitter.com') >= 0) {
+          successAlert(
+            '',
+            'Please note: Twitter videos are named after the username! Some tweets are just too long for titles.',
+            swalColour
+          );
+        } else {
+          successAlert('', '', swalColour);
+        }
       }
       lineBreak();
     }
