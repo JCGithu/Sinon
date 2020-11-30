@@ -102,5 +102,13 @@
   "nbcsandiego":{
     "category": "mp4scrape",
     "proxy":false
+  },
+  "wric":{
+    "category": "mp4scrape",
+    "proxy": true
+  },
+  "tiktok":{
+    "category": "skip",
+    "proxy": false
   }
 }
