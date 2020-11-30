@@ -1,4 +1,4 @@
-const { lineBreak } = require('../utilities/utils.js');
+const { lineBreak, progressBar } = require('../utilities/utils.js');
 const fileSetUp = require('../utilities/fileSetUp.js');
 
 const convertAlert = require('../alerts/convertAlert.js');
@@ -52,15 +52,7 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
             .format('mp4')
             .outputOptions(['-map 0:a?'])
             .on('progress', function (progress) {
-              if (progress.percent === undefined) {
-                document.getElementById('progressText').textContent = progress.timemark.match('dd:dd:dd)');
-              } else {
-                document.getElementById('progressText').textContent =
-                  (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
-                let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
-                win.setProgressBar(percentage);
-                console.log('Processing: ' + progress.percent + '% done');
-              }
+              progressBar(progress, format, targetFiles);
             })
             .on('error', function (err, stdout, stderr) {
               errorAlert('', 'effect', err);
