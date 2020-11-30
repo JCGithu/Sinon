@@ -30,7 +30,7 @@ const cpuCount = os.cpus().length
 var OSs = ['Win', 'Mac', 'X11', 'Linux'];
 var plat = ['Windows', 'MacOS', 'UNIX', 'Linux'];
 
-for (let i = 0; i > OSs.length; i++) {
+for (let i = 0; i < OSs.length; i++) {
   if (navigator.appVersion.indexOf(OSs[i]) != -1) {
     versionInfo.OS = plat[i];
   }
