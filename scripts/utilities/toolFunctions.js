@@ -9,6 +9,9 @@ var targetFiles;
 
 document.body.addEventListener('click', function (event) {
   if (event.target.id == 'downFileButton') {
+    if (document.getElementsByClassName('toolMenu')[0].classList.contains('toolOpen')){
+      document.getElementsByClassName('toolMenu')[0].classList.remove('toolOpen');
+    }
     dialog
       .showOpenDialog({
         properties: ['openDirectory'],
@@ -21,6 +24,9 @@ document.body.addEventListener('click', function (event) {
         setTimeout(settingSave, 5000);
       });
   } else if (event.target.id == 'effectFileButton' || event.target.id == 'convFileButton') {
+    if (document.getElementsByClassName('toolMenu')[0].classList.contains('toolOpen')){
+      document.getElementsByClassName('toolMenu')[0].classList.remove('toolOpen');
+    }
     dialog
       .showOpenDialog({
         filters: [
