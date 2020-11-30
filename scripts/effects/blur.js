@@ -63,7 +63,7 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
               }
             })
             .on('error', function (err, stdout, stderr) {
-              errorAlert('', 'effect', err, swalColour);
+              errorAlert('', 'effect', err);
             })
             .save(finalOutput)
             .on('end', function (stdout, stderr) {
@@ -71,7 +71,7 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
               win.setProgressBar(-1);
               if (multi == false) {
                 console.log('Conversion Success!');
-                successAlert('effect', 'Social blur applied', swalColour);
+                successAlert('effect', 'Social blur applied');
               }
             });
         });

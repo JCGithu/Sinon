@@ -40,7 +40,7 @@ function scraping(data){
       .then(async (response, error) => {
         console.log('huzzah for axios')
         if (error){
-          errorAlert(error, '', '', swalColour);
+          errorAlert(error, '', '');
         } else {
           var regex = /[0-9A-Za-z\/\.\-\:\_\\\-]+.\.mp4/g
           var videoURLS = response.data.match(regex);
@@ -53,7 +53,7 @@ function scraping(data){
         }
     }).catch((error)=>{
       console.log(axiosOpts)
-      errorAlert(error, '', '', swalColour);
+      errorAlert(error, '', '');
     })
     })
   })

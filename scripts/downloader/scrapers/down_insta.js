@@ -32,7 +32,6 @@ function down_insta(data, extractorOptions) {
         '',
         'basic',
         'No instagram login details found in settings. Required for story downloads!',
-        swalColour,
       );
     } else {Swal.fire(swalSet)}
   }

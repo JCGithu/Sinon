@@ -38,12 +38,12 @@ async function downloader() {
   const input = inputDetails();
 
   if (input.path === '') {
-    errorAlert('', 'basic', 'No download path given!', swalColour);
+    errorAlert('', 'basic', 'No download path given!');
   }
 
   gateKeeper(input).then((data) => {
     if (data == false){
-      errorAlert('', 'basic', "Couldn't connect to URL!", swalColour);
+      errorAlert('', 'basic', "Couldn't connect to URL!");
     }
     let category = ['generic','file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc', 'mp4scrape'];
     let versions = [

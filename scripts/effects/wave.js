@@ -38,14 +38,14 @@ async function wave(multi, swalColour, format, targetFiles) {
           }
         })
         .on('error', function (err) {
-          errorAlert('', 'effect', err, swalColour);
+          errorAlert('', 'effect', err);
         })
         .save(finalOutput)
         .on('end', function () {
           console.log('Conversion Success!');
           resolve(outputFiles);
           if (multi == false) {
-            successAlert('effect', 'Wave created!', swalColour);
+            successAlert('effect', 'Wave created!');
             win.setProgressBar(-1);
           }
         });

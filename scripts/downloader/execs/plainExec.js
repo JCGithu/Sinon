@@ -19,7 +19,7 @@ function plainExec(data, extractorOptions){
     extractorOptions,
     (error, stdout) => {
       if (error) {
-        errorAlert(error + stdout, 'download', '', swalColour);
+        errorAlert(error + stdout, 'download', '');
       } else {
         console.log(stdout);
         if (data.URL.indexOf('twitter.com') >= 0) {

@@ -31,7 +31,7 @@ function down_periscope(data, extractorOptions) {
         .get(data.URL)
         .then(async (response, error) => {
           if (error){
-            errorAlert(error, '', '', swalColour);
+            errorAlert(error, '', '');
           } else {
             if (dlquality == 'normal'){
               ffmpeg(response.data.replay_url)
@@ -40,7 +40,7 @@ function down_periscope(data, extractorOptions) {
               .on('error', (err, stdout, stderr) => {
                 console.log('hehe')
                 err = err + stdout + stderr;
-                errorAlert(err, 'convert', '', swalColour);
+                errorAlert(err, 'convert', '');
               })
               .on('progress', (progress) => {
                 progressBar(progress, '');
@@ -53,7 +53,7 @@ function down_periscope(data, extractorOptions) {
               if (response.data.hls_url){
                 successAlert('live', response.data.hls_url, swalColour);
               } else {
-                errorAlert('', 'basic', "No HLS URL found, is this livestream still running?", swalColour);
+                errorAlert('', 'basic', "No HLS URL found, is this livestream still running?");
               }
             }
           }

@@ -38,7 +38,7 @@ async function concat(multi, swalColour, format, targetFiles) {
         .on('error', function (err, stdout, stderr) {
           console.log(err + stdout + stderr);
           err = err + stdout + stderr;
-          errorAlert('', 'effect', err, swalColour);
+          errorAlert('', 'effect', err);
         })
         .complexFilter([filter], 'outv')
         .outputOptions(['-map [outa]'])

@@ -34,13 +34,13 @@ async function screengrabs(multi, swalColour, format, targetFiles) {
                 filename: fileSettings.inputName + '-%d.png',
               })
               .on('error', function (err) {
-                errorAlert('', 'effect', err, swalColour);
+                errorAlert('', 'effect', err);
               })
               .on('end', function () {
                 console.log('Conversion Success!');
                 resolve();
                 if (multi == false) {
-                  successAlert('effect', 'Screenshots taken', swalColour);
+                  successAlert('effect', 'Screenshots taken');
                 }
               });
           });

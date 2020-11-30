@@ -38,7 +38,7 @@ function down_file(data, extractorOptions) {
             await pipeline(got.stream(parsedURL), fs.createWriteStream(data.path));
             successAlert('', '', swalColour);
           } catch (error) {
-            errorAlert(error, 'download', '', swalColour);
+            errorAlert(error, 'download', '');
           }
         })();
       } else {
@@ -47,7 +47,7 @@ function down_file(data, extractorOptions) {
         .save(finalOutput)
         .on('error', (err, stdout, stderr) => {
           err = err + stdout + stderr;
-          errorAlert(err, 'convert', '', swalColour);
+          errorAlert(err, 'convert', '');
         })
         .on('progress', (progress) => {
           progressBar(progress, '');

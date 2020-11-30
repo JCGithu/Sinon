@@ -1,6 +1,6 @@
 const { copyString } = require('../utilities/utils.js');
 
-function successAlert(passType, passText, swalColour) {
+function successAlert(passType, passText) {
   var swalOptions = {
     icon: 'success',
     title: 'Download Success!',
