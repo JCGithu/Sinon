@@ -34,8 +34,9 @@ async function urlFix (url){
 function scraping(data){
   return new Promise ((resolve) => {
     console.log('ran scraping')
-    axios
-      .get(data.URL)
+    proxyAxios(data).then((axiosOpts) => {
+      axios
+      .get(data.URL, axiosOpts)
       .then(async (response, error) => {
         console.log('huzzah for axios')
         if (error){
@@ -50,7 +51,28 @@ function scraping(data){
           data.URL = tempURL
           resolve(data);
         }
+    }).catch((error)=>{
+      console.log(axiosOpts)
+      errorAlert(error, '', '', swalColour);
     })
+    })
+  })
+}
+
+function proxyAxios(data){
+  return new Promise((res)=>{
+    let axiosOpts = {
+
+    }
+    if (data.proxyUse == true){
+      let proxyHost = data.proxy.split(':')
+      axiosOpts.proxy = {
+        host: 'https://' + proxyHost[0], 
+        port: proxyHost[1],
+      }
+      
+    }
+    res(axiosOpts)
   })
 }
 
