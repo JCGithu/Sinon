@@ -35,8 +35,8 @@ for (let i = 0; i < OSs.length; i++) {
     versionInfo.OS = plat[i];
   }
   if (navigator.appVersion.indexOf('Mac') != -1) {
-    versionInfo.ExtractorSet = '../scripts/extractor';
-    versionInfo.ffmpegSet = '../scripts/ffmpeg';
+    versionInfo.ExtractorSet = './extractor';
+    versionInfo.ffmpegSet = './ffmpeg';
   }
 }
 
