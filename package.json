@@ -6,9 +6,9 @@
   "scripts": {
     "loggerStart": "set ELECTRON_ENABLE_LOGGING=1",
     "start": "electron . --enable-logging",
-    "win": "electron-packager . --app-version 1.2.4 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
-    "mac": "electron-packager . --app-version 1.2.3 --prune=true --platform darwin --icon=./imgs/sinon.icns --ignore='mac_venv' --overwrite",
-    "linux": "electron-packager . --app-version 1.2.4 --prune=true --platform linux --arch x64 --icon ./imgs/sinon.icns --overwrite",
+    "win": "electron-packager . --app-version 1.3.0 --prune=true --platform win32 --icon ./imgs/sinon.ico --overwrite",
+    "mac": "electron-packager . --app-version 1.3.0 --prune=true --platform darwin --icon=./imgs/sinon.icns --ignore='mac_venv' --overwrite",
+    "linux": "electron-packager . --app-version 1.3.0 --prune=true --platform linux --arch x64 --icon ./imgs/sinon.icns --overwrite",
     "build": "electron-builder",
     "postinstall": "install-app-deps"
   },
