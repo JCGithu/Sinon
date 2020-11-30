@@ -21,9 +21,9 @@ import youtube_dl
 test = False
 
 if test is True :
-	parsedURL = 'https://twitter.com/caenhillcc/status/1332604393489911808'
+	parsedURL = 'https://www.tiktok.com/@therock/video/6879854011848150277'
 	downloadPath = r"C:\\Users\\jackc\\Desktop\\metro"
-	options = 'high'
+	options = 'normal'
 	userProxy = ''
 	ffmpegPath = r''
 	instaUse = ''
@@ -91,6 +91,14 @@ def download(downloadPath, options, parsedURL, ffmpegPath):
 		else:
 			with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 				ydl.download([parsedURL])
+
+
+if 'facebook.com' in parsedURL:
+		if 'posts' in parsedURL:
+				source = requests.get(parsedURL, verify=True).text
+				soup = BeautifulSoup(source, 'lxml')
+				texttwo = re.findall('permalinkURL:"(.*?videos.*?)"}],', str(soup))
+				parsedURL = str(texttwo[0]).replace("'","").replace("[","").replace("]","").replace("\/","/")
 
 if 'normal' in options or 'high' in options:
     download(downloadPath, options, parsedURL, ffmpegPath)
