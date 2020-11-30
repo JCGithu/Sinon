@@ -38,7 +38,7 @@ function progressBar(progress, format, targetFiles) {
 
     if (progressText) {
       progressText.textContent = (Math.round(progress.percent * 100) / 100).toFixed(1) + '%';
-      console.log('Processing: ' + progress.percent + '% done');
+      console.log('Processing: ' + Math.floor(progress.percent) + '% done');
       let percentage = parseFloat((Math.round(progress.percent) / 100).toFixed(2));
       win.setProgressBar(percentage);
     }
