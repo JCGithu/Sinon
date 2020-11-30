@@ -38,13 +38,13 @@
   "author": "Colloquial",
   "license": "CC0-1.0",
   "devDependencies": {
+    "electron": "^10.1.6",
     "electron-builder": "^22.9.1",
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
     "animejs": "^3.2.1",
     "axios": "^0.20.0",
-    "electron": "^10.1.6",
     "electron-json-storage": "^4.1.8",
     "eslint-config-airbnb": "^18.2.1",
     "ffmpeg-static-electron": "^2.0.1",
