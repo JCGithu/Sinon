@@ -3,10 +3,6 @@
 ### A handy video tool.
 #### Video tool built using [electron](http://electron.atom.io/), [node.js](https://nodejs.org/), and [python](https://www.python.org/).
 
-## Note
-
-This is my first scripting project and I have learnt alongside it so there are undoubtedly a number of mistakes or (*probably extremely*) unoptimized code. If you can see a cruicial fault or want to offer improvement I welcome it -- provided it's constructive.
-
 ## Currently supported releases:
 
 * OS X
@@ -31,7 +27,7 @@ If you think it is missing a feature or you've found a bug feel free to open an 
 
 *  __TV__:  To download BBC iPlayer and Sounds you will install 'Get_iPlayer'.
 
-*  __Audio__: Sites such as Soundcloud and Audioboom are also covered.
+*  __Audio__: Sites such as Soundcloud are also covered.
 
 *  __Live Feeds__: Grab livestream codes (.m3u8) from Youtube and Periscope (or Parliament Live if you're missing that excitement in your life) these can be plugged into OBS and other software to record.
 
@@ -53,7 +49,15 @@ Afterwards you can run `npm start` to run the app.
 
 This app is thanks to the tools made available by the teams behind __ffmepg__, __youtube-dl__, and __get_iplayer__.
 
-Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code.
+Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code and everyone over on the [Twitch stream](https://twitch.tv/colloquialowl):
+
+* [GreatGameGal](https://twitch.tv/greatgamegal)
+* The_Kiwi_Fruitbird
+* [RetroMMO](https://twitch.tv/retrommo)
+* [DaneHarnett](https://twitch.tv/daneharnett)
+* MG_John
+* PikaProgram
+* Nerolynx
 
 ## License
 
