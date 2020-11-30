@@ -40,8 +40,6 @@ for (let i = 0; i > OSs.length; i++) {
   }
 }
 
-win.webContents.openDevTools();
-
 const Block = require('../scripts/block');
 const swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50' };
 
