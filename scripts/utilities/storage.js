@@ -53,20 +53,41 @@ function settingSave() {
   let InstaPass = document.getElementById('InstaPass');
   let downloadfolder = document.getElementById('downloadfolder');
 
-  storage.set(
-    'settings',
-    {
-      UrlWipe: URLSwitch.checked,
-      DarkMode: darkSwitch.checked,
-      Geo: geoFormat.value,
-      InstaUse: InstaUse.value,
-      InstaPass: InstaPass.value,
-      downloadPath: downloadfolder.value,
-    },
-    function (error) {
-      if (error) throw error;
-    }
-  );
+  if (downloadfolder){
+    storage.set(
+      'settings',
+      {
+        UrlWipe: URLSwitch.checked,
+        DarkMode: darkSwitch.checked,
+        Geo: geoFormat.value,
+        InstaUse: InstaUse.value,
+        InstaPass: InstaPass.value,
+        downloadPath: downloadfolder.value,
+      },
+      function (error) {
+        if (error) throw error;
+      }
+    );
+  } else {
+    storage.get('settings', function (error, data) {
+      if (data.downloadPath) {
+        storage.set(
+          'settings',
+          {
+            UrlWipe: URLSwitch.checked,
+            DarkMode: darkSwitch.checked,
+            Geo: geoFormat.value,
+            InstaUse: InstaUse.value,
+            InstaPass: InstaPass.value,
+            downloadPath: data.downloadPath,
+          },
+          function (error) {
+            if (error) throw error;
+          })
+      }
+    });
+  }
+
   console.log('New Settings Saved!');
 }
 
