@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const { app, ipcMain, BrowserWindow } = require('electron');
+const { app, ipcMain, BrowserWindow, globalShortcut } = require('electron');
 const path = require('path');
 
 process.env.ELECTRON_ENABLE_LOGGING=1
@@ -24,6 +24,13 @@ function createWindow() {
   });
   mainWindow.loadFile('./GUI/GUI.html');
   mainWindow.on('maximize', () => mainWindow.unmaximize());
+
+  for (let i = 1; i < 4; i++) {
+    globalShortcut.register(`CommandOrControl+${i}`, () => {
+      mainWindow.webContents.send(`numPress${i}`)
+    });
+  }
+
 }
 
 // This method will be called when Electron has finished

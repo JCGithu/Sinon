@@ -1,5 +1,6 @@
 const { docReady } = require('./utils');
 const anime = require('animejs');
+const { ipcRenderer } = require('electron')
 
 const storage = require('electron-json-storage');
 
@@ -22,9 +23,6 @@ function startAnimation() {
   pageElements.options = document.getElementsByClassName('optionsbg')[0];
   pageElements.optionsBar = document.getElementById('optionstrip');
   pageElements.currentTool = document.getElementById('currentTool');
-
-  //Tool Transition Variables
-  let menuCurrent = 'down';
 
   //Title Animation
   let textWrapper = document.querySelector('.mainTitle .letters');
@@ -102,7 +100,7 @@ function folderLoad() {
 function toolSwap(toolKit) {
   let menus = document.querySelectorAll('#MenuD, #MenuC, #MenuE');
   let pages = ['toolDown', 'toolConv', 'toolEffect'];
-  let menuCurrent = '#MenuD';
+  let menuCurrent = 'MenuD';
 
   for (let i = 0; i < menus.length; i++) {
     menus[i].addEventListener('click', function (info) {
@@ -120,20 +118,36 @@ function toolSwap(toolKit) {
           pageElements.currentTool.classList.remove('toolChange');
         }, 1500);
         setTimeout(function () {
+          menuCurrent = info.target.id
           runButtonReset();
         }, 800);
         pageElements.toolMenu.classList.remove('toolOpen');
       } else {
-        pageElements.toolMenu.classList.remove('toolOpen');
+        if (pageElements.toolMenu.classList.contains('toolOpen')){
+          pageElements.toolMenu.classList.remove('toolOpen');
+        }
       }
     });
   }
+}
+
+//TOOL HOTKEYS
+let keys = ['numPress1','numPress2','numPress3']
+let keyMenus = ['MenuD', 'MenuC', 'MenuE']
+for (let i = 0; i < keys.length; i++) {
+  ipcRenderer.on(keys[i], () => {
+    let menu = document.getElementById(keyMenus[i]);
+    menu.click();
+  })
 }
 
 function runButtonReset() {
   inputText = document.querySelector('.inputBox');
   runButton = document.querySelector('.runButton');
   inputText.addEventListener('input', function () {
+    if (pageElements.toolMenu.classList.contains('toolOpen')){
+      pageElements.toolMenu.classList.remove('toolOpen');
+    }
     runButtonShow(inputText);
   });
 }
