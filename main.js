@@ -49,13 +49,3 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
 });
-
-ipcMain.on('waveStart', (event) => {
-  console.log('Wave start recieved');
-  event.reply('waveStartReply');
-});
-
-ipcMain.on('waveDone', (event, digits) => {
-  console.log('Wave done recieved');
-  event.reply('waveDoneReply', digits);
-});
