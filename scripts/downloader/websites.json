@@ -35,8 +35,8 @@
     "category": "skip",
     "proxy":false
   },
-  "dailymail.co.uk":{
-    "category": "rip",
+  "dailymail":{
+    "category": "skip",
     "proxy":false
   },
   "itv":{
