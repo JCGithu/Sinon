@@ -40,7 +40,7 @@
     "proxy":false
   },
   "itv":{
-    "category": "itv",
+    "category": "skip",
     "proxy":false
   },
   "nbcnews":{
