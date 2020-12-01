@@ -25,6 +25,9 @@ function down_insta(data, extractorOptions) {
   } else {
     data.options = 'stories'
     usernameParse = /(?<=com\/)[A-z0-9\.\_]+(?=\/)/g
+    if (data.URL.indexOf('stories') >= 0){
+      usernameParse = /(?<=stories\/)[A-z0-9\.\_]+(?=\/)/g
+    }
     usernames = data.URL.match(usernameParse);
     data.URL = usernames[0]
     if (data.instaUse === '' || data.instaPass === '') {
