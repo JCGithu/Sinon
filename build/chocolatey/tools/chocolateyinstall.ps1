@@ -1,5 +1,4 @@
-﻿
-$ErrorActionPreference = 'Stop';
+﻿$ErrorActionPreference = 'Stop';
 $toolsDir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 $url        = 'https://github.com/JCGithu/Sinon/releases/download/v.1.3/Sinon.Setup.1.3.0.exe'
 
@@ -20,22 +19,3 @@ $packageArgs = @{
 }
 
 Install-ChocolateyPackage @packageArgs
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
