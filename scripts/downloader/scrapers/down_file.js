@@ -3,12 +3,12 @@ const runningAlert = require('../../alerts/runningAlert');
 const successAlert = require('../../alerts/successAlert');
 const errorAlert = require('../../alerts/errorAlert');
 
+const { progressBar } = require('../../utilities/utils');
+
 const { execFile } = require('child_process');
 const { promisify } = require('util');
 const stream = require('stream');
 const got = require('got');
-
-const plainExec = require('../execs/plainExec');
 
 function down_file(data, extractorOptions) {
   let parsedURL = data.URL.replace(/\\\/|\/\\|\/\/|\\\\/g, '/')
