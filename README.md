@@ -51,13 +51,12 @@ This app is thanks to the tools made available by the teams behind __ffmepg__, _
 
 Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code and everyone over on the [Twitch stream](https://twitch.tv/colloquialowl):
 
-* [GreatGameGal](https://twitch.tv/greatgamegal)
-* The_Kiwi_Fruitbird
-* [RetroMMO](https://twitch.tv/retrommo)
-* [DaneHarnett](https://twitch.tv/daneharnett)
-* MG_John
-* PikaProgram
-* [Nerolynx](https://github.com/nqngo)
+
+| [GreatGameGal](https://twitch.tv/greatgamegal) |  The_Kiwi_Fruitbird | [RetroMMO](https://twitch.tv/retrommo) |
+|--------------|---|---|
+| [DaneHarnett](https://twitch.tv/daneharnett) | MG_John | PikaProgram |
+| [Nerolynx](https://github.com/nqngo) | <a href="https://github.com/dragonDScript" rel="dragonDScript">![dragonDScript](https://avatars2.githubusercontent.com/u/46191980?s=25)</a> |   |
+
 
 ## License
 
