@@ -26,16 +26,24 @@
     },
     "mac": {
       "icon": "./imgs/sinon.icns"
-    }
+    },
+    "linux": {
+      "target": "deb",
+      "icon": "./imgs/sinon.icns"
+    },
+    "deb": {}
   },
-  "repository": "https://github.com/JCGithu/Sinon",
+  "repository": "https: //  github.com/JCGithu/Sinon",
   "keywords": [
     "Electron",
     "Sinon",
     "Video",
     "Downloader"
   ],
-  "author": "Colloquial",
+  "author": {
+    "name": "Colloquial",
+    "email": "hello@colloquial.studio"
+  },
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^10.1.6",
