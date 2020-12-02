@@ -24,7 +24,6 @@ const gateKeeper = require('../downloader/gateKeeper');
 //Downloaders
 const down_bbc = require('../downloader/scrapers/down_bbc');
 const down_file = require('../downloader/scrapers/down_file');
-const down_generic = require('../downloader/scrapers/down_generic');
 const down_insta = require('../downloader/scrapers/down_insta');
 const down_parliament = require('../downloader/scrapers/down_parliament');
 const down_periscope = require('../downloader/scrapers/down_periscope');
