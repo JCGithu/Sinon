@@ -26,7 +26,7 @@ function down_file(data, extractorOptions) {
     target: document.getElementById('swalframe'),
     preConfirm: () => {
       runningAlert();
-      if (parsedURL.indexOf('.mp4') >= 0 || parsedURL.indexOf('.mp3') >= 0) {
+      if (parsedURL.indexOf('.mp4') >= 0 && parsedURL.indexOf('.m3u8') == 0 || parsedURL.indexOf('.mp3') >= 0 && parsedURL.indexOf('.m3u8') == 0) {
         console.log(parsedURL);
         let fileName = /\/[^\/]+$/.exec(parsedURL);
         data.path = data.path.concat(fileName.toString().replace('/', '\\'));
@@ -42,9 +42,10 @@ function down_file(data, extractorOptions) {
           }
         })();
       } else {
+        outputFormat = data.path + '/' + data.hostname + '.mp4';
         ffmpeg(parsedURL)
-        .format(videoForm)
-        .save(finalOutput)
+        .format('mp4')
+        .save(outputFormat)
         .on('error', (err, stdout, stderr) => {
           err = err + stdout + stderr;
           errorAlert(err, 'convert', '');
