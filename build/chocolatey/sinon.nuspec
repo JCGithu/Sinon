@@ -24,6 +24,8 @@ This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Refe
     <projectUrl>https://colloquial.studio/sinon</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/JCGithu/Sinon/main/imgs/Sinon.appiconset/AppIcon.appiconset/icon_512@2x.png</iconUrl>
     <copyright>2020 Colloquial Studio</copyright>
+    <licenseUrl>https://github.com/JCGithu/Sinon/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectSourceUrl>https://github.com/JCGithu/Sinon</projectSourceUrl>
     <tags>sinon electron youtube-dl</tags>
     <summary>Handy video downloader, converter and effect applying.</summary>
