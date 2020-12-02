@@ -1,0 +1,39 @@
+name: Chocolatey
+
+on:
+  push:
+    paths:
+      - 'build/chocolatey/**'
+      - '!build/chocolatey/Readme.md'
+      - '!build/chocolatey/.gitignore'
+  pull_request:
+    paths:
+      - 'build/chocolatey/**'
+      - '!build/chocolatey/Readme.md'
+      - '!build/chocolatey/.gitignore'
+
+jobs:
+  lint:
+    name: "Powershell Linting check"
+    runs-on: "windows-latest"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install PSScriptAnalyzer
+      run: choco install --no-progress -y psscriptanalyzer
+    - name: Lint the powershell scripts
+      shell: powershell
+      working-directory: build/chocolatey
+      run: Invoke-ScriptAnalyzer -EnableExit -Path 'tools\*.ps1'
+  test:
+    name: "Test the Chocolatey package"
+    runs-on: "windows-latest"
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create the nupkg
+      working-directory: build/chocolatey
+      run: choco pack
+    - name: Test Sinon package installation
+      working-directory: build/chocolatey
+      run: choco install Sinon --no-progress -y -s .
+    - name: Test Sinon package uninstallation
+      run: choco uninstall Sinon
