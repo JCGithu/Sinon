@@ -18,7 +18,7 @@ function down_insta(data, extractorOptions) {
       plainExec(data, extractorOptions)
     },
   };
-  if (data.URL.indexOf('/p/') >= 0) {
+  if (data.URL.indexOf('/p/') >= 0 || data.URL.indexOf('/tv/') >= 0 ) {
     swalSet.title = 'Instagram Post';
     data.options = 'normal';
     Swal.fire(swalSet);
