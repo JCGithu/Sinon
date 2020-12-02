@@ -23,7 +23,8 @@ function gateKeeper(input) {
         input.category = websites[hostname].category;
         input.proxyUse = websites[hostname].proxy;
       } else {
-        input.category = 'generic';
+        input.category = 'skip';
+        input.options = 'unlisted';
       }
 
       resolve(input);

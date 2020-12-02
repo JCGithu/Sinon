@@ -45,9 +45,8 @@ async function downloader() {
     if (data == false){
       errorAlert('', 'basic', "Couldn't connect to URL!");
     }
-    let category = ['generic','file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc', 'mp4scrape'];
+    let category = ['file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc', 'mp4scrape'];
     let versions = [
-      down_generic,
       down_file,
       down_skip,
       down_youtube,

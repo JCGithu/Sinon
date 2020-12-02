@@ -6,21 +6,30 @@ const plainExec = require('../execs/plainExec');
 const axios = require('axios');
 
 function down_skip(data, extractorOptions) {
-  Swal.fire({
+  let swalSet = {
     icon: 'success',
     title: 'Video found!',
     showCancelButton: true,
     confirmButtonText: 'Download',
     showLoaderOnConfirm: true,
     backdrop: swalColour.loading,
-    preConfirm: () => {
+    preConfirm:  () => {
       runningAlert();
       dataParse(data).then((data)=>{
         data.options = 'normal';
         plainExec(data, extractorOptions);
       })
     },
-  });
+  };
+
+  if (data.options == 'unlisted'){
+    swalSet.icon = 'info';
+    swalSet.title = 'Site not covered yet';
+    swalSet.text =
+      'Please forward the name of the site so it can be added. Meanwhile you can try running it through a generic extractor.';
+  }
+
+  Swal.fire(swalSet);
 }
 
 function dataParse(data){
