@@ -6,6 +6,7 @@ function gateKeeper(input) {
   return new Promise((resolve) => {
     fileExts = ['.mp4', '.mpd', '.m3u8', '.ts', '.mp4'];
     let hostname = parse(input.URL).resource.replace('www.', '').split('.')[0];
+    input.hostname = hostname
 
     for (let i = 0; i < fileExts.length; i++) {
       if (input.URL.indexOf(fileExts[i]) >= 0) {
