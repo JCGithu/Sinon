@@ -57,8 +57,8 @@ Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code and everyo
 * [DaneHarnett](https://twitch.tv/daneharnett)
 * MG_John
 * PikaProgram
-* Nerolynx
+* [Nerolynx](https://github.com/nqngo)
 
 ## License
 
-MIT
+[MIT](LICENSE)
