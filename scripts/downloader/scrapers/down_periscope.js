@@ -24,7 +24,7 @@ function down_periscope(data, extractorOptions) {
     target: document.getElementById('swalframe'),
     preConfirm: (dlquality) => {
       runningAlert();
-        var regex = /[0-9A-Za-z]+(?=\?)/g;
+        var regex = /(?<=\/w\/)[0-9A-Za-z]+/g
         var token = data.URL.match(regex);
         data.URL = `https://api.periscope.tv/api/v2/getAccessPublic?token=${token}`
         axios
