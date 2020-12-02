@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This is a nuspec. It mostly adheres to https://docs.nuget.org/create/Nuspec-Reference. Chocolatey uses a special version of NuGet.Core that allows us to do more than was initially possible. As such there are certain things to be aware of:
+
+* the package xmlns schema url may cause issues with nuget.exe
+* Any of the following elements can ONLY be used by choco tools - projectSourceUrl, docsUrl, mailingListUrl, bugTrackerUrl, packageSourceUrl, provides, conflicts, replaces 
+* nuget.exe can still install packages with those elements but they are ignored. Any authoring tools or commands will error on those elements 
+-->
+
+<!-- You can embed software files directly into packages, as long as you are not bound by distribution rights. -->
+<!-- * If you are an organization making private packages, you probably have no issues here -->
+<!-- * If you are releasing to the community feed, you need to consider distribution rights. -->
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>Sinon</id>
+    <version>1.3.0</version>
+    <packageSourceUrl>https://github.com/JCGithu/Sinon</packageSourceUrl>
+
+    <!-- == SOFTWARE SPECIFIC SECTION == -->
+    <!-- This section is about the software itself -->
+    <title>Sinon (Install)</title>
+    <authors>Colloquial Owl</authors>
+    <projectUrl>https://colloquial.studio/sinon</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/JCGithu/Sinon/main/imgs/Sinon.appiconset/AppIcon.appiconset/icon_512@2x.png</iconUrl>
+    <copyright>2020 Colloquial Studio</copyright>
+    <projectSourceUrl>https://github.com/JCGithu/Sinon</projectSourceUrl>
+    <tags>sinon electron youtube-dl</tags>
+    <summary>Handy video downloader, converter and effect applying.</summary>
+    <description>
+    
+# Sinon
+### A handy video tool.
+#### Video tool built using [electron](http://electron.atom.io/), [node.js](https://nodejs.org/), and [python](https://www.python.org/).
+
+## Currently supported releases:
+
+* OS X
+* Windows
+
+If you think it is missing a feature or you've found a bug feel free to open an issue, or even better sending a PR that fixes that.
+
+## Features
+
+*  __Video Downloader__: You can rip video from over 50 sites across the internet. Please test out a site and the app will tell you if it's included. If not please pass it on and it will be included in the next update.
+
+*  __Converter__: You can convert to mp4, mp3, and GIF
+
+*  __Effects__:
+	* **Audio Waveform**: Turn clips into .MOV files with transparency for quick edits.
+	![Example of wave produced](https://raw.githubusercontent.com/JCGithu/jackgracie.co.uk/master/dist/wave.jpg)
+	* **Social Media Blur**: You know that unnamed effect where square or vertical video is centered in a 16:9 frame with a larger, blurred, version behind? Yeah this is that.
+![Social Media Blur example](https://raw.githubusercontent.com/JCGithu/jackgracie.co.uk/master/dist/blur.jpg)
+
+
+*  __Social Media__: Facebook, Twitter, Youtube, Instagram, Periscope, Twitch, Weibo, and even Tiktok because I need to stay relevant fellow kids.
+
+*  __TV__:  To download BBC iPlayer and Sounds you will install 'Get_iPlayer'.
+
+*  __Audio__: Sites such as Soundcloud are also covered.
+
+*  __Live Feeds__: Grab livestream codes (.m3u8) from Youtube and Periscope (or Parliament Live if you're missing that excitement in your life) these can be plugged into OBS and other software to record.
+
+*  __Proxies__:
+	* **Custom Proxies**: Ability to add a custom proxy has been added in settings.
+	* **Automatic Proxies**: If a custom proxy is not set the app will automatically grab a free service online. Please note these may be tempremental, very slow, or most likely both.
+
+*  __Other Features__:
+	* **Dark Mode**: Because why not.
+	* **Automatic URL Wiping**: to save those vital milliseconds.
+	* **Autosaved settings**.
+
+## Development
+
+Simply clone this repo and run `npm install` and then `npm run rebuild`.
+Afterwards you can run `npm start` to run the app.
+
+## Thanks
+
+This app is thanks to the tools made available by the teams behind __ffmepg__, __youtube-dl__, and __get_iplayer__.
+
+Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code and everyone over on the [Twitch stream](https://twitch.tv/colloquialowl):
+
+* [GreatGameGal](https://twitch.tv/greatgamegal)
+* The_Kiwi_Fruitbird
+* [RetroMMO](https://twitch.tv/retrommo)
+* [DaneHarnett](https://twitch.tv/daneharnett)
+* MG_John
+* PikaProgram
+* [Nerolynx](https://github.com/nqngo)
+
+## License
+
+MIT
+    </description>
+
+
+  </metadata>
+  <files>
+    <!-- this section controls what actually gets packaged into the Chocolatey package -->
+    <file src="tools\**" target="tools" />
+    <!--Building from Linux? You may need this instead: <file src="tools/**" target="tools" />-->
+  </files>
+</package>
