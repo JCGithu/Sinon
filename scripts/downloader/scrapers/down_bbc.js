@@ -1,3 +1,9 @@
+const convertAlert = require('../../alerts/convertAlert');
+const successAlert = require('../../alerts/successAlert');
+const spawn = require('child_process').spawn;
+
+const { lineBreak } = require('../../utilities/utils');
+
 function down_bbc(data) {
   let iplayerMode = '--radiomode=best';
   if (data.URL.indexOf('iplayer') >= 0) {
@@ -45,12 +51,12 @@ function down_bbc(data) {
         });
         iPlay.on('close', () => {
           lineBreak();
-          successAlert('', '', swalColour);
+          successAlert();
         });
       }
 
       if (timing === 'whole') {
-        let iplayerArgs = ['--force', '--overwrite', '--log-progress', iplayerMode, '--output', downloadPath, data.URL];
+        let iplayerArgs = ['--force', '--overwrite', '--log-progress', iplayerMode, '--output', data.path, data.URL];
         convertAlert();
         runiPlayer(iplayerArgs);
       }
@@ -78,7 +84,7 @@ function down_bbc(data) {
                   start,
                   end,
                   '--output',
-                  downloadPath,
+                  data.path,
                   data.URL,
                 ];
                 convertAlert();
