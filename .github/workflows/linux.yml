@@ -26,4 +26,5 @@ jobs:
       - name: Pyinstaller
         working-directory: ./engine
         run: pipenv run pyinstaller -w --noconfirm Extractor.py dllive.py dlstories.py
-      - run: npm run build
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
