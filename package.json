@@ -4,6 +4,10 @@
   "description": "A video tool that's actually useful",
   "homepage":"https://colloquial.studio/sinon",
   "main": "./main.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/JCGithu/Sinon.git"
+  },
   "scripts": {
     "loggerStart": "set ELECTRON_ENABLE_LOGGING=1",
     "start": "electron . --enable-logging",
@@ -34,7 +38,6 @@
     },
     "deb": {}
   },
-  "repository": "https: //  github.com/JCGithu/Sinon",
   "keywords": [
     "Electron",
     "Sinon",
