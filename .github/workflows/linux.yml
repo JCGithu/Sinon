@@ -13,7 +13,6 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
-      - run: ls
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -26,5 +25,6 @@ jobs:
           python -m pipenv install
       - name: Pyinstaller
         working-directory: ./engine
-        run: pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
+        run: ls
+        pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
       - run: npm run build
