@@ -5,7 +5,7 @@ on:
     branches: [ github_action ]
 
 jobs:
-  -job: "LinuxWindows_Release"
+  LinuxWindows_Release:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -30,33 +30,6 @@ jobs:
       - name: Pyinstaller
         working-directory: ./engine
         run: pipenv run pyinstaller -w --noconfirm Extractor.py dllive.py dlstories.py
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          github_token: ${{ secrets.github_token }}
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-  -job: "Mac_Release"
-    runs-on: 'macos-latest'
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-      - run: npm ci
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        working-directory: ./engine
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install pipenv
-          python -m pipenv install
-          python -m pipenv update youtube-dl
-      - name: Pyinstaller
-        working-directory: ./engine
-        run: pyinstaller --debug all --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --onedir Extractor.py dllive.py dlstories.py
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
