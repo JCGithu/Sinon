@@ -54,7 +54,7 @@ Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code and everyo
 
 | [GreatGameGal](https://twitch.tv/greatgamegal) |  The_Kiwi_Fruitbird | [RetroMMO](https://twitch.tv/retrommo) |
 |--------------|---|---|
-| [DaneHarnett](https://twitch.tv/daneharnett) | MG_John | PikaProgram |
+| [DaneHarnett](https://twitch.tv/daneharnett) | MG_John | [PikaProgram](https://github.com/PikaProgram) |
 | [Nerolynx](https://github.com/nqngo) | <a href="https://github.com/dragonDScript" rel="dragonDScript">![dragonDScript](https://avatars2.githubusercontent.com/u/46191980?s=25)</a> |   |
 
 
