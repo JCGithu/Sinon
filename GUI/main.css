@@ -678,6 +678,10 @@ canvas {
   bottom: 0 !important;
 }
 
+.swal2-container a {
+  color: #232323 !important;
+}
+
 .swal2-popup {
   top: 0vh !important;
   font-size: 0.65rem !important;
