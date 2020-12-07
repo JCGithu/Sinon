@@ -25,5 +25,5 @@ jobs:
           python -m pipenv install
       - name: Pyinstaller
         working-directory: ./engine
-        run: python3 -m pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
+        run: pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
       - run: npm run build
