@@ -18,7 +18,7 @@ jobs:
       - run: npm ci
       - name: get-npm-version
         id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
+        uses: nyaayaya/package-version@v1
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -63,8 +63,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/sinon_${{ steps.package-version.outputs.current-version}}_amd64.deb
-          asset_name: sinon_${{ steps.package-version.outputs.current-version}}_amd64.deb
+          asset_path: ./dist/sinon_${{ env.PACKAGE_VERSION }}_amd64.deb
+          asset_name: sinon_${{ env.PACKAGE_VERSION }}_amd64.deb
       - name: Upload Mac
         if: matrix.os == 'macos-latest'
         uses: actions/upload-release-asset@v1
@@ -72,8 +72,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/sinon_${{ steps.package-version.outputs.current-version}}-mac.zip
-          asset_name: Sinon-${{ steps.package-version.outputs.current-version}}-mac.zip
+          asset_path: ./dist/sinon_${{ env.PACKAGE_VERSION }}-mac.zip
+          asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
       - name: Upload Win
         if: matrix.os == 'windows-latest'
         uses: actions/upload-release-asset@v1
@@ -81,8 +81,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: './dist/Sinon Setup ${{ steps.package-version.outputs.current-version}}.exe'
-          asset_name: 'SSinon Setup ${{ steps.package-version.outputs.current-version}}.exe'
+          asset_path: './dist/Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
+          asset_name: 'SSinon Setup ${{ env.PACKAGE_VERSION }}.exe'
 
           #Sinon Setup 1.3.2.exe
           #Sinon-1.3.2-mac.zip
