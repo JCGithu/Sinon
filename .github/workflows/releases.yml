@@ -53,6 +53,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: test
           release_name: Release ${{ steps.create_release.outputs.upload_url }}
           draft: true
           prerelease: false
