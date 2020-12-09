@@ -44,3 +44,10 @@ jobs:
         with:
           github_token: ${{ secrets.github_token }}
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      - name: Upload to a release
+        working-directory: ./dist
+        run: ls
+        #uses: fnkr/github-action-ghr@v1.3
+        #env:
+          #GHR_PATH: dist/quick-start-macOS.zip
+          #GITHUB_TOKEN: ${{ secrets.github_token }}
