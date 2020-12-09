@@ -58,7 +58,6 @@ jobs:
           prerelease: false
       - name: Upload Linux
         if: matrix.os == 'ubuntu-latest'
-        id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -68,7 +67,6 @@ jobs:
           asset_name: sinon_${{ steps.package-version.outputs.current-version}}_amd64.deb
       - name: Upload Mac
         if: matrix.os == 'macos-latest'
-        id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -78,7 +76,6 @@ jobs:
           asset_name: Sinon-${{ steps.package-version.outputs.current-version}}-mac.zip
       - name: Upload Win
         if: matrix.os == 'windows-latest'
-        id: upload-release-asset 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
