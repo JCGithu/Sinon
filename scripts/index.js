@@ -7,20 +7,20 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-const FFmpegStatic = require('ffmpeg-static-electron');
+const FFmpegStatic = require('ffmpeg-static');
 const ffmpeg = require('fluent-ffmpeg');
-const ffmpegPath = FFmpegStatic.path;
-ffmpeg.setFfmpegPath(ffmpegPath);
+//const ffmpegPath = FFmpegStatic;
+ffmpeg.setFfmpegPath(FFmpegStatic);
 
 const ffmpegOptions = {
-  cwd: ffmpegPath,
+  cwd: FFmpegStatic,
 };
 
 const versionInfo = {
   OS: '',
   ExtractorSet: 'extractor',
   ffmpegSet: 'ffmpeg',
-  ffmpegPath: ffmpegPath,
+  ffmpegPath: FFmpegStatic,
   extractorPath: '',
 };
 
