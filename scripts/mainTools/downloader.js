@@ -2,7 +2,7 @@
 const { lineBreak, swalColours, URLwipe } = require('../utilities/utils');
 const { settingSave } = require('../utilities/storage');
 const { execFile } = require('child_process');
-const spawn = require('child_process').spawn;
+
 const stream = require('stream');
 const { promisify } = require('util');
 
@@ -12,12 +12,7 @@ const extractorOptions = {
 };
 versionInfo.extractorPath = extractorPath;
 
-// Alerts
 const errorAlert = require('../alerts/errorAlert');
-const runningAlert = require('../alerts/runningAlert');
-const successAlert = require('../alerts/successAlert');
-const convertAlert = require('../alerts/convertAlert');
-
 const inputDetails = require('../downloader/inputDetails');
 const gateKeeper = require('../downloader/gateKeeper');
 
@@ -29,7 +24,8 @@ const down_parliament = require('../downloader/scrapers/down_parliament');
 const down_periscope = require('../downloader/scrapers/down_periscope');
 const down_skip = require('../downloader/scrapers/down_skip');
 const down_youtube = require('../downloader/scrapers/down_youtube');
-const down_mp4scrape = require('../downloader/scrapers/down_mp4scrape');
+const down_mp4 = require('../downloader/scrapers/down_mp4');
+const down_scrape = require('../downloader/scrapers/down_scrape');
 
 async function downloader() {
   //Inputs
@@ -44,7 +40,7 @@ async function downloader() {
     if (data == false){
       errorAlert('', 'basic', "Couldn't connect to URL!");
     }
-    let category = ['file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc', 'mp4scrape'];
+    let category = ['file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc', 'mp4', 'scrape'];
     let versions = [
       down_file,
       down_skip,
@@ -53,7 +49,8 @@ async function downloader() {
       down_periscope,
       down_parliament,
       down_bbc,
-      down_mp4scrape
+      down_mp4,
+      down_scrape,
     ];
     for (let i = 0; i < category.length; i++) {
       if (data.category == category[i]) {

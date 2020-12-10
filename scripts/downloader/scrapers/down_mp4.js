@@ -1,13 +1,9 @@
 const runningAlert = require('../../alerts/runningAlert');
-const successAlert = require('../../alerts/successAlert');
 const errorAlert = require('../../alerts/errorAlert');
-
-const { execFile } = require('child_process');
-const inputDetails = require('../inputDetails');
 const plainExec = require('../execs/plainExec');
 const axios = require('axios');
 
-function down_mp4scrape(data, extractorOptions) {
+function down_mp4(data, extractorOptions) {
   Swal.fire({
     icon: 'success',
     title: 'Video found!',
@@ -33,26 +29,19 @@ async function urlFix (url){
 
 function scraping(data){
   return new Promise ((resolve) => {
-    console.log('ran scraping')
     proxyAxios(data).then((axiosOpts) => {
       axios
       .get(data.URL, axiosOpts)
       .then(async (response, error) => {
-        console.log('huzzah for axios')
-        if (error){
-          errorAlert(error, '', '');
-        } else {
-          var regex = /[0-9A-Za-z\/\.\-\:\_\\\-]+.\.mp4/g
-          var videoURLS = response.data.match(regex);
-          var tempURL = await urlFix(videoURLS[0])
-          if (data.URL.includes('metro.co.uk')){
-            tempURL = tempURL.replace("640x360", "1024x576").replace("960x540", "1024x576").replace("480x270", "1024x576")
-          }
-          data.URL = tempURL
-          resolve(data);
+        var regex = /[0-9A-Za-z\/\.\-\:\_\\\-]+.\.mp4/g
+        var videoURLS = response.data.match(regex);
+        var tempURL = await urlFix(videoURLS[0])
+        if (data.URL.includes('metro.co.uk')){
+          tempURL = tempURL.replace("640x360", "1024x576").replace("960x540", "1024x576").replace("480x270", "1024x576")
         }
+        data.URL = tempURL
+        resolve(data);
     }).catch((error)=>{
-      console.log(axiosOpts)
       errorAlert(error, '', '');
     })
     })
@@ -61,11 +50,10 @@ function scraping(data){
 
 function proxyAxios(data){
   return new Promise((res)=>{
-    let axiosOpts = {
-
-    }
+    let axiosOpts = {}
     if (data.proxyUse == true){
       let proxyHost = data.proxy.split(':')
+      console.log(proxyHost)
       axiosOpts.proxy = {
         host: 'https://' + proxyHost[0], 
         port: proxyHost[1],
@@ -76,4 +64,4 @@ function proxyAxios(data){
   })
 }
 
-module.exports = down_mp4scrape;
+module.exports = down_mp4;
