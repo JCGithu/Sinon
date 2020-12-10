@@ -68,6 +68,7 @@ jobs:
         run: |
           npm install --save-dev electron-packager@electron/electron-packager
           node_modules/.bin/electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
+          cd sinon-darwin-x64
           ls
       - name: Build/release Electron app
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
