@@ -5,10 +5,15 @@ const axios = require('axios');
 function gateKeeper(input) {
   return new Promise((resolve) => {
     fileExts = ['.mp4', '.mpd', '.m3u8', '.ts', '.mp4'];
+    nullHosts = ['vm', 'm', 'mobile', 'clips'];
     let hostname = parse(input.URL).resource.replace('www.', '').split('.')[0];
     input.hostname = hostname
 
     for (let i = 0; i < fileExts.length; i++) {
+      if (hostname == nullHosts[i]){
+        hostname = parse(input.URL).resource.replace('www.', '').split('.')[1];
+        input.hostname = hostname
+      }
       if (input.URL.indexOf(fileExts[i]) >= 0) {
         input.category = 'file';
         input.proxyUse = false;
