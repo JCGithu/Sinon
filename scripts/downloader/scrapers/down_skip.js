@@ -1,5 +1,4 @@
 const runningAlert = require('../../alerts/runningAlert');
-const successAlert = require('../../alerts/successAlert');
 
 const { execFile } = require('child_process');
 const plainExec = require('../execs/plainExec');
@@ -15,7 +14,7 @@ function down_skip(data, extractorOptions) {
     backdrop: swalColour.loading,
     preConfirm:  () => {
       runningAlert();
-      dataParse(data).then((data)=>{
+      dataParse(data, extractorOptions).then((data)=>{
         data.options = 'normal';
         plainExec(data, extractorOptions);
       })
@@ -32,7 +31,7 @@ function down_skip(data, extractorOptions) {
   Swal.fire(swalSet);
 }
 
-function dataParse(data){
+function dataParse(data, extractorOptions){
   return new Promise((res) =>{
     if (data.URL.indexOf('itv.com/hub') >= 0) {
       extractorOptions.maxBuffer = 1024 * 30720;
