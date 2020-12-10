@@ -22,7 +22,7 @@ async function socialBlur(multi, swalColour, format, targetFiles) {
       backdrop: swalColour.loading,
       target: document.getElementById('swalframe'),
       preConfirm: (ratio) => {
-        convertAlert(swalColour);
+        convertAlert();
         var cropSetting = "[pxratio_fix]crop='if(lt(in_h,in_w),in_h,in_w):in_h'[cropped]";
         if (ratio === 'vertical') {
           cropSetting = '[pxratio_fix]crop=w=ih*(9/16)[cropped]';

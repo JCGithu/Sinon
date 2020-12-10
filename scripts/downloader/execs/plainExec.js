@@ -23,13 +23,9 @@ function plainExec(data, extractorOptions){
       } else {
         console.log(stdout);
         if (data.URL.indexOf('twitter.com') >= 0) {
-          successAlert(
-            '',
-            'Please note: Twitter videos are named after the username! Some tweets are just too long for titles.',
-            swalColour
-          );
+          successAlert('', 'Please note: Twitter videos are named after the username! Some tweets are just too long for titles.');
         } else {
-          successAlert('', '', swalColour);
+          successAlert();
         }
       }
       lineBreak();

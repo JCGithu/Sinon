@@ -46,12 +46,12 @@ function down_periscope(data, extractorOptions) {
                 progressBar(progress, '');
               })
               .on('end', () => {
-                successAlert('', '', swalColour);
+                successAlert();
               })
               .run();
             } else {
               if (response.data.hls_url){
-                successAlert('live', response.data.hls_url, swalColour);
+                successAlert('live', response.data.hls_url);
               } else {
                 errorAlert('', 'basic', "No HLS URL found, is this livestream still running?");
               }

@@ -20,7 +20,7 @@ function settingDelete() {
         if (error) throw error;
       });
       console.log('Settings deleted');
-      successAlert('delete', '', swalColour);
+      successAlert('delete');
     }
   });
 }

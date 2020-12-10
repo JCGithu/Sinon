@@ -16,7 +16,7 @@ function down_parliament(data) {
       } else {
         var regex = /[0-9A-Za-z\/\.\-\:]+.m3u8/g;
         var livestreamURL = response.data.match(regex);
-        successAlert('live', livestreamURL[0], swalColour);
+        successAlert('live', livestreamURL[0]);
       }
     })
 }

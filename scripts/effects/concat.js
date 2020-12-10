@@ -28,7 +28,7 @@ async function concat(multi, swalColour, format, targetFiles) {
     });
     getInputs.then(() => {
       lineBreak();
-      convertAlert(swalColour);
+      convertAlert();
       var finalOutput = fileSettings.outputFile + '-Sinon-Joined.mp4';
       var outputFiles = [finalOutput];
       ffmpegInputs
@@ -48,7 +48,7 @@ async function concat(multi, swalColour, format, targetFiles) {
           win.setProgressBar(-1);
           resolve(outputFiles);
           if (multi == false) {
-            successAlert('effect', 'Clips merged', swalColour);
+            successAlert('effect', 'Clips merged');
           }
         }).run();
     });

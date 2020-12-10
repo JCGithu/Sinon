@@ -22,7 +22,7 @@ async function screengrabs(multi, swalColour, format, targetFiles) {
       backdrop: swalColour.loading,
       target: document.getElementById('swalframe'),
       preConfirm: (grabNum) => {
-        convertAlert(swalColour);
+        convertAlert();
         numberGen(grabNum).then((stages)=>{
           targetFiles.forEach(function (fileSelected) {
             let fileSettings = fileSetUp(fileSelected);

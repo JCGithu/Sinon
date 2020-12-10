@@ -2,7 +2,6 @@ const plainExec = require("../execs/plainExec");
 
 const runningAlert = require('../../alerts/runningAlert');
 const errorAlert = require('../../alerts/errorAlert');
-const successAlert = require('../../alerts/successAlert');
 
 function down_insta(data, extractorOptions) {
   let swalSet = {

@@ -99,13 +99,13 @@ async function gifConvert(convertInfo) {
 }
 
 function gifRun(result, convertInfo) {
-  convertAlert(swalColour);
+  convertAlert();
   let i = -1;
   function convertTHATFILE() {
     i++;
     if (i == convertInfo.targets.length) {
       console.log(i);
-      successAlert('convert', '', swalColour);
+      successAlert('convert');
       win.setProgressBar(-1);
       console.log('finished!');
       lineBreak();
@@ -191,7 +191,7 @@ function gifRun(result, convertInfo) {
         });
         console.log('Final output: ', finalOutput);
         lineBreak();
-        convertAlert(swalColour);
+        convertAlert();
       }
     }
   }

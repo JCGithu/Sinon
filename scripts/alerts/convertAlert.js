@@ -1,4 +1,4 @@
-function convertAlert(swalColour) {
+function convertAlert() {
   Swal.fire({
     title: 'Generating...',
     html: "<p id='progressText'></p>",

@@ -14,7 +14,7 @@ async function wave(multi, swalColour, format, targetFiles) {
       outputFiles.push(finalOutput);
       console.log('Final output: ', finalOutput);
       lineBreak();
-      convertAlert(swalColour);
+      convertAlert();
       ffmpeg(fileSelected)
         .fps(25)
         .format('mov')

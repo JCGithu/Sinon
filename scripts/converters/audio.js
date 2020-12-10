@@ -18,13 +18,13 @@ async function audioConvert(convertInfo) {
     backdrop: swalColour.loading,
     target: document.getElementById('swalframe'),
     preConfirm: (audioForm) => {
-      convertAlert(swalColour);
+      convertAlert();
       let i = -1;
       function convertTHATFILE() {
         i++;
         if (i == convertInfo.targets.length) {
           console.log(i);
-          successAlert('convert', '', swalColour);
+          successAlert('convert');
           win.setProgressBar(-1);
           console.log('finished!');
           lineBreak();
