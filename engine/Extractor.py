@@ -73,6 +73,8 @@ def download(downloadPath, options, parsedURL, ffmpegPath):
 				'key': 'FFmpegVideoConvertor',
 				'preferedformat': 'mp4',
 		}]
+	if 'print' in options:
+		ydl_opts['forceurl'] = True
 
 	if 'twitter.com' in parsedURL:
 		accountName = re.findall(r'(?<=\/)[A-z0-9]+(?=\/status)', parsedURL)
@@ -90,7 +92,11 @@ def download(downloadPath, options, parsedURL, ffmpegPath):
 			subprocess.call(['get_iplayer --pid=' + parsedURL + ' --force --overwrite --radiomode=best --output="' + downloadPath + '"/'], shell=True)
 		else:
 			with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-				ydl.download([parsedURL])
+				if 'print' in options:
+					r = ydl.extract_info(parsedURL, False)
+					print (r['formats'])
+				else:
+					ydl.download([parsedURL])
 
 
 if 'facebook.com' in parsedURL:
@@ -100,15 +106,15 @@ if 'facebook.com' in parsedURL:
 				texttwo = re.findall('permalinkURL:"(.*?videos.*?)"}],', str(soup))
 				parsedURL = str(texttwo[0]).replace("'","").replace("[","").replace("]","").replace("\/","/")
 
-if 'normal' in options or 'high' in options:
-    download(downloadPath, options, parsedURL, ffmpegPath)
+if 'normal' in options or 'high' in options or 'print' in options:
+	download(downloadPath, options, parsedURL, ffmpegPath)
 
 if 'live' in options:
-    import dllive
-    dllive.download(parsedURL)
+	import dllive
+	dllive.download(parsedURL)
 
 if 'stories' in options:
-    import dlstories
-    dlstories.start(downloadPath, parsedURL, instaUse, instaPass, ffmpegPath)
+	import dlstories
+	dlstories.start(downloadPath, parsedURL, instaUse, instaPass, ffmpegPath)
 
 sys.stdout.flush()
