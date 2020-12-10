@@ -11,7 +11,7 @@ function inputDetails() {
     input.URL = input.URL.replace(/\?lang=../gm, '');
   }
   if (input.URL.indexOf('youtu.be/') >= 0) {
-    input.URL = inputURL.replace('youtu.be/', 'youtube.com/watch?v=');
+    input.URL = input.URL.replace('youtu.be/', 'youtube.com/watch?v=');
   }
 
   return input;
