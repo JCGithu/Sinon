@@ -68,7 +68,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.createRelease.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.createRelease.outputs.upload_url }}
           asset_path: ./dist/sinon_${{ env.PACKAGE_VERSION }}_amd64.deb
           asset_name: sinon_${{ env.PACKAGE_VERSION }}_amd64.deb
           asset_content_type: application/vnd.debian.binary-package
@@ -78,7 +78,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.createRelease.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.createRelease.outputs.upload_url }}
           asset_path: ./dist/sinon_${{ env.PACKAGE_VERSION }}-mac.zip
           asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
           asset_content_type: application/zip
@@ -88,7 +88,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ needs.createRelease.steps.create_release.outputs.upload_url }}
+          upload_url: ${{ needs.createRelease.outputs.upload_url }}
           asset_path: './dist/Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
           asset_name: 'Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
           asset_content_type: application/vnd.microsoft.portable-executable
