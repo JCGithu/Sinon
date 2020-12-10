@@ -9,7 +9,6 @@ const os = require('os');
 
 const FFmpegStatic = require('ffmpeg-static');
 const ffmpeg = require('fluent-ffmpeg');
-//const ffmpegPath = FFmpegStatic;
 ffmpeg.setFfmpegPath(FFmpegStatic);
 
 const ffmpegOptions = {
@@ -18,8 +17,8 @@ const ffmpegOptions = {
 
 const versionInfo = {
   OS: '',
-  ExtractorSet: 'extractor',
-  ffmpegSet: 'ffmpeg',
+  ExtractorSet: './extractor',
+  ffmpegSet: './ffmpeg',
   ffmpegPath: FFmpegStatic,
   extractorPath: '',
 };
@@ -34,9 +33,9 @@ for (let i = 0; i < OSs.length; i++) {
   if (navigator.appVersion.indexOf(OSs[i]) != -1) {
     versionInfo.OS = plat[i];
   }
-  if (navigator.appVersion.indexOf('Mac') != -1) {
-    versionInfo.ExtractorSet = './extractor';
-    versionInfo.ffmpegSet = './ffmpeg';
+  if (navigator.appVersion.indexOf('Windows') != -1) {
+    versionInfo.ExtractorSet = 'extractor';
+    versionInfo.ffmpegSet = 'ffmpeg';
   }
 }
 

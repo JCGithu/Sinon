@@ -68,6 +68,7 @@ jobs:
         run: |
           npm install --save-dev electron-packager@electron/electron-packager
           node_modules/.bin/electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
+          zip -vr sinon-darwin-x64.zip sinon-darwin-x64/ -x "*.DS_Store"
       - name: Build/release Electron app
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
         uses: samuelmeuli/action-electron-builder@v1
@@ -101,9 +102,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./sinon-darwin-x64/sinon.app
-          asset_name: sinon.app
-          asset_content_type: application/octet-stream
+          asset_path: ./sinon-darwin-x64.zip
+          asset_name: sinon-darwin-x64.zip
+          asset_content_type: application/zip
       - name: Upload Win
         if: matrix.os == 'windows-latest'
         uses: actions/upload-release-asset@v1

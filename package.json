@@ -25,9 +25,6 @@
       "createStartMenuShortcut": true,
       "menuCategory": true
     },
-    "mac": {
-      "icon": "./imgs/sinon.icns"
-    },
     "linux": {
       "target": ["AppImage", "snap"],
       "icon": "./imgs/sinon.icns"
