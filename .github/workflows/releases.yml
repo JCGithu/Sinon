@@ -81,7 +81,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./dist/sinon_${{ env.PACKAGE_VERSION }}-mac.zip
+          asset_path: ./dist/sinon-${{ env.PACKAGE_VERSION }}-mac.zip
           asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
           asset_content_type: application/zip
       - name: Upload Win
