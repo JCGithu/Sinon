@@ -29,10 +29,9 @@
       "icon": "./imgs/sinon.icns"
     },
     "linux": {
-      "target": "deb",
+      "target": ["AppImage", "snap"],
       "icon": "./imgs/sinon.icns"
-    },
-    "deb": {}
+    }
   },
   "keywords": [
     "Electron",
