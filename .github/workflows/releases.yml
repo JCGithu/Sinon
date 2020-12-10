@@ -67,7 +67,7 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: |
         npm i --save-dev electron-packager
-        electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
+        electron-packager . --app-version 1.3.2 --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
         ls
       - name: Build/release Electron app
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
