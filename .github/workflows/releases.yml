@@ -59,11 +59,17 @@ jobs:
         working-directory: ./engine
         run: pipenv run pyinstaller --debug all --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --onedir extractor.py dllive.py dlstories.py
         if: matrix.os == 'macos-latest'
+      - name: Package Mac app
+        if: matrix.os == 'macos-latest'
+        run: |
+        npm i --save-dev electron-packager
+        electron-packager . --app-version ${{ env.PACKAGE_VERSION }} --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
+        ls
       - name: Build/release Electron app
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
-          #release: ${{ startsWith(github.ref, 'refs/tags/v') }}
       - name: Upload Snap
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-release-asset@v1
