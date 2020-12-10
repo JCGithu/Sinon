@@ -1,11 +1,12 @@
-const axios = require('axios');
-const { lineBreak } = require('../utilities/utils'); 
+const HttpsProxyAgent = require('https-proxy-agent');
+const axios = require('axios')
+const { lineBreak } = require('../utilities/utils');
+const fetch = require('node-fetch');
 
 async function proxyGenerator() {
   let ip_addresses = [];
   let port_numbers = [];
-  var ip;
-
+  var ip; 
   return axios
     .get('https://www.us-proxy.org/')
     .then(async (response) => {
@@ -18,26 +19,29 @@ async function proxyGenerator() {
       let i = 0;
       return new Promise((resolve) => {
         function testProxy(){
+          let controller = new AbortController();
+          const timeout = setTimeout(
+            () => { controller.abort(); },
+            10000,
+          );
           console.log('Trying IP number: ' + (i + 1));
-          var config = {
-            proxy: { host: ip_addresses[i], port: port_numbers[i] },
-          };
-          axios.get('https://httpbin.org/ip', config).then(async (response) => {
-            if (response.status == 200) {
-              ip = ip_addresses[i] + ':' + port_numbers[i];
-              console.log('IP is : ' + ip);
-              lineBreak();
-              if (ip == undefined){
+          fetch('https://httpbin.org/ip', {agent: new HttpsProxyAgent('http://' + proxy[i]), signal: controller.signal})
+            .then(res => {
+              if (res.status == 200) {
+                clearTimeout(timeout)
+                console.log(proxy[i]);
+                resolve(proxy[i]);
+              } else {
                 i++
                 testProxy();
-              } else{
-                resolve(ip);
               }
-            }
-          }).catch(function (error) {
-            i++
-            testProxy();      
-          });
+            })
+            .catch(err => {
+              i++
+              clearTimeout(timeout);
+              console.log('Proxy timed out');
+              testProxy();
+            });
         }
         testProxy();
       });
