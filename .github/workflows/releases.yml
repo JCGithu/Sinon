@@ -29,6 +29,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v2
+      ###NODE
       - uses: actions/setup-node@v1
         with:
           node-version: 12
@@ -36,6 +37,7 @@ jobs:
       - name: get-npm-version
         id: package-version
         uses: nyaayaya/package-version@v1
+      ###PYTHON
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -47,6 +49,7 @@ jobs:
           python -m pip install pipenv
           python -m pipenv install
           python -m pipenv update youtube-dl
+      ###PYINSTALLERS
       - name: Pyinstaller Linux
         working-directory: ./engine
         run: pipenv run pyinstaller -w --noconfirm Extractor.py dllive.py dlstories.py
@@ -59,17 +62,19 @@ jobs:
         working-directory: ./engine
         run: pipenv run pyinstaller --debug all --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --onedir extractor.py dllive.py dlstories.py
         if: matrix.os == 'macos-latest'
+      ###PACKAGING
       - name: Package Mac app
         if: matrix.os == 'macos-latest'
         run: |
         npm i --save-dev electron-packager
-        electron-packager . --app-version ${{ env.PACKAGE_VERSION }} --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
+        electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
         ls
       - name: Build/release Electron app
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
+      ###UPLOADING
       - name: Upload Snap
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-release-asset@v1
