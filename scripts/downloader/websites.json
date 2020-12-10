@@ -64,7 +64,7 @@
     "proxy":false
   },
   "bbc":{
-    "category": "skip",
+    "category": "bbc",
     "proxy":false
   },
   "cbslocal":{
@@ -96,19 +96,35 @@
     "proxy":false
   },
   "metro":{
-    "category": "mp4scrape",
+    "category": "mp4",
     "proxy":false
   },
   "nbcsandiego":{
-    "category": "mp4scrape",
+    "category": "mp4",
     "proxy":false
   },
   "wric":{
-    "category": "mp4scrape",
+    "category": "mp4",
     "proxy": true
   },
   "tiktok":{
     "category": "skip",
     "proxy": false
+  },
+  "c-span":{
+    "category": "skip",
+    "proxy": false
+  },
+  "audioboom":{
+    "category": "skip",
+    "proxy": false
+  },
+  "abc7":{
+    "category":"skip",
+    "proxy": false
+  },
+  "abc13":{
+    "category":"scrape",
+    "proxy": true
   }
 }
