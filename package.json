@@ -27,6 +27,7 @@
       "menuCategory": true
     },
     "mac":{
+      "icon": "./imgs/sinon.icns",
       "target": "zip"
     },
     "linux": {
