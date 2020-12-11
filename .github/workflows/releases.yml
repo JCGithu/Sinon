@@ -35,7 +35,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm install
+      - run: npm ci
       - name: get-npm-version
         id: package-version
         uses: nyaayaya/package-version@v1
@@ -65,13 +65,6 @@ jobs:
         run: pipenv run pyinstaller --debug all --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --onedir extractor.py dllive.py dlstories.py
         if: matrix.os == 'macos-latest'
       ###PACKAGING
-      - name: Package Mac app
-        if: matrix.os == 'macos-latest'
-        run: |
-          npm run mac
-          zip -vr sinon-darwin-x64.zip sinon-darwin-x64/ -x "*.DS_Store"
-      #npm install --save-dev electron-packager@electron/electron-packager
-      #node_modules/.bin/electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
       - name: Build/release Electron app
         #if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
         uses: samuelmeuli/action-electron-builder@v1
@@ -108,8 +101,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./sinon-darwin-x64.zip
-          asset_name: sinon-darwin-x64.zip
+          asset_path: ./dist/Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
+          asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
           asset_content_type: application/zip
       - name: Upload Win
         if: matrix.os == 'windows-latest'
