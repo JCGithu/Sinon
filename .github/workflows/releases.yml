@@ -68,9 +68,10 @@ jobs:
       - name: Package Mac app
         if: matrix.os == 'macos-latest'
         run: |
-          npm install --save-dev electron-packager@electron/electron-packager
-          node_modules/.bin/electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
+          npm run mac
           zip -vr sinon-darwin-x64.zip sinon-darwin-x64/ -x "*.DS_Store"
+      #npm install --save-dev electron-packager@electron/electron-packager
+      #node_modules/.bin/electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
       - name: Build/release Electron app
         if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
         uses: samuelmeuli/action-electron-builder@v1
