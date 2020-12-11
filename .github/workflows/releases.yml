@@ -35,7 +35,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
+      - run: npm install
       - name: get-npm-version
         id: package-version
         uses: nyaayaya/package-version@v1
@@ -73,7 +73,7 @@ jobs:
       #npm install --save-dev electron-packager@electron/electron-packager
       #node_modules/.bin/electron-packager . --app-version $env.PACKAGE_VERSION --prune=true --platform darwin --icon=./imgs/sinon.icns --overwrite
       - name: Build/release Electron app
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
+        #if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
@@ -98,6 +98,9 @@ jobs:
           asset_path: ./dist/Sinon-${{ env.PACKAGE_VERSION }}.AppImage
           asset_name: Sinon-${{ env.PACKAGE_VERSION }}.AppImage
           asset_content_type: application/vnd.appimage
+      - name: Mac List
+        if: matrix.os == 'macos-latest'
+        run: ls
       - name: Upload Mac
         if: matrix.os == 'macos-latest'
         uses: actions/upload-release-asset@v1
