@@ -54,15 +54,15 @@ jobs:
       ###PYINSTALLERS
       - name: Pyinstaller Linux
         working-directory: ./engine
-        run: pipenv run pyinstaller -w --noconfirm Extractor.py dllive.py dlstories.py
+        run: pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
         if: matrix.os == 'ubuntu-latest'
       - name: Pyinstaller Windows
         working-directory: ./engine
-        run: pipenv run pyinstaller -w --noconfirm Extractor.py dllive.py dlstories.py
+        run: pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
         if: matrix.os == 'windows-latest'
       - name: Pyinstaller Mac
         working-directory: ./engine
-        run: pipenv run pyinstaller --debug all --add-binary='/System/Library/Frameworks/Tk.framework/Tk':'tk' --add-binary='/System/Library/Frameworks/Tcl.framework/Tcl':'tcl' --onedir extractor.py dllive.py dlstories.py
+        run: pipenv run pyinstaller extractor.spec
         if: matrix.os == 'macos-latest'
       ###PACKAGING
       - name: Build/release Electron app
@@ -93,6 +93,7 @@ jobs:
           asset_content_type: application/vnd.appimage
       - name: Mac List
         if: matrix.os == 'macos-latest'
+        working-directory: ./dist
         run: ls
       - name: Upload Mac
         if: matrix.os == 'macos-latest'
