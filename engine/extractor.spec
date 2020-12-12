@@ -3,7 +3,7 @@
 block_cipher = None
 
 a = Analysis(['extractor.py', 'dllive.py', 'dlstories.py'],
-             pathex=['./mac_venv/bin', '/Users/jack.gracie/Desktop/Sinon/engine'],
+             pathex=['./engine'],
              binaries=[('/System/Library/Frameworks/Tk.framework/Tk', 'tk'), ('/System/Library/Frameworks/Tcl.framework/Tcl', 'tcl')],
              datas=[],
              hiddenimports=[],
