@@ -48,6 +48,7 @@ docReady(function () {
 
   storage.get('settings', function (error, data) {
     if (error) throw error;
+    console.log(data);
     let darkSwitch = document.getElementById('darkswitch');
     let urlSwitch = document.getElementById('urlswitch');
     let geoFormat = document.getElementById('geoFormat');
