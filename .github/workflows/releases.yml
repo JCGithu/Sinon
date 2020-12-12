@@ -63,7 +63,7 @@ jobs:
       - name: Pyinstaller Mac
         working-directory: ./engine
         run: pipenv run pyinstaller extractor.spec
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-10.15'
       ###PACKAGING
       - name: Build/release Electron app
         #if: matrix.os == 'ubuntu-latest' || matrix.os == 'windows-latest'
