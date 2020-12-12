@@ -92,7 +92,7 @@ jobs:
           asset_name: Sinon-${{ env.PACKAGE_VERSION }}.AppImage
           asset_content_type: application/vnd.appimage
       - name: Mac List
-        if: matrix.os == 'macos-latest'
+        if: matrix.os == 'macos-10.15'
         working-directory: ./dist
         run: ls
       - name: Upload Mac
