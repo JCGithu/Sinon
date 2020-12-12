@@ -20,7 +20,7 @@ If you think it is missing a feature or you've found a bug feel free to open an 
 	* **Audio Waveform**: Turn clips into .MOV files with transparency for quick edits.
 	![Example of wave produced](https://raw.githubusercontent.com/JCGithu/jackgracie.co.uk/master/dist/wave.jpg)
 	* **Social Media Blur**: You know that unnamed effect where square or vertical video is centered in a 16:9 frame with a larger, blurred, version behind? Yeah this is that.
-![Social Media Blur example](https://raw.githubusercontent.com/JCGithu/jackgracie.co.uk/master/dist/blur.jpg)
+	![Social Media Blur example](https://raw.githubusercontent.com/JCGithu/jackgracie.co.uk/master/dist/blur.jpg)
 
 
 *  __Social Media__: Facebook, Twitter, Youtube, Instagram, Periscope, Twitch, Weibo, and even Tiktok because I need to stay relevant fellow kids.
@@ -41,9 +41,15 @@ If you think it is missing a feature or you've found a bug feel free to open an 
 	* **Autosaved settings**.
 
 ## Development
-
-Simply clone this repo and run `npm install` and then `npm run rebuild`.
-Afterwards you can run `npm start` to run the app.
+To build your own version of the app follow the following.
+### Requierments: Node & Python 3 
+> * Clone the repo to a folder
+> * `npm install` to download dependencies
+> * `pip install pipenv` install pipenv
+> * `cd engine` you will need to be in the engine folder to build the python executable
+> * `pipenv install` install python dependancies
+> * `pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py` to build the downloader executable.
+> * `npm start` to run the app.
 
 ## Thanks
 
@@ -55,7 +61,7 @@ Additional thanks to __Dirk Vingerhoeds__ for his PyInstaStories code and everyo
 | [GreatGameGal](https://twitch.tv/greatgamegal) |  The_Kiwi_Fruitbird | [RetroMMO](https://twitch.tv/retrommo) |
 |--------------|---|---|
 | [DaneHarnett](https://twitch.tv/daneharnett) | MG_John | [PikaProgram](https://github.com/PikaProgram) |
-| [Nerolynx](https://github.com/nqngo) | <a href="https://github.com/dragonDScript" rel="dragonDScript">![dragonDScript](https://avatars2.githubusercontent.com/u/46191980?s=25)</a> |   |
+| [Nerolynx](https://github.com/nqngo) | <a href="https://github.com/dragonDScript" rel="dragonDScript">![dragonDScript](https://avatars2.githubusercontent.com/u/46191980?s=25)</a> | [Donjo9](https://github.com/donjo9) |
 
 
 ## License
