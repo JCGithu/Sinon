@@ -19,6 +19,9 @@
     "productName": "Sinon",
     "icon": "./imgs/sinon.ico",
     "asar": false,
+    "files": [
+      "!MacLegacy.zip"
+    ],
     "nsis": {
       "oneClick": false,
       "createDesktopShortcut": "always",
