@@ -68,8 +68,7 @@ jobs:
       - name: Mac Legacy Download
         working-directory: ./engine
         if: matrix.os == 'macos-10.15'
-        - uses: suisei-cn/actions-download-file@v1
-          name: Download the file
+        uses: suisei-cn/actions-download-file@v1
           with:
             url: "https://github.com/JCGithu/Sinon/raw/main/MacLegacy.zip"
       - name: Mac Legacy Unzip
