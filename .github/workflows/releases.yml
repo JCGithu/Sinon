@@ -65,10 +65,9 @@ jobs:
         run: pipenv run pyinstaller extractor.spec
         if: matrix.os == 'macos-latest'
       ### MAC LEGACY
-      - name: Mac Legacy Download
+      - uses: suisei-cn/actions-download-file@v1
         working-directory: ./engine
         if: matrix.os == 'macos-10.15'
-        uses: suisei-cn/actions-download-file@v1
         with:
           url: "https://github.com/JCGithu/Sinon/raw/main/MacLegacy.zip"
       - name: Mac Legacy Unzip
