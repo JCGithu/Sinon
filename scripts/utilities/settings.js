@@ -48,7 +48,6 @@ docReady(function () {
 
   storage.get('settings', function (error, data) {
     if (error) throw error;
-    console.log(data);
     let darkSwitch = document.getElementById('darkswitch');
     let urlSwitch = document.getElementById('urlswitch');
     let geoFormat = document.getElementById('geoFormat');
@@ -130,6 +129,7 @@ docReady(function () {
   //Console Startup Log
   lineBreak();
   console.log('FFmpeg ::: ' + versionInfo.ffmpegPath);
+  console.log('Extractor ::: ' + versionInfo.extractorPath)
   console.log('OS ::: ' + versionInfo.OS);
   console.log('Settings file ::: ' + dataPath);
 });
