@@ -18,18 +18,19 @@ async function proxyGenerator() {
       }
       let i = 0;
       return new Promise((resolve) => {
+        console.log('Trying to find proxy...');
         function testProxy(){
           let controller = new AbortController();
           const timeout = setTimeout(
             () => { controller.abort(); },
-            10000,
+            14000,
           );
-          console.log('Trying IP number: ' + (i + 1));
+          
           fetch('https://httpbin.org/ip', {agent: new HttpsProxyAgent('http://' + proxy[i]), signal: controller.signal})
             .then(res => {
               if (res.status == 200) {
                 clearTimeout(timeout)
-                console.log(proxy[i]);
+                console.log('Proxy found after ' + i + ' attempts: ' + proxy[i]);
                 resolve(proxy[i]);
               } else {
                 i++
@@ -39,7 +40,6 @@ async function proxyGenerator() {
             .catch(err => {
               i++
               clearTimeout(timeout);
-              console.log('Proxy timed out');
               testProxy();
             });
         }
