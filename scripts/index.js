@@ -20,7 +20,6 @@ const versionInfo = {
   ExtractorSet: './extractor',
   ffmpegSet: './ffmpeg',
   ffmpegPath: FFmpegStatic,
-  extractorPath: '',
 };
 
 const cpuCount = os.cpus().length
@@ -38,6 +37,15 @@ for (let i = 0; i < OSs.length; i++) {
     versionInfo.ffmpegSet = 'ffmpeg';
   }
 }
+
+const extractorPath = path.join(__dirname, '/../../engine/dist/extractor');
+if (fs.existsSync(extractorPath)) {
+  versionInfo.extractorPath = extractorPath;
+} else{
+  const extractorPath = path.join(__dirname, '/../engine/dist/extractor');
+  versionInfo.extractorPath = extractorPath;
+}
+
 
 const Block = require('../scripts/block');
 const swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50' };
