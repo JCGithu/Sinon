@@ -20,7 +20,9 @@
     "icon": "./imgs/sinon.ico",
     "asar": false,
     "files": [
-      "!MacLegacy.zip"
+      "!MacLegacy.zip",
+      "!node_modules/.cache/",
+      "!**/*.map"
     ],
     "nsis": {
       "oneClick": false,
@@ -31,7 +33,8 @@
     },
     "mac":{
       "icon": "./imgs/sinon.icns",
-      "target": "zip"
+      "target": "zip",
+      "category": "public.app-category.productivity"
     },
     "linux": {
       "target": ["AppImage", "snap"],
