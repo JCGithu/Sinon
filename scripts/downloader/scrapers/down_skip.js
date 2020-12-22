@@ -1,6 +1,5 @@
 const runningAlert = require('../../alerts/runningAlert');
 
-const { execFile } = require('child_process');
 const plainExec = require('../execs/plainExec');
 const axios = require('axios');
 
