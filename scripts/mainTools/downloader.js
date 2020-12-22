@@ -26,6 +26,7 @@ const down_skip = require('../downloader/scrapers/down_skip');
 const down_youtube = require('../downloader/scrapers/down_youtube');
 const down_mp4 = require('../downloader/scrapers/down_mp4');
 const down_scrape = require('../downloader/scrapers/down_scrape');
+const down_facebook = require('../downloader/scrapers/down_facebook');
 
 async function downloader() {
   //Inputs
@@ -37,16 +38,28 @@ async function downloader() {
   }
 
   gateKeeper(input).then((data) => {
-    if (data == false){
+    if (data == false) {
       errorAlert('', 'basic', "Couldn't connect to URL!");
     }
-    let category = ['file', 'skip', 'youtube', 'instagram', 'periscope', 'parliament', 'bbc', 'mp4', 'scrape'];
+    let category = [
+      'file',
+      'skip',
+      'youtube',
+      'instagram',
+      'periscope',
+      'facebook',
+      'parliament',
+      'bbc',
+      'mp4',
+      'scrape',
+    ];
     let versions = [
       down_file,
       down_skip,
       down_youtube,
       down_insta,
       down_periscope,
+      down_facebook,
       down_parliament,
       down_bbc,
       down_mp4,

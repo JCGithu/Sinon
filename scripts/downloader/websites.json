@@ -3,128 +3,128 @@
     "category": "youtube",
     "proxy": false
   },
-  "twitter":{
+  "twitter": {
     "category": "skip",
     "proxy": false
   },
-  "reddit":{
+  "reddit": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "instagram":{
+  "instagram": {
     "category": "instagram",
-    "proxy":false
+    "proxy": false
   },
-  "facebook":{
+  "facebook": {
+    "category": "facebook",
+    "proxy": false
+  },
+  "cba.ca": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "cba.ca":{
+  "liveleak": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "liveleak":{
+  "wsj": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "wsj":{
+  "worldstarhiphop": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "worldstarhiphop":{
+  "dailymail": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "dailymail":{
+  "itv": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "itv":{
+  "nbcnews": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "nbcnews":{
-    "category": "skip",
-    "proxy":false
-  },
-  "parliamentlive":{
+  "parliamentlive": {
     "category": "parliament",
-    "proxy":false
+    "proxy": false
   },
-  "pscp":{
+  "pscp": {
     "category": "periscope",
-    "proxy":false
+    "proxy": false
   },
-  "cloudfront":{
+  "cloudfront": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "vimeo":{
+  "vimeo": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "bbc":{
+  "bbc": {
     "category": "bbc",
-    "proxy":false
+    "proxy": false
   },
-  "cbslocal":{
+  "cbslocal": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "twitch":{
+  "twitch": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "crunchyroll":{
+  "crunchyroll": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "myspace":{
+  "myspace": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "soundcloud":{
+  "soundcloud": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "bandcamp":{
+  "bandcamp": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "weibo":{
+  "weibo": {
     "category": "skip",
-    "proxy":false
+    "proxy": false
   },
-  "metro":{
+  "metro": {
     "category": "mp4",
-    "proxy":false
+    "proxy": false
   },
-  "nbcsandiego":{
+  "nbcsandiego": {
     "category": "mp4",
-    "proxy":false
+    "proxy": false
   },
-  "wric":{
+  "wric": {
     "category": "mp4",
     "proxy": true
   },
-  "tiktok":{
+  "tiktok": {
     "category": "skip",
     "proxy": false
   },
-  "c-span":{
+  "c-span": {
     "category": "skip",
     "proxy": false
   },
-  "audioboom":{
+  "audioboom": {
     "category": "skip",
     "proxy": false
   },
-  "abc7":{
-    "category":"skip",
+  "abc7": {
+    "category": "scrape",
     "proxy": false
   },
-  "abc13":{
-    "category":"scrape",
+  "abc13": {
+    "category": "scrape",
     "proxy": true
   }
 }
