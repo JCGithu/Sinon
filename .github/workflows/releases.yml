@@ -28,20 +28,20 @@ jobs:
     if: "contains(github.event.head_commit.message, '-build')"
     strategy:
       matrix:
-        include: 
-          -os: ubuntu-latest #SNAP
+        include:
+          - os: ubuntu-latest #SNAP
             py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
             name: 'sinon_${{ env.PACKAGE_VERSION }}_amd64.snap'
             type: 'application/vnd.snap'
-          -os: ubuntu-latest #APPIMAGE
+          - os: ubuntu-latest #APPIMAGE
             py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
             name: Sinon-${{ env.PACKAGE_VERSION }}.AppImage
             type: 'application/vnd.appimage'
-          -os: windows-latest
+          - os: windows-latest
             py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
             name: 'Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
             type: 'application/vnd.microsoft.portable-executable'
-          -os: macos-latest
+          - os: macos-latest
             py: 'pipenv run pyinstaller extractor.spec'
             name: 'Sinon-${{ env.PACKAGE_VERSION }}-mac.zip'
             type: 'application/zip'
