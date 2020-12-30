@@ -31,13 +31,16 @@
       "createStartMenuShortcut": true,
       "menuCategory": true
     },
-    "mac":{
+    "mac": {
       "icon": "./imgs/sinon.icns",
       "target": "zip",
       "category": "public.app-category.productivity"
     },
     "linux": {
-      "target": ["AppImage", "snap"],
+      "target": [
+        "AppImage",
+        "snap"
+      ],
       "icon": "./imgs/sinon.icns"
     }
   },
@@ -69,6 +72,7 @@
     "node-fetch": "^2.6.1",
     "parse-url": "^5.0.2",
     "rimraf": "^3.0.2",
+    "sinon-stories": "^1.0.1",
     "sweetalert2": "^10.11.1"
   }
 }
