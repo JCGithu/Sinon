@@ -23,6 +23,10 @@ jobs:
           release_name: Release ${{ steps.create_release.outputs.upload_url }}
           draft: true
           prerelease: false
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
       - name: get-npm-version
         id: package-version
         uses: nyaayaya/package-version@v1
@@ -56,9 +60,6 @@ jobs:
         with:
           node-version: 12
       - run: npm ci
-      - name: get-npm-version
-        id: package-version
-        uses: nyaayaya/package-version@v1
       ###PYTHON
       - name: Set up Python 3.8
         uses: actions/setup-python@v2

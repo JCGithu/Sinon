@@ -57,7 +57,7 @@ jobs:
           chmod +x Sinon.app/Contents/MacOS/*
           cd ..
           rm Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
-          zip -vr Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy/ -x "*.DS_Store"
+          zip -r Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy -x "*.DS_Store"
       ###UPLOADING
       - name: Upload
         uses: actions/upload-release-asset@v1
