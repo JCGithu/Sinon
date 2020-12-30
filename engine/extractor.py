@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 import re
 import requests
 from bs4 import BeautifulSoup
+import json
 
 #SHELL
 import subprocess
@@ -39,9 +40,6 @@ else:
 	instaPass = sys.argv[7]
 
 def download(downloadPath, options, parsedURL, ffmpegPath):
-
-	print ('URL recieved is:')
-	print (parsedURL)
 
 	#YOUTUBE-DL LOGGING
 	class MyLogger(object):
@@ -94,7 +92,8 @@ def download(downloadPath, options, parsedURL, ffmpegPath):
 			with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 				if 'print' in options:
 					r = ydl.extract_info(parsedURL, False)
-					print (r['formats'])
+					r2 = json.dumps(r['formats'])
+					print (r2)
 				else:
 					ydl.download([parsedURL])
 
