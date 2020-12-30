@@ -11,6 +11,7 @@ jobs:
     if: "contains(github.event.head_commit.message, '-build')"
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
+      package_version: ${{env.PACKAGE_VERSION}}
     steps:
       - name: Create Release
         id: create_release
@@ -22,6 +23,9 @@ jobs:
           release_name: Release ${{ steps.create_release.outputs.upload_url }}
           draft: true
           prerelease: false
+      - name: get-npm-version
+        id: package-version
+        uses: nyaayaya/package-version@v1
   Release:
     runs-on: ${{ matrix.os }}
     needs: createRelease
@@ -31,19 +35,19 @@ jobs:
         include:
           - os: ubuntu-latest #SNAP
             py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
-            name: 'sinon_${{ env.PACKAGE_VERSION }}_amd64.snap'
+            name: 'sinon_${{ needs.createRelease.outputs.package_version }}_amd64.snap'
             type: 'application/vnd.snap'
           - os: ubuntu-latest #APPIMAGE
             py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
-            name: Sinon-${{ env.PACKAGE_VERSION }}.AppImage
+            name: Sinon-${{ needs.createRelease.outputs.package_version }}.AppImage
             type: 'application/vnd.appimage'
           - os: windows-latest
             py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
-            name: 'Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
+            name: 'Sinon Setup ${{ needs.createRelease.outputs.package_version }}.exe'
             type: 'application/vnd.microsoft.portable-executable'
           - os: macos-latest
             py: 'pipenv run pyinstaller extractor.spec'
-            name: 'Sinon-${{ env.PACKAGE_VERSION }}-mac.zip'
+            name: 'Sinon-${{ needs.createRelease.outputs.package_version }}-mac.zip'
             type: 'application/zip'
     steps:
       - uses: actions/checkout@v2
