@@ -2,7 +2,7 @@ name: Releases Action
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   createRelease:
@@ -28,7 +28,23 @@ jobs:
     if: "contains(github.event.head_commit.message, '-build')"
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-10.15, macos-latest]
+        include: 
+          -os: ubuntu-latest #SNAP
+            py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
+            name: 'sinon_${{ env.PACKAGE_VERSION }}_amd64.snap'
+            type: 'application/vnd.snap'
+          -os: ubuntu-latest #APPIMAGE
+            py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
+            name: Sinon-${{ env.PACKAGE_VERSION }}.AppImage
+            type: 'application/vnd.appimage'
+          -os: windows-latest
+            py: 'pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py'
+            name: 'Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
+            type: 'application/vnd.microsoft.portable-executable'
+          -os: macos-latest
+            py: 'pipenv run pyinstaller extractor.spec'
+            name: 'Sinon-${{ env.PACKAGE_VERSION }}-mac.zip'
+            type: 'application/zip'
     steps:
       - uses: actions/checkout@v2
       ###NODE
@@ -45,93 +61,25 @@ jobs:
         with:
           python-version: 3.8
       - name: Install dependencies
-        if: matrix.os != 'macos-10.15'
         working-directory: ./engine
         run: |
           python -m pip install --upgrade pip
           python -m pip install pipenv
           python -m pipenv install
           python -m pipenv update youtube-dl
-      ###PYINSTALLERS
-      - name: Pyinstaller Linux
-        working-directory: ./engine
-        run: pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
-        if: matrix.os == 'ubuntu-latest'
-      - name: Pyinstaller Windows
-        working-directory: ./engine
-        run: pipenv run pyinstaller -w --noconfirm extractor.py dllive.py dlstories.py
-        if: matrix.os == 'windows-latest'
-      - name: Pyinstaller Mac
-        working-directory: ./engine
-        run: pipenv run pyinstaller extractor.spec
-        if: matrix.os == 'macos-latest'
-      ### MAC LEGACY
-      - uses: suisei-cn/actions-download-file@v1
-        if: matrix.os == 'macos-10.15'
-        with:
-          url: "https://github.com/JCGithu/Sinon/raw/main/MacLegacy.zip"
-          target: engine/
-      - name: Mac Legacy Unzip
-        working-directory: ./engine
-        if: matrix.os == 'macos-10.15'
-        run: unzip MacLegacy.zip
+          ${{ matrix.py }}
       ###PACKAGING
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
-      - name: rename Mac Legacy
-        working-directory: ./dist
-        if: matrix.os == 'macos-10.15'
-        run: mv  Sinon-${{ env.PACKAGE_VERSION }}-mac.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
       ###UPLOADING
-      - name: Upload Snap
-        if: matrix.os == 'ubuntu-latest'
+      - name: Upload
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./dist/sinon_${{ env.PACKAGE_VERSION }}_amd64.snap
-          asset_name: sinon_${{ env.PACKAGE_VERSION }}_amd64.snap
-          asset_content_type: application/vnd.snap
-      - name: Upload AppImage
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./dist/Sinon-${{ env.PACKAGE_VERSION }}.AppImage
-          asset_name: Sinon-${{ env.PACKAGE_VERSION }}.AppImage
-          asset_content_type: application/vnd.appimage
-      - name: Upload Mac
-        if: matrix.os == 'macos-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./dist/Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
-          asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
-          asset_content_type: application/zip
-      - name: Upload Mac Legacy
-        if: matrix.os == 'macos-10.15'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: ./dist/Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
-          asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
-          asset_content_type: application/zip
-      - name: Upload Win
-        if: matrix.os == 'windows-latest'
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ needs.createRelease.outputs.upload_url }}
-          asset_path: './dist/Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
-          asset_name: 'Sinon Setup ${{ env.PACKAGE_VERSION }}.exe'
-          asset_content_type: application/vnd.microsoft.portable-executable
+          asset_path: ./dist/${{ matrix.name }}
+          asset_name: ${{ matrix.name }}
+          asset_content_type: ${{ matrix.type }}

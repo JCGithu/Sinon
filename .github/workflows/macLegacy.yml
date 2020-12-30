@@ -1,0 +1,73 @@
+name: Mac Legacy Action
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  createRelease:
+    name: Create Release
+    runs-on: 'ubuntu-latest'
+    if: "contains(github.event.head_commit.message, '-build')"
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: test
+          release_name: Release ${{ steps.create_release.outputs.upload_url }}
+          draft: true
+          prerelease: false
+  Release:
+    runs-on: macos-10.15
+    needs: createRelease
+    if: "contains(github.event.head_commit.message, '-build')"
+    steps:
+      - uses: actions/checkout@v2
+      ###NODE
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - name: get-npm-version
+        id: package-version
+        uses: nyaayaya/package-version@v1
+      - uses: suisei-cn/actions-download-file@v1
+        if: matrix.os == 'macos-10.15'
+        with:
+          url: 'https://github.com/JCGithu/Sinon/raw/main/MacLegacy.zip'
+          target: engine/
+      - name: Mac Legacy Unzip
+        working-directory: ./engine
+        if: matrix.os == 'macos-10.15'
+        run: unzip MacLegacy.zip
+      ###PACKAGING
+      - name: Build/release Electron app
+        uses: samuelmeuli/action-electron-builder@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+      - name: rename Mac Legacy
+        if: matrix.os == 'macos-10.15'
+        run: |
+          cd dist
+          mv  Sinon-${{ env.PACKAGE_VERSION }}-mac.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
+          unzip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
+          cd Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy
+          chmod +x Sinon.app/Contents/MacOS/*
+          cd ..
+          rm Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
+          zip -vr Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy/ -x "*.DS_Store"
+      ###UPLOADING
+      - name: Upload Mac / Mac Legacy / Win
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.createRelease.outputs.upload_url }}
+          asset_path: ./dist/Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
+          asset_name: Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
+          asset_content_type: application/zip
