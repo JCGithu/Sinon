@@ -2,9 +2,10 @@
 
 block_cipher = None
 
+
 a = Analysis(['extractor.py', 'dllive.py', 'dlstories.py'],
-             pathex=['./engine'],
-             binaries=[('/System/Library/Frameworks/Tk.framework/Tk', 'tk'), ('/System/Library/Frameworks/Tcl.framework/Tcl', 'tcl')],
+             pathex=['C:\\Users\\jackc\\Documents\\Colloquial\\Sinon\\Sinon\\engine'],
+             binaries=[],
              datas=[],
              hiddenimports=[],
              hookspath=[],
@@ -13,19 +14,19 @@ a = Analysis(['extractor.py', 'dllive.py', 'dlstories.py'],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
              cipher=block_cipher,
-             noarchive=True)
+             noarchive=False)
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
-          [('v', None, 'OPTION')],
+          [],
           exclude_binaries=True,
           name='extractor',
-          debug=True,
+          debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True )
+          console=False )
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,
