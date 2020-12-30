@@ -1,6 +1,8 @@
 node_modules
 engine/build
 engine/dist
+engine/extractor.build
+engine/extractor.dist
 engine/__pycache__
 engine/feed_json.json
 .vscode
