@@ -48,13 +48,11 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
-      - name: Decompress
-        uses: TonyBogdanov/zip@1.0
-        with:
-          args: unzip -qq ./dist/Sinon-${{ env.PACKAGE_VERSION }}-mac.zip -d ./dist/Sinon-${{ env.PACKAGE_VERSION }}-mac
       - name: rename Mac Legacy
         run: |
           cd dist
+          brew install p7zip
+          7za x Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
           cd Sinon-${{ env.PACKAGE_VERSION }}-mac
           chmod +x Sinon.app/Contents/MacOS/*
           cd ..
