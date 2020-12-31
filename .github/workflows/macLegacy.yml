@@ -51,8 +51,7 @@ jobs:
       - name: rename Mac Legacy
         run: |
           cd dist
-          7za x Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
-          ls
+          7za x Sinon-${{ env.PACKAGE_VERSION }}-mac.zip -o*
           cd Sinon-${{ env.PACKAGE_VERSION }}-mac
           chmod +x Sinon.app/Contents/MacOS/*
           cd ..
