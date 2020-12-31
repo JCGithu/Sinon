@@ -51,8 +51,8 @@ jobs:
       - name: rename Mac Legacy
         run: |
           cd dist
-          brew install p7zip
           7za x Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
+          ls
           cd Sinon-${{ env.PACKAGE_VERSION }}-mac
           chmod +x Sinon.app/Contents/MacOS/*
           cd ..
