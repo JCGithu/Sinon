@@ -51,13 +51,11 @@ jobs:
       - name: rename Mac Legacy
         run: |
           cd dist
-          mv  Sinon-${{ env.PACKAGE_VERSION }}-mac.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
-          unzip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
-          cd Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy
+          unzip Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
+          cd Sinon-${{ env.PACKAGE_VERSION }}-mac
           chmod +x Sinon.app/Contents/MacOS/*
           cd ..
-          rm Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip
-          zip -r Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy -x "*.DS_Store"
+          zip -r Sinon-${{ env.PACKAGE_VERSION }}-mac-Legacy.zip Sinon-${{ env.PACKAGE_VERSION }}-mac
       ###UPLOADING
       - name: Upload
         uses: actions/upload-release-asset@v1
