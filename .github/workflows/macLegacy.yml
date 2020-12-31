@@ -8,7 +8,7 @@ jobs:
   createRelease:
     name: Create Release
     runs-on: 'ubuntu-latest'
-    if: "contains(github.event.head_commit.message, '-build')"
+    if: "contains(github.event.head_commit.message, '-buildLegacy')"
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
@@ -48,12 +48,14 @@ jobs:
         uses: samuelmeuli/action-electron-builder@v1
         with:
           github_token: ${{ secrets.github_token }}
+      - name: Decompress
+        uses: TonyBogdanov/zip@1.0
+        working-directory: ./dist
+        with:
+          args: unzip -qq ./Sinon-${{ env.PACKAGE_VERSION }}-mac.zip -d ./Sinon-${{ env.PACKAGE_VERSION }}-mac
       - name: rename Mac Legacy
         run: |
           cd dist
-          ls
-          file Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
-          unzip Sinon-${{ env.PACKAGE_VERSION }}-mac.zip
           cd Sinon-${{ env.PACKAGE_VERSION }}-mac
           chmod +x Sinon.app/Contents/MacOS/*
           cd ..
