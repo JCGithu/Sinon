@@ -23,16 +23,13 @@ async function audioConvert(convertInfo) {
       function convertTHATFILE() {
         i++;
         if (i == convertInfo.targets.length) {
-          console.log(i);
           successAlert('convert', '', swalColour);
           win.setProgressBar(-1);
-          console.log('finished!');
           lineBreak();
         } else if (i > convertInfo.targets.length) {
           return;
         } else {
-          console.log(convertInfo.targets[i]);
-          console.log(i);
+          console.log(`Converting file #${i} to ${audioForm}`);
           let finalOutput = convertInfo.targets[i].output + '.' + audioForm;
           if (
             convertInfo.targets[i].ext.indexOf('.' + audioForm) >= 0 ||
@@ -40,8 +37,6 @@ async function audioConvert(convertInfo) {
           ) {
             finalOutput = convertInfo.targets[i].output + '-SinonConverted.' + audioForm;
           }
-          console.log('Final output: ', finalOutput);
-          lineBreak();
           ffmpeg(convertInfo.targets[i].input)
             .format(audioForm)
             .noVideo()
@@ -56,7 +51,6 @@ async function audioConvert(convertInfo) {
             .on('end', () => {
               convertTHATFILE();
             });
-          console.log(audioForm + ' running');
         }
       }
       convertTHATFILE();
