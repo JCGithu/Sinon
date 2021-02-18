@@ -1,12 +1,14 @@
-const { copyString } = require('../utilities/utils.js');
+var { copyString } = require('../utilities/utils.js');
 
 function successAlert(passType, passText) {
   var swalOptions = {
     icon: 'success',
     title: 'Download Success!',
+    confirmButtonText: 'Done',
     text: passText,
     backdrop: swalColour.pass,
     target: document.getElementById('swalframe'),
+    preConfirm: () => {},
   };
 
   if (passType == 'live') {
