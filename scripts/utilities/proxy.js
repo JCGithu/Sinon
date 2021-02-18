@@ -1,12 +1,12 @@
 const HttpsProxyAgent = require('https-proxy-agent');
-const axios = require('axios')
+const axios = require('axios');
 const { lineBreak } = require('../utilities/utils');
 const fetch = require('node-fetch');
 
 async function proxyGenerator() {
   let ip_addresses = [];
   let port_numbers = [];
-  var ip; 
+  var ip;
   return axios
     .get('https://www.us-proxy.org/')
     .then(async (response) => {
@@ -19,26 +19,28 @@ async function proxyGenerator() {
       let i = 0;
       return new Promise((resolve) => {
         console.log('Trying to find proxy...');
-        function testProxy(){
+        function testProxy() {
           let controller = new AbortController();
-          const timeout = setTimeout(
-            () => { controller.abort(); },
-            14000,
-          );
-          
-          fetch('https://httpbin.org/ip', {agent: new HttpsProxyAgent('http://' + proxy[i]), signal: controller.signal})
-            .then(res => {
+          const timeout = setTimeout(() => {
+            controller.abort();
+          }, 14000);
+
+          fetch('https://httpbin.org/ip', {
+            agent: new HttpsProxyAgent('http://' + proxy[i]),
+            signal: controller.signal,
+          })
+            .then((res) => {
               if (res.status == 200) {
-                clearTimeout(timeout)
+                clearTimeout(timeout);
                 console.log('Proxy found after ' + i + ' attempts: ' + proxy[i]);
                 resolve(proxy[i]);
               } else {
-                i++
+                i++;
                 testProxy();
               }
             })
-            .catch(err => {
-              i++
+            .catch((err) => {
+              i++;
               clearTimeout(timeout);
               testProxy();
             });
