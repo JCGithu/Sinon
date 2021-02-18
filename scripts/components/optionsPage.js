@@ -1,41 +1,8 @@
-const optionsPage = {
-  name: 'optionsPage',
-  view() {
-    return `
-			<div class = "optionsbg">
-				<div class="colourstrip" id="optionstrip"></div>
-				<h1>Options</h1>
-				<div class="optionsblock">
-					<div class="optionscontainer">
-						<div class='optionscontainertwo'>
-							<a>Dark Mode</a>
-							<input class="container_toggle" type="checkbox" id="darkswitch" name="mode">
-							<label for="darkswitch">Toggle</label>
-							<a style="margin-top: 10px;">Auto-delete URL on completion</a>
-							<input class="container_toggle" type="checkbox" id="urlswitch" name="urlwipe">
-							<label for="urlswitch">Toggle</label>
-							<a style="margin-top: 10px;">Country select</a>
-							<select id='geoFormat' class="geoFormat" classNamePrefix='conv'>
-								<option value='UK'>UK</option>
-								<option value='US'>US</option>
-							</select>
-							<a style="margin-top: 10px;">Custom Proxy</a>
-							<input type="text" id="proxyInput" placeholder="Enter Custom Proxy" style='width: 60vw !important'>
-							<p>Proxies are only used if a website is <br> not available in your country</p>
-							<a>Instagram Username</a>
-							<input type="text" id="InstaUse" placeholder="Enter Instagram Username" style='width: 60vw !important'>
-							<a style="margin-top: 10px;">Instagram Password</a>
-							<input type="password" id="InstaPass" placeholder="Enter Instagram Password" style='width: 60vw !important'>
-							<button id="settingDelete" class="grow-on-hover">Delete settings</button>
-						</div>
-					</div>
-				</div>
-				<svg id="closeOptions" viewBox="0 0 512 512">
-					<use xlink:href="../imgs/tools.svg#downArrow"></use>
-				</svg>
-			</div>
-    `;
-  },
+var optionsPage = {
+    name: 'optionsPage',
+    view: function () {
+        return "\n\t\t\t<div class = \"optionsbg\">\n\t\t\t\t<div class=\"colourstrip\" id=\"optionstrip\"></div>\n\t\t\t\t<h1>Options</h1>\n\t\t\t\t<div class=\"optionsblock\">\n\t\t\t\t\t<div class=\"optionscontainer\">\n\t\t\t\t\t\t<div class='optionscontainertwo'>\n\t\t\t\t\t\t\t<a>Dark Mode</a>\n\t\t\t\t\t\t\t<input class=\"container_toggle\" type=\"checkbox\" id=\"darkMode\" name=\"mode\">\n\t\t\t\t\t\t\t<label for=\"darkMode\">Toggle</label>\n\t\t\t\t\t\t\t<a style=\"margin-top: 10px;\">Auto-delete URL on completion</a>\n\t\t\t\t\t\t\t<input class=\"container_toggle\" type=\"checkbox\" id=\"urlWipe\" name=\"urlwipe\">\n\t\t\t\t\t\t\t<label for=\"urlWipe\">Toggle</label>\n\t\t\t\t\t\t\t<a style=\"margin-top: 10px;\">Country select</a>\n\t\t\t\t\t\t\t<select id='geo' class=\"geo\" classNamePrefix='conv'>\n\t\t\t\t\t\t\t\t<option value='UK'>UK</option>\n\t\t\t\t\t\t\t\t<option value='US'>US</option>\n\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t<a style=\"margin-top: 10px;\">Custom Proxy</a>\n\t\t\t\t\t\t\t<input type=\"text\" id=\"customProxy\" placeholder=\"Enter Custom Proxy\" style='width: 60vw !important'>\n\t\t\t\t\t\t\t<p>Proxies are only used if a website is <br> not available in your country</p>\n\t\t\t\t\t\t\t<a>Instagram Username</a>\n\t\t\t\t\t\t\t<input type=\"text\" id=\"instaUse\" placeholder=\"Enter Instagram Username\" style='width: 60vw !important'>\n\t\t\t\t\t\t\t<a style=\"margin-top: 10px;\">Instagram Password</a>\n\t\t\t\t\t\t\t<input type=\"password\" id=\"instaPass\" placeholder=\"Enter Instagram Password\" style='width: 60vw !important'>\n\t\t\t\t\t\t\t<a style=\"margin-top: 10px;\">Instagram Cookie</a>\n\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t<input type=\"text\" id='instaCookie' placeholder=\"Find cookie.txt file\">\n\t\t\t\t\t\t\t\t<button id=\"cookieButton\" class=\"fileButton\">Find</button>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<button id=\"settingDelete\" class=\"grow-on-hover\">Delete settings</button>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<svg id=\"closeOptions\" viewBox=\"0 0 512 512\">\n\t\t\t\t\t<use xlink:href=\"../imgs/tools.svg#downArrow\"></use>\n\t\t\t\t</svg>\n\t\t\t</div>\n    ";
+    }
 };
-
 module.exports = optionsPage;
+//# sourceMappingURL=optionsPage.js.map

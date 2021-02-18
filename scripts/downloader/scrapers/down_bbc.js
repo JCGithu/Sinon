@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 function down_bbc(data) {
   let iplayerMode = '--radiomode=best';
   if (data.URL.indexOf('iplayer') >= 0) {
@@ -82,14 +83,95 @@ function down_bbc(data) {
                   data.URL,
                 ];
                 convertAlert();
-                runiPlayer(iplayerArgs);
-              }
+=======
+var convertAlert = require('../../alerts/convertAlert');
+var successAlert = require('../../alerts/successAlert');
+var spawn = require('child_process').spawn;
+var lineBreak = require('../../utilities/utils').lineBreak;
+function down_bbc(data) {
+    var iplayerMode = '--radiomode=best';
+    if (data.URL.indexOf('iplayer') >= 0) {
+        iplayerMode = '--tvmode=best';
+    }
+    Swal.fire({
+        icon: 'success',
+        title: 'Found!',
+        text: 'Nice one, do you want the whole show or a segment?',
+        input: 'select',
+        inputOptions: {
+            whole: 'Whole Episode',
+            clip: 'Clip a Segment'
+        },
+        inputPlaceholder: 'Select',
+        showCancelButton: true,
+        confirmButtonText: 'Download',
+        showLoaderOnConfirm: true,
+        backdrop: swalColour.loading,
+        target: document.getElementById('swalframe'),
+        preConfirm: function (timing) {
+            function runiPlayer(iplayerArgs) {
+                console.log(iplayerArgs);
+                var iplayerOptions = {
+                    maxBuffer: 1024 * 30720,
+                    shell: true
+                };
+                var iPlay = spawn('get_iplayer', iplayerArgs, iplayerOptions);
+                document.getElementById('progressText').textContent = '...';
+                iPlay.stdout.on('data', function (data) {
+                    console.log(data.toString().match(/(\d+.\d)%/g));
+                    if (data.toString() == null) {
+                        document.getElementById('progressText').textContent = '...';
+                    }
+                    else {
+                        document.getElementById('progressText').textContent = ('' + ('' + data.toString().match(/(\d+.\d)%/g)).replace(/\.0/g, '')).replace(/null/g, '');
+                    }
+                });
+                iPlay.stderr.on('data', function (data) {
+                    console.log('stderr: ' + data.toString());
+                });
+                iPlay.on('close', function () {
+                    lineBreak();
+                    successAlert();
+                });
             }
-          },
-        });
-      }
-    },
-  });
+            if (timing === 'whole') {
+                var iplayerArgs = ['--force', '--overwrite', '--log-progress', iplayerMode, '--output', data.path, data.URL];
+                convertAlert(swalColour);
+>>>>>>> Stashed changes
+                runiPlayer(iplayerArgs);
+            }
+            if (timing === 'clip') {
+                Swal.fire({
+                    title: 'Input Start and Stop Times',
+                    html: "<a style='color:black'>Format is hh:mm:ss</a>" +
+                        '<input id="swal-input1" class="swal2-input" placeholder="00:00:00">' +
+                        '<input id="swal-input2" class="swal2-input" placeholder="00:00:00">',
+                    focusConfirm: false,
+                    target: document.getElementById('swalframe'),
+                    preConfirm: function (formValues) {
+                        var startNumber = document.getElementById('swal-input1').value, endNumber = document.getElementById('swal-input2').value, start = '--start=' + startNumber, end = '--stop=' + endNumber;
+                        if (start !== '') {
+                            if (end !== '') {
+                                var iplayerArgs = [
+                                    '--force',
+                                    '--overwrite',
+                                    '--log-progress',
+                                    iplayerMode,
+                                    start,
+                                    end,
+                                    '--output',
+                                    data.path,
+                                    data.URL,
+                                ];
+                                convertAlert(swalColour);
+                                runiPlayer(iplayerArgs);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    });
 }
-
 module.exports = down_bbc;
+//# sourceMappingURL=down_bbc.js.map
