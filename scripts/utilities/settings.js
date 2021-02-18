@@ -71,36 +71,11 @@ docReady(function () {
     document.getElementById('settingDelete').addEventListener('click', function () {
         settingDelete();
     });
-<<<<<<< Updated upstream
-  }
-  locals.addEventListener('change', function () {
-    autoSave();
-  });
-
-  let proxyChange = document.getElementById('proxyInput');
-  proxyChange.addEventListener('keyup', function(){
-    waitTimer = setTimeout(proxySave, 5000);
-    clearTimeout(waitTimer);
-  })
-
-  //Settings Delete
-
-  document.getElementById('settingDelete').addEventListener('click', function () {
-    settingDelete();
-  });
-
-  //Console Startup Log
-  lineBreak();
-  console.log('FFmpeg ::: ' + versionInfo.ffmpegPath);
-  console.log('OS ::: ' + versionInfo.OS);
-  console.log('Settings file ::: ' + dataPath);
-=======
     //Console Startup Log
     lineBreak();
     console.log('FFmpeg ::: ' + versionInfo.ffmpegPath);
     console.log('Extractor ::: ' + versionInfo.extractorPath);
     console.log('OS ::: ' + versionInfo.OS);
     console.log('Settings file ::: ' + dataPath);
->>>>>>> Stashed changes
 });
 //# sourceMappingURL=settings.js.map

@@ -38,28 +38,67 @@ var axios = require('axios');
 var runningAlert = require('../../alerts/runningAlert');
 var successAlert = require('../../alerts/successAlert');
 var errorAlert = require('../../alerts/errorAlert');
-function down_parliament(data) {
-    var _this = this;
-    runningAlert();
-    var regex = /[0-9A-Za-z]+-[0-9A-Za-z]+-[0-9A-Za-z]+-[0-9A-Za-z]+-[0-9A-Za-z]+/g;
-    var code = data.URL.match(regex);
-    data.URL = "http://videoplayback.parliamentlive.tv/Player/Live/" + code;
-    axios
-        .get(data.URL)
-        .then(function (response, error) { return __awaiter(_this, void 0, void 0, function () {
-        var regex, livestreamURL;
+var progressBar = require('../../utilities/utils').progressBar;
+var execFile = require('child_process').execFile;
+var fetch = require('node-fetch');
+function fileExec(data) {
+    return __awaiter(this, void 0, void 0, function () {
+        function downloader() {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    fs.writeFile(data.path + "\\" + fileName_1 + filetype_1, buffer_1, function () { });
+                    return [2 /*return*/];
+                });
+            });
+        }
+        var filetype_1, fileName_1, response, buffer_1;
         return __generator(this, function (_a) {
-            if (error) {
-                errorAlert(error, '', '');
+            switch (_a.label) {
+                case 0:
+                    runningAlert();
+                    console.log('file exec');
+                    if (!((data.URL.indexOf('.mp4') >= 0 && data.URL.indexOf('.m3u8') < 0) ||
+                        (data.URL.indexOf('.mp3') >= 0 && data.URL.indexOf('.m3u8') < 0))) return [3 /*break*/, 3];
+                    console.log(data.URL);
+                    filetype_1 = '.mp4';
+                    if (data.URL.indexOf('.mp3') >= 0) {
+                        filetype_1 = '.mp3';
+                    }
+                    fileName_1 = "" + data.hostname;
+                    return [4 /*yield*/, fetch(data.URL)];
+                case 1:
+                    response = _a.sent();
+                    return [4 /*yield*/, response.buffer()];
+                case 2:
+                    buffer_1 = _a.sent();
+                    downloader()["catch"](function (error) {
+                        errorAlert(error, 'download', '');
+                    })
+                        .then(function () {
+                        successAlert();
+                    });
+                    return [3 /*break*/, 4];
+                case 3:
+                    outputFormat = data.path + '/' + data.hostname + '.mp4';
+                    ffmpeg(data.URL)
+                        .format('mp4')
+                        .save(outputFormat)
+                        .on('error', function (err, stdout, stderr) {
+                        err = err + stdout + stderr;
+                        errorAlert(err, 'download', '');
+                    })
+                        .on('progress', function (progress) {
+                        progressBar(progress, '');
+                    })
+                        .on('end', function () {
+                        successAlert();
+                    })
+                        .run();
+                    _a.label = 4;
+                case 4: return [2 /*return*/];
             }
-            else {
-                regex = /[0-9A-Za-z\/\.\-\:]+.m3u8/g;
-                livestreamURL = response.data.match(regex);
-                successAlert('live', livestreamURL[0]);
-            }
-            return [2 /*return*/];
         });
-    }); });
+    });
 }
-module.exports = down_parliament;
-//# sourceMappingURL=down_parliament.js.map
+module.exports = fileExec;
+//# sourceMappingURL=fileExec.js.map

@@ -1,10 +1,1 @@
-{
-  "version": 3,
-  "file": "toolBar.js",
-  "sourceRoot": "",
-  "sources": [
-    "../../ts/components/toolBar.js"
-  ],
-  "names": [],
-  "mappings": "AAAA,IAAM,OAAO,GAAG;IACd,IAAI,EAAE,SAAS;IACf,IAAI;QACF,OAAO,ymBAaiF,cAAc,uDAGrG,CAAC;IACJ,CAAC;CACF,CAAC;AAEF,MAAM,CAAC,OAAO,GAAG,OAAO,CAAC"
-}
+{"version":3,"file":"toolbar.js","sourceRoot":"","sources":["../../ts/components/toolbar.ts"],"names":[],"mappings":"AAAA,IAAM,OAAO,GAAG;IACd,IAAI,EAAE,SAAS;IACf,IAAI;QACF,OAAO,ymBAaiF,cAAc,uDAGrG,CAAC;IACJ,CAAC;CACF,CAAC;AAEF,MAAM,CAAC,OAAO,GAAG,OAAO,CAAC"}

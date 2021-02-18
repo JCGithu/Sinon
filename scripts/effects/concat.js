@@ -6,33 +6,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
-<<<<<<< Updated upstream
-    getInputs.then(() => {
-      lineBreak();
-      convertAlert(swalColour);
-      var finalOutput = fileSettings.outputFile + '-Sinon-Joined.mp4';
-      var outputFiles = [finalOutput];
-      ffmpegInputs
-        .on('progress', function (progress) {
-          progressBar(progress, format, targetFiles);
-        })
-        .on('error', function (err, stdout, stderr) {
-          console.log(err + stdout + stderr);
-          err = err + stdout + stderr;
-          errorAlert('', 'effect', err);
-        })
-        .complexFilter([filter], 'outv')
-        .outputOptions(['-map [outa]'])
-        .output(finalOutput)
-        .on('end', function () {
-          console.log('Merge Success!');
-          win.setProgressBar(-1);
-          resolve(outputFiles);
-          if (multi == false) {
-            successAlert('effect', 'Clips merged', swalColour);
-          }
-        }).run();
-=======
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
     var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
@@ -123,7 +96,6 @@ function concat(multi, swalColour, format, targetFiles) {
                     });
                 })];
         });
->>>>>>> Stashed changes
     });
 }
 module.exports = concat;

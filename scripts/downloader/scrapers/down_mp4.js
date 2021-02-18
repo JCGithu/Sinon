@@ -34,66 +34,80 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var successAlert = require('../alerts/successAlert.js');
-var swalColours = require('./utils.js').swalColours;
-var defaultSettings = require('./defaultSettings.json');
-var storage = require('electron-json-storage');
-function settingDelete() {
-    var swalColour = swalColours();
+var runningAlert = require('../../alerts/runningAlert');
+var errorAlert = require('../../alerts/errorAlert');
+var plainExec = require('../execs/plainExec');
+var axios = require('axios');
+function down_mp4(data, extractorOptions) {
     Swal.fire({
-        icon: 'warning',
-        title: 'Delete Settings',
-        text: 'Are you sure you want to delete the settings?',
-        showConfirmButton: true,
+        icon: 'success',
+        title: 'Video found!',
         showCancelButton: true,
+        confirmButtonText: 'Download',
+        showLoaderOnConfirm: true,
         backdrop: swalColour.loading,
-        toast: false,
-        target: document.getElementById('swalframe')
-    }).then(function (result) {
-        if (result.value) {
-            storage.clear(function (error) {
-                if (error)
-                    throw error;
+        preConfirm: function () {
+            runningAlert();
+            console.log(data);
+            scraping(data).then(function (data) {
+                data.options = 'normal';
+                plainExec(data, extractorOptions);
             });
-            console.log('Settings deleted');
-            successAlert('delete');
         }
     });
 }
-function settingSave(setID, data) {
-    function runData(data) {
-        console.log(data);
-        if (data[setID].type == 0) {
-            data[setID].value = document.getElementById(setID).checked;
-        }
-        else {
-            data[setID].value = document.getElementById(setID).value;
-        }
-        settingSet(data);
-    }
-    if (!data) {
-        storage.get('settings', function (error, data) {
-            runData(data);
-        });
-    }
-    else {
-        runData(data);
-    }
-}
-function settingSet(data) {
+function urlFix(url) {
     return __awaiter(this, void 0, void 0, function () {
+        var newURL;
         return __generator(this, function (_a) {
-            if (!data) {
-                data = defaultSettings;
-            }
-            storage.set('settings', data, function (error) {
-                if (error)
-                    throw error;
-                console.log('Settings updated!');
-            });
-            return [2 /*return*/];
+            newURL = url.replace(/\\\/|\/\\|\/\/|\\\\/g, '/').replace(':/', '://').replace(':///', '://');
+            return [2 /*return*/, newURL];
         });
     });
 }
-module.exports = { settingSet: settingSet, settingSave: settingSave, settingDelete: settingDelete };
-//# sourceMappingURL=storage.js.map
+function scraping(data) {
+    var _this = this;
+    return new Promise(function (resolve) {
+        proxyAxios(data).then(function (axiosOpts) {
+            axios
+                .get(data.URL, axiosOpts)
+                .then(function (response, error) { return __awaiter(_this, void 0, void 0, function () {
+                var regex, videoURLS, tempURL;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            regex = /[0-9A-Za-z\/\.\-\:\_\\\-]+.\.mp4/g;
+                            videoURLS = response.data.match(regex);
+                            return [4 /*yield*/, urlFix(videoURLS[0])];
+                        case 1:
+                            tempURL = _a.sent();
+                            if (data.URL.includes('metro.co.uk')) {
+                                tempURL = tempURL.replace("640x360", "1024x576").replace("960x540", "1024x576").replace("480x270", "1024x576");
+                            }
+                            data.URL = tempURL;
+                            resolve(data);
+                            return [2 /*return*/];
+                    }
+                });
+            }); })["catch"](function (error) {
+                errorAlert(error, '', '');
+            });
+        });
+    });
+}
+function proxyAxios(data) {
+    return new Promise(function (res) {
+        var axiosOpts = {};
+        if (data.proxyUse == true) {
+            var proxyHost = data.proxy.split(':');
+            console.log(proxyHost);
+            axiosOpts.proxy = {
+                host: 'https://' + proxyHost[0],
+                port: proxyHost[1]
+            };
+        }
+        res(axiosOpts);
+    });
+}
+module.exports = down_mp4;
+//# sourceMappingURL=down_mp4.js.map

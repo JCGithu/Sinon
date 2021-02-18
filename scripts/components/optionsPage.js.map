@@ -1,1 +1,1 @@
-{"version":3,"file":"optionsPage.js","sourceRoot":"","sources":["../../ts/components/optionsPage.js"],"names":[],"mappings":"AAAA,IAAM,WAAW,GAAG;IAClB,IAAI,EAAE,aAAa;IACnB,IAAI;QACF,OAAO,mnEAsCN,CAAC;IACJ,CAAC;CACF,CAAC;AAEF,MAAM,CAAC,OAAO,GAAG,WAAW,CAAC"}
+{"version":3,"file":"optionsPage.js","sourceRoot":"","sources":["../../ts/components/optionsPage.ts"],"names":[],"mappings":"AAAA,IAAM,WAAW,GAAG;IAClB,IAAI,EAAE,aAAa;IACnB,IAAI;QACF,OAAO,mnEAsCN,CAAC;IACJ,CAAC;CACF,CAAC;AAEF,MAAM,CAAC,OAAO,GAAG,WAAW,CAAC"}
