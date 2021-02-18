@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "allowJs": true,
+    "checkJs": true,
+    "outDir": "./scripts",
+    "strict": false,
+    "esModuleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */,
+    "declaration": true /* Generates corresponding '.d.ts' file. */,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "types": ["node"],
+    "paths": {
+      "*": ["*", "src/*", "src/setup/*", "src/logic/*", "src/models/*", "config/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "engine", "img"],
+  "include": ["./ts"]
+}
