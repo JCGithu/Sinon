@@ -9,7 +9,7 @@ var targetFiles;
 
 document.body.addEventListener('click', function (event) {
   if (event.target.id == 'downFileButton') {
-    if (document.getElementsByClassName('toolMenu')[0].classList.contains('toolOpen')){
+    if (document.getElementsByClassName('toolMenu')[0].classList.contains('toolOpen')) {
       document.getElementsByClassName('toolMenu')[0].classList.remove('toolOpen');
     }
     dialog
@@ -20,11 +20,11 @@ document.body.addEventListener('click', function (event) {
       .then((data) => {
         console.log(data.filePaths);
         let downloadPath = data.filePaths;
-        document.getElementById('downloadfolder').value = downloadPath.toString();
-        setTimeout(settingSave, 5000);
+        document.getElementById('downloadPath').value = downloadPath.toString();
+        setTimeout(settingSave('downloadPath'), 2000);
       });
   } else if (event.target.id == 'effectFileButton' || event.target.id == 'convFileButton') {
-    if (document.getElementsByClassName('toolMenu')[0].classList.contains('toolOpen')){
+    if (document.getElementsByClassName('toolMenu')[0].classList.contains('toolOpen')) {
       document.getElementsByClassName('toolMenu')[0].classList.remove('toolOpen');
     }
     dialog

@@ -1,7 +1,7 @@
 function inputDetails() {
   const input = {
     URL: document.getElementById('inputURL').value.replace('https://', 'http://'),
-    path: document.getElementById('downloadfolder').value,
+    path: document.getElementById('downloadPath').value,
     proxy: document.getElementById('proxyInput').value,
     instaUse: document.getElementById('InstaUse').value,
     instaPass: document.getElementById('InstaPass').value,

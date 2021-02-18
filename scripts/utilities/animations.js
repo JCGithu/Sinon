@@ -1,6 +1,6 @@
 const { docReady } = require('./utils');
 const anime = require('animejs');
-const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron');
 
 const storage = require('electron-json-storage');
 
@@ -45,7 +45,7 @@ function startAnimation() {
   });
 
   //Toolbar Animations
-  document.getElementById('toolbar').addEventListener('click', function () {
+  document.getElementById('toolBar').addEventListener('click', function () {
     pageElements.toolMenu.classList.add('toolOpen');
   });
 
@@ -91,7 +91,7 @@ function folderLoad() {
     if (error) throw error;
     if (data.downloadPath) {
       if (data.downloadPath !== null) {
-        document.getElementById('downloadfolder').value = data.downloadPath;
+        document.getElementById('downloadPath').value = data.downloadPath;
       }
     }
   });
@@ -106,7 +106,7 @@ function toolSwap(toolKit) {
     menus[i].addEventListener('click', function (info) {
       if (menuCurrent !== info.target.id) {
         setTimeout(function () {
-          if (document.getElementById('downloadfolder')) {
+          if (document.getElementById('downloadPath')) {
             folderLoad();
           }
         }, 800);
@@ -118,12 +118,12 @@ function toolSwap(toolKit) {
           pageElements.currentTool.classList.remove('toolChange');
         }, 1500);
         setTimeout(function () {
-          menuCurrent = info.target.id
+          menuCurrent = info.target.id;
           runButtonReset();
         }, 800);
         pageElements.toolMenu.classList.remove('toolOpen');
       } else {
-        if (pageElements.toolMenu.classList.contains('toolOpen')){
+        if (pageElements.toolMenu.classList.contains('toolOpen')) {
           pageElements.toolMenu.classList.remove('toolOpen');
         }
       }
@@ -132,20 +132,20 @@ function toolSwap(toolKit) {
 }
 
 //TOOL HOTKEYS
-let keys = ['numPress1','numPress2','numPress3']
-let keyMenus = ['MenuD', 'MenuC', 'MenuE']
+let keys = ['numPress1', 'numPress2', 'numPress3'];
+let keyMenus = ['MenuD', 'MenuC', 'MenuE'];
 for (let i = 0; i < keys.length; i++) {
   ipcRenderer.on(keys[i], () => {
     let menu = document.getElementById(keyMenus[i]);
     menu.click();
-  })
+  });
 }
 
 function runButtonReset() {
   inputText = document.querySelector('.inputBox');
   runButton = document.querySelector('.runButton');
   inputText.addEventListener('input', function () {
-    if (pageElements.toolMenu.classList.contains('toolOpen')){
+    if (pageElements.toolMenu.classList.contains('toolOpen')) {
       pageElements.toolMenu.classList.remove('toolOpen');
     }
     runButtonShow(inputText);
