@@ -1,5 +1,6 @@
 const successAlert = require('../alerts/successAlert.js');
 const { swalColours } = require('./utils.js');
+const defaultSettings = require('./defaultSettings.json');
 
 const storage = require('electron-json-storage');
 
@@ -25,89 +26,33 @@ function settingDelete() {
   });
 }
 
-function proxySave(){
-  let proxyInput = document.getElementById('proxyInput');
-  storage.set(
-    'settings',
-    {
-      UrlWipe: URLSwitch.checked,
-      DarkMode: darkSwitch.checked,
-      Geo: geoFormat.value,
-      CustomProxy: proxyInput.value,
-      InstaUse: InstaUse.value,
-      InstaPass: InstaPass.value,
-      downloadPath: downloadfolder.value,
-    },
-    function (error) {
-      if (error) throw error;
+function settingSave(setID, data) {
+  function runData(data) {
+    console.log(data);
+    if (data[setID].type == 0) {
+      data[setID].value = document.getElementById(setID).checked;
+    } else {
+      data[setID].value = document.getElementById(setID).value;
     }
-  );
-
-}
-
-function settingSave() {
-  let URLSwitch = document.getElementById('urlswitch');
-  let darkSwitch = document.getElementById('darkswitch');
-  let geoFormat = document.getElementById('geoFormat');
-  let InstaUse = document.getElementById('InstaUse');
-  let InstaPass = document.getElementById('InstaPass');
-  let downloadfolder = document.getElementById('downloadfolder');
-
-  if (downloadfolder){
-    storage.set(
-      'settings',
-      {
-        UrlWipe: URLSwitch.checked,
-        DarkMode: darkSwitch.checked,
-        Geo: geoFormat.value,
-        InstaUse: InstaUse.value,
-        InstaPass: InstaPass.value,
-        downloadPath: downloadfolder.value,
-      },
-      function (error) {
-        if (error) throw error;
-      }
-    );
-  } else {
-    storage.get('settings', function (error, data) {
-      if (data.downloadPath) {
-        storage.set(
-          'settings',
-          {
-            UrlWipe: URLSwitch.checked,
-            DarkMode: darkSwitch.checked,
-            Geo: geoFormat.value,
-            InstaUse: InstaUse.value,
-            InstaPass: InstaPass.value,
-            downloadPath: data.downloadPath,
-          },
-          function (error) {
-            if (error) throw error;
-          })
-      }
-    });
+    settingSet(data);
   }
-
-  console.log('New Settings Saved!');
+  if (!data) {
+    storage.get('settings', function (error, data) {
+      runData(data);
+    });
+  } else {
+    runData(data);
+  }
 }
 
-function settingSet() {
-  storage.set(
-    'settings',
-    {
-      UrlWipe: 'false',
-      DarkMode: 'false',
-      Geo: '',
-      CustomProxy: '',
-      InstaUse: '',
-      InstaPass: '',
-      downloadPath: '',
-    },
-    function (error) {
-      if (error) throw error;
-    }
-  );
-  console.log('Setting File Created!');
+async function settingSet(data) {
+  if (!data) {
+    data = defaultSettings;
+  }
+  storage.set('settings', data, function (error) {
+    if (error) throw error;
+    console.log('Settings updated!');
+  });
 }
 
-module.exports = { settingSet, settingSave, proxySave, settingDelete };
+module.exports = { settingSet, settingSave, settingDelete };
