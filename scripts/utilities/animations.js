@@ -91,7 +91,7 @@ function folderLoad() {
     if (error) throw error;
     if (data.downloadPath) {
       if (data.downloadPath !== null) {
-        document.getElementById('downloadPath').value = data.downloadPath;
+        document.getElementById('downloadPath').value = data.downloadPath.value;
       }
     }
   });
