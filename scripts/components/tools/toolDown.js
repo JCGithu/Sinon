@@ -6,7 +6,7 @@ const toolDown = {
 				<input type="text" id="inputURL" class="inputBox" placeholder="Enter URL">
 			</div>
 			<div style="margin-bottom: 5vh">
-				<input type="text" id='downloadfolder' placeholder="Enter Download Folder">
+				<input type="text" id='downloadPath' placeholder="Enter Download Folder">
 				<button id="downFileButton" class="fileButton">Pick Folder</button>
 			</div>
 			<div>
