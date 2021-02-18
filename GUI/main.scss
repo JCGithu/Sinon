@@ -174,7 +174,7 @@ header {
   cursor: pointer;
 }
 
-#toolbar {
+#toolBar {
   position: absolute;
   top: 4vw;
   left: 5vh;
@@ -432,7 +432,7 @@ html.transition *:after {
 }
 
 .fileButton,
-#downloadfolder {
+#downloadPath {
   margin: 0;
   width: 70%;
   border-radius: 20px 0 0 20px !important;
@@ -458,7 +458,8 @@ html.transition *:after {
 
 input {
   height: 50% !important;
-  &[type='text'], &[type='password']{
+  &[type='text'],
+  &[type='password'] {
     border-radius: 8px;
     border: 0px;
     color: black;
@@ -511,7 +512,7 @@ button {
 
 /* Converter */
 .convFormat,
-.geoFormat {
+.geo {
   appearance: none;
   outline: 0;
   box-shadow: none;
@@ -526,7 +527,7 @@ button {
   font-weight: bold;
 }
 
-.geoFormat {
+.geo {
   border-radius: 1em;
   padding: 0 5em;
 }
@@ -624,13 +625,13 @@ canvas {
   text-align: center;
 }
 
-.swal2-container .select{
+.swal2-container .select {
   &::after {
     top: -2px;
   }
 }
 
-.swal2-range output{
+.swal2-range output {
   line-height: 1.6em !important;
 }
 
