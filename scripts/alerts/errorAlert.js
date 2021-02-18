@@ -8,6 +8,7 @@ function errorAlert(error, errorType, errorText) {
 
   var swalOptions = {
     icon: 'error',
+    title: 'Error!',
     backdrop: swalColour.fail,
     text: 'Something went wrong. Please send error code and info.',
     toast: false,
@@ -29,11 +30,10 @@ function errorAlert(error, errorType, errorText) {
   } else if (errorType == 'convert') {
     swalOptions.title = 'Conversion error!';
   } else if (errorType == 'basic') {
-    swalOptions.title = 'Error!';
     swalOptions.text = errorText;
     swalOptions.showCancelButton = false;
-    delete swalOptions.confirmButtonText;
-    delete swalOptions.preConfirm;
+    swalOptions.confirmButtonText = 'Close';
+    swalOptions.preConfirm = () => {};
   }
 
   Swal.fire(swalOptions);
