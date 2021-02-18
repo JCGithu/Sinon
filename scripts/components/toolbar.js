@@ -1,9 +1,9 @@
-const toolbar = {
-  name: 'toolbar',
+const toolBar = {
+  name: 'toolBar',
   view() {
     return `
 			<header>
-				<svg id="toolbar" viewBox="0 0 448 512">
+				<svg id="toolBar" viewBox="0 0 448 512">
 					<use xlink:href="../imgs/tools.svg#toolBox"></use>
 				</svg>
 				<div class="colourstrip"></div>
@@ -14,11 +14,11 @@ const toolbar = {
 					<svg id="optionsIcon" viewBox="0 0 640 512">
 						<use xlink:href="../imgs/tools.svg#optionsBox"></use>
 					</svg>
-					<a style="font-size: 8pt;" class="grow-on-hover" id='version'>Version <span id='ver'>1.3.2</span></a>
+					<a style="font-size: 8pt;" class="grow-on-hover" id='version'>Version <span id='ver'>${packageVersion}</span></a>
 				</div>
 			</header>
     `;
   },
 };
 
-module.exports = toolbar;
+module.exports = toolBar;
