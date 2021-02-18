@@ -27,8 +27,7 @@ async function run_convert(targetFiles) {
   };
 
   console.log('Converter running');
-  console.log(convertInfo);
-  lineBreak();
+  console.info(convertInfo);
 
   eval(convertInfo.format + 'Convert(convertInfo, swalColour)');
 }
