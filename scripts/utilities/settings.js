@@ -40,31 +40,23 @@ docReady(function () {
   //Initial Settings Check
   storage.get('settings', function (error, data) {
     if (error) throw error;
-    console.log(data);
     for (let setting in data) {
-      if (data[setting].type == 0) {
-        document.getElementById(setting).checked = data[setting].value;
-      } else {
-        document.getElementById(setting).value = data[setting].value;
-      }
-      if (document.getElementById('darkMode').checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
+      if (document.getElementById(setting)) {
+        if (data[setting].type == 0) {
+          document.getElementById(setting).checked = data[setting].value;
+        } else {
+          document.getElementById(setting).value = data[setting].value;
+        }
+        if (document.getElementById('darkMode').checked) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
       }
     }
   });
 
   //Save Settings
   var waitTimer;
-  const settingsSelect = [
-    'darkMode',
-    'urlWipe',
-    'geo',
-    'customProxy',
-    'downloadPath',
-    'instaPass',
-    'instaUse',
-    'instaCookie',
-  ];
+  const settingsSelect = ['darkMode', 'urlWipe', 'geo', 'customProxy', 'downloadPath'];
   for (const sets of settingsSelect) {
     document.getElementById(sets).addEventListener('change', function () {
       storage.get('settings', function (error, data) {
