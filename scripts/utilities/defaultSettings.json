@@ -1,0 +1,10 @@
+{
+  "urlWipe": { "type": 0, "value": false },
+  "darkMode": { "type": 0, "value": false },
+  "geo": { "type": 1, "value": "UK" },
+  "instaUse": { "type": 1, "value": "" },
+  "customProxy": { "type": 1, "value": "" },
+  "downloadPath": { "type": 1, "value": "" },
+  "instaCookie": { "type": 1, "value": "" },
+  "instaPass": { "type": 1, "value": "" }
+}
