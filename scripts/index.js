@@ -11,6 +11,9 @@ const FFmpegStatic = require('ffmpeg-static');
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(FFmpegStatic);
 
+var contents = fs.readFileSync(path.resolve(__dirname, '..') + '/package.json');
+const packageVersion = JSON.parse(contents).version;
+
 const ffmpegOptions = {
   cwd: FFmpegStatic,
 };
@@ -22,7 +25,7 @@ const versionInfo = {
   ffmpegPath: FFmpegStatic,
 };
 
-const cpuCount = os.cpus().length
+const cpuCount = os.cpus().length;
 //console.log(cpuCount)
 
 var OSs = ['Win', 'Mac', 'X11', 'Linux'];
@@ -41,11 +44,10 @@ for (let i = 0; i < OSs.length; i++) {
 const extractorPath = path.join(__dirname, '/../../engine/dist/extractor');
 if (fs.existsSync(extractorPath)) {
   versionInfo.extractorPath = extractorPath;
-} else{
+} else {
   const extractorPath = path.join(__dirname, '/../engine/dist/extractor');
   versionInfo.extractorPath = extractorPath;
 }
-
 
 const Block = require('../scripts/block');
 const swalColour = { fail: '#232323', loading: '#2c3e50', pass: '#2c3e50' };
@@ -55,7 +57,7 @@ const wave = require('../scripts/components/wave');
 const toolmenu = require('../scripts/components/toolmenu');
 const optionsPage = require('../scripts/components/optionsPage');
 const documentation = require('../scripts/components/documentation');
-const toolbar = require('../scripts/components/toolbar');
+const toolBar = require('../scripts/components/toolBar');
 const mainTitle = require('../scripts/components/title');
 
 //Tool components
@@ -69,7 +71,7 @@ const proxyGenerator = require('../scripts/utilities/proxy');
 
 const sinon = new Block('#sinon');
 
-var bootComps = [wave, toolmenu, optionsPage, documentation, toolbar, mainTitle];
+var bootComps = [wave, toolmenu, optionsPage, documentation, toolBar, mainTitle];
 var tools = [toolDown, toolConv, toolEffect];
 
 const toolKit = new Block('#currentTool');
@@ -84,7 +86,7 @@ async function sinonBoot() {
   }
   sinon.loadAll();
   let target = document.getElementById('docText');
-  let proxyInput = document.getElementById('proxyInput');
+  let customProxy = document.getElementById('customProxy');
   let versionNumber = document.getElementById('ver');
   if (target) {
     target.innerHTML = fs.readFileSync(path.resolve(__dirname, '../GUI/changelog.html'), 'utf-8');
@@ -93,9 +95,9 @@ async function sinonBoot() {
     const tools = require('../scripts/utilities/toolFunctions');
     toolSwap(toolKit);
     versionChecker();
-    if (proxyInput.value == '') {
+    if (customProxy.value == '') {
       proxyGenerator().then((proxy) => {
-        proxyInput.value = proxy;
+        customProxy.value = proxy;
       });
     }
   }
