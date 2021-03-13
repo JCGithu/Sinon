@@ -24,21 +24,19 @@ function down_periscope(data, extractorOptions) {
     target: document.getElementById('swalframe'),
     preConfirm: (dlquality) => {
       runningAlert();
-        var regex = /(?<=\/w\/)[0-9A-Za-z]+/g
-        var token = data.URL.match(regex);
-        data.URL = `https://api.periscope.tv/api/v2/getAccessPublic?token=${token}`
-        axios
-        .get(data.URL)
-        .then(async (response, error) => {
-          if (error){
-            errorAlert(error, '', '');
-          } else {
-            if (dlquality == 'normal'){
-              ffmpeg(response.data.replay_url)
+      var regex = /(?<=\/w\/)[0-9A-Za-z]+/g;
+      var token = data.URL.match(regex);
+      data.URL = `https://api.periscope.tv/api/v2/getAccessPublic?token=${token}`;
+      axios.get(data.URL).then(async (response, error) => {
+        if (error) {
+          errorAlert(error, '', '');
+        } else {
+          if (dlquality == 'normal') {
+            console.log(response.data.replay_url);
+            ffmpeg(response.data.replay_url)
               .format('mp4')
               .save(data.path + '\\periscope.mp4')
               .on('error', (err, stdout, stderr) => {
-                console.log('hehe')
                 err = err + stdout + stderr;
                 errorAlert(err, 'convert', '');
               })
@@ -49,15 +47,15 @@ function down_periscope(data, extractorOptions) {
                 successAlert();
               })
               .run();
+          } else {
+            if (response.data.hls_url) {
+              successAlert('live', response.data.hls_url);
             } else {
-              if (response.data.hls_url){
-                successAlert('live', response.data.hls_url);
-              } else {
-                errorAlert('', 'basic', "No HLS URL found, is this livestream still running?");
-              }
+              errorAlert('', 'basic', 'No HLS URL found, is this livestream still running?');
             }
           }
-        })
+        }
+      });
     },
   });
 }

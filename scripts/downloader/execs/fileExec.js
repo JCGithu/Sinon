@@ -1,4 +1,3 @@
-const axios = require('axios');
 const runningAlert = require('../../alerts/runningAlert');
 const successAlert = require('../../alerts/successAlert');
 const errorAlert = require('../../alerts/errorAlert');

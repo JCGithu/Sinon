@@ -1,9 +1,9 @@
 const { copyString } = require('../utilities/utils.js');
 
 function errorAlert(error, errorType, errorText) {
-  let instaUse = document.getElementById('InstaUse');
-  let instaPass = document.getElementById('InstaPass');
-  error = error.toString().replace(instaPass.value, '').replace(instaUse.value, '');
+  //let instaUse = document.getElementById('InstaUse');
+  //let instaPass = document.getElementById('InstaPass');
+  //error = error.toString().replace(instaPass.value, '').replace(instaUse.value, '');
   console.log(error);
 
   var swalOptions = {
